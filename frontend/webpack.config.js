@@ -9,6 +9,10 @@ module.exports = {
   devtool: 'inline-source-map',
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', 'css'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      '@asset': path.resolve(__dirname, 'src/asset'),
+    },
   },
   entry: {
     app: ['./src/index.tsx'],

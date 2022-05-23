@@ -8,6 +8,12 @@
     "allowJs": false,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "typeRoots": ["node_modules/@types", "src/types"]
-  }
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@asset": ["src/asset"]
+    }
+  },
+  "include": ["src"]
 }
