@@ -1,7 +1,6 @@
-import express from 'express'
+import { Express } from 'express'
+import { rootRouter } from '../routes'
 
-export const expressLoader = async ({ app }: { app: express.Express }) => {
-  app.get('/', (req, res) => {
-    res.status(200).send('hello !')
-  })
+export const expressLoader = async ({ app }: { app: Express }) => {
+  app.use('/', rootRouter)
 }
