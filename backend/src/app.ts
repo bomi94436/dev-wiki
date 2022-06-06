@@ -1,15 +1,15 @@
-import express from 'express';
-import { initDatabase } from './model/db';
+import express from 'express'
+import loaders from './loaders/index'
 
-const app = express();
-const port = process.env.PORT || 5001;
+const startServer = async () => {
+  const app = express()
+  const port = process.env.PORT || 5001
 
-initDatabase();
+  loaders.init({ app })
 
-app.get('/', (req, res) => {
-  res.status(200).send('hello !');
-});
+  app.listen(port, () => {
+    console.log(`server is listening at port ${port}`)
+  })
+}
 
-app.listen(port, () => {
-  console.log(`server is listening at localhost:${port}`);
-});
+startServer()
