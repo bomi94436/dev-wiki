@@ -1,6 +1,10 @@
 import express from 'express';
+import { initDatabase } from './model/db';
+
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 5001;
+
+initDatabase();
 
 app.get('/', (req, res) => {
   res.status(200).send('hello !');
