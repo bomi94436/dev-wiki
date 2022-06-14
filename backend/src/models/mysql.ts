@@ -10,18 +10,12 @@ const pool = mysql.createPool({
   connectionLimit: 10,
 })
 
-const getConnectionPool = async (
-  callback: (conn: mysql.PoolConnection) => any
-) => {
+const getConnectionPool = async (): Promise<mysql.PoolConnection> => {
   const connection = await pool.getConnection()
 
-  try {
-    callback(connection)
-  } catch (err) {
-    console.error(err)
-  }
+  return connection
 
-  connection.release()
+  // connection.release()
 }
 
 export default getConnectionPool

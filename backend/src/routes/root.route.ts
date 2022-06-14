@@ -1,9 +1,9 @@
 import express from 'express'
 import { rootController } from '../controllers'
-import { wrapAsync } from '../utils'
+import { asyncMiddleware } from '../utils'
 
 const rootRouter = express.Router()
 
-rootRouter.get('/', wrapAsync(rootController.healthCheck))
+rootRouter.get('/', asyncMiddleware(rootController.healthCheck))
 
 export default rootRouter

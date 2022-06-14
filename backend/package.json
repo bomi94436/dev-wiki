@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "start": "node dist/src/app.js",
+    "start": "NODE_ENV=development node dist/src/app.js",
     "build": "tsc -p .",
     "start:dev": "NODE_ENV=development nodemon --watch  \"src/**/*.ts\" --exec ts-node src/app.ts",
     "start:prod": "tsc -p . && NODE_ENV=production node dist/src/app.js",

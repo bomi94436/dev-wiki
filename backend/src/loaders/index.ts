@@ -1,6 +1,6 @@
 import express from 'express'
-import { expressLoader } from './express'
-import { mysqlLoader } from './mysql'
+import expressLoader from './expressLoader'
+import mysqlLoader from './mysql/mysqlLoader'
 
 const loaders = {
   init: async ({ app }: { app: express.Express }) => {
