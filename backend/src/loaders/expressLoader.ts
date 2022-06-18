@@ -9,7 +9,7 @@ const expressLoader = async ({ app }: { app: Express }) => {
   app.use('/auth', authRouter)
 
   app.use(<ErrorRequestHandler>((error, req, res, next) => {
-    res.status(500).json({ message: error.message })
+    res.status(error.status || 500).json({ message: error.message })
   }))
 }
 
