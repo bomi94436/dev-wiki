@@ -8,6 +8,7 @@ const authController: {
 } = {
   signup: async (req, res, next) => {
     const createdUser = await authService.signup(req.body)
+
     res.status(200).json({
       message: 'success create user',
       user: createdUser,

@@ -10,13 +10,13 @@ const User = {
     const connection = await getConnectionPool()
 
     try {
-      const [rows] = await connection.query(
+      const [rows] = await connection.query<ResultSetHeader>(
         'INSERT INTO user (email, password, nickname, is_verificated) VALUES (?,?,?,?)',
-        [user.email, user.password, user.nickname, 0]
+        [user.email, user.password, user.nickname, false]
       )
 
       return {
-        id: (rows as ResultSetHeader).insertId,
+        id: rows.insertId,
         ...user,
       }
     } finally {
@@ -27,12 +27,12 @@ const User = {
     const connection = await getConnectionPool()
 
     try {
-      const [rows] = await connection.query(
-        'SELECT id, email FROM user WHERE email = ?',
+      const [rows] = await connection.query<RowDataPacket[]>(
+        'SELECT * FROM user WHERE email = ?',
         email
       )
 
-      return rows as RowDataPacket[]
+      return rows
     } finally {
       connection.release()
     }
@@ -41,12 +41,12 @@ const User = {
     const connection = await getConnectionPool()
 
     try {
-      const [rows] = await connection.query(
+      const [rows] = await connection.query<RowDataPacket[]>(
         'SELECT id, nickname FROM user WHERE nickname = ?',
         nickname
       )
 
-      return rows as RowDataPacket[]
+      return rows
     } finally {
       connection.release()
     }
