@@ -1,23 +1,37 @@
 import { ResultSetHeader, RowDataPacket } from 'mysql2/promise'
+import { v4 as uuidv4 } from 'uuid'
+import { parseUuidToBinary } from '../utils'
 import getConnectionPool from './mysql'
 
-const User = {
+export interface User {
+  id: string
+  email: string
+  password: string
+  nickname: string
+  is_verificated: boolean
+  created_at: string // timestamp
+  updated_at: string // timestamp
+}
+
+const UserModel = {
   create: async (user: {
     email: string
     password: string
     nickname: string
-  }) => {
+  }): Promise<Partial<User>> => {
     const connection = await getConnectionPool()
+    const id = uuidv4()
 
     try {
-      const [rows] = await connection.query<ResultSetHeader>(
-        'INSERT INTO user (email, password, nickname, is_verificated) VALUES (?,?,?,?)',
-        [user.email, user.password, user.nickname, false]
+      await connection.query<ResultSetHeader>(
+        'INSERT INTO user (id, email, password, nickname, is_verificated) VALUES (?,?,?,?,?)',
+        [parseUuidToBinary(id), user.email, user.password, user.nickname, false]
       )
 
       return {
-        id: rows.insertId,
-        ...user,
+        id,
+        email: user.email,
+        nickname: user.nickname,
       }
     } finally {
       connection.release()
@@ -53,4 +67,4 @@ const User = {
   },
 }
 
-export default User
+export default UserModel

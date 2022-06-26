@@ -1,4 +1,5 @@
 import { RequestHandler, Request, Response, NextFunction } from 'express'
+import { parse as uuidParse } from 'uuid'
 
 export const asyncMiddleware =
   (fn: RequestHandler) => (req: Request, res: Response, next: NextFunction) => {
@@ -14,3 +15,6 @@ export class CustomError extends Error {
     }
   }
 }
+
+export const parseUuidToBinary = (id: string) =>
+  Buffer.from(Object.values(uuidParse(id)))

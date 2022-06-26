@@ -8,7 +8,7 @@ export const DropUserTable = `DROP TABLE IF EXISTS user;`
  */
 export const CreateUserTable = `
 CREATE TABLE IF NOT EXISTS user (
-  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id BINARY(16) NOT NULL UNIQUE,
   email VARCHAR(50) NOT NULL UNIQUE,
   password VARCHAR(200) NOT NULL,
   nickname VARCHAR(20) NOT NULL UNIQUE,

@@ -58,8 +58,8 @@ export const validator =
 
       if (option.length?.min) {
         if (
-          (option.type === 'Number' && data < option.length.min) ||
-          (option.type === 'String' && data.length < option.length.min)
+          (validateDataType.isNumber(data) && data < option.length.min) ||
+          (validateDataType.isString(data) && data.length < option.length.min)
         ) {
           throw new CustomError(
             422,
@@ -70,8 +70,8 @@ export const validator =
 
       if (option.length?.max) {
         if (
-          (option.type === 'Number' && data > option.length.max) ||
-          (option.type === 'String' && data.length > option.length.max)
+          (validateDataType.isNumber(data) && data > option.length.max) ||
+          (validateDataType.isString(data) && data.length > option.length.max)
         ) {
           throw new CustomError(
             422,
