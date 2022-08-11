@@ -1,4 +1,4 @@
-import User from '../models/user.model'
+import User from '../repositories/user.repository'
 import { CustomError } from '../utils'
 
 const authService = {
