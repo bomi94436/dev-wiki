@@ -1,4 +1,4 @@
-import getConnectionPool from '../../repositories/mysql'
+import { getConnectionPool } from './usecase'
 import { CreateUserTable, DropUserTable } from './initQuery'
 
 const mysqlLoader = async () => {

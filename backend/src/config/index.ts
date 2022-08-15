@@ -10,11 +10,15 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const config = {
-  database: {
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+  mysql: {
+    host: process.env.MYSQL_DB_HOST,
+    port: Number(process.env.MYSQL_DB_PORT),
+    user: process.env.MYSQL_DB_USER,
+    password: process.env.MYSQL_DB_PASSWORD,
+  },
+  redis: {
+    host: process.env.REDIS_DB_HOST,
+    port: process.env.REDIS_DB_PORT,
   },
 }
 

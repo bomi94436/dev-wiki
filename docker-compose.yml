@@ -1,13 +1,20 @@
 version: '3.7'
 
 services:
-  db:
+  mysql:
+    container_name: mysql-db
     env_file:
       - ./backend/.env.development
     image: mysql:8.0
-    container_name: mysql-db
     ports:
       - 3306:3306
+    restart: always
+
+  redis:
+    container_name: redis-db
+    image: redis:alpine
+    ports:
+      - 6379:6379
     restart: always
 
   backend:
@@ -20,4 +27,5 @@ services:
     volumes:
       - ./backend:/usr/src/app/backend
     depends_on:
-      - db
+      - mysql
+      - redis

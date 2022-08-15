@@ -1,8 +1,8 @@
 import { ResultSetHeader, RowDataPacket } from 'mysql2/promise'
 import { v4 as uuidv4 } from 'uuid'
+import { getConnectionPool } from '../loaders/mysql/usecase'
 import { User } from '../models/user.model'
 import { parseUuidToBinary } from '../utils'
-import getConnectionPool from './mysql'
 
 const UserModel = {
   create: async (user: {

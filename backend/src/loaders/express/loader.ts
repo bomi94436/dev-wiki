@@ -1,5 +1,5 @@
 import express, { ErrorRequestHandler, Express } from 'express'
-import { authRouter, rootRouter } from '../routes'
+import { authRouter, rootRouter } from '../../routes'
 
 const expressLoader = async ({ app }: { app: Express }) => {
   app.use(express.json())
