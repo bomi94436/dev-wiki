@@ -7,9 +7,8 @@ const startServer = async () => {
 
   loaders.init({ app })
 
-  app.use(<ErrorRequestHandler>((err, req, res, next) => {
-    console.error(err.stack)
-    res.status(500).send('Something broke!')
+  app.use(<ErrorRequestHandler>((error, req, res, next) => {
+    res.status(error.status || 500).json({ message: error.message })
   }))
 
   app.listen(port, () => {

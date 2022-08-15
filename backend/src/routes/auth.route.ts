@@ -10,7 +10,7 @@ authRouter.post(
   authValidator.signup,
   asyncMiddleware(authController.signup)
 )
-authRouter.post('/login')
-authRouter.post('/logout')
+authRouter.post('/login', asyncMiddleware(authController.login))
+authRouter.post('/logout', asyncMiddleware(authController.logout))
 
 export default authRouter

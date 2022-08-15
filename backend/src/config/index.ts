@@ -19,6 +19,7 @@ const config = {
   redis: {
     host: process.env.REDIS_DB_HOST,
     port: process.env.REDIS_DB_PORT,
+    secretKey: process.env.REDIS_DB_SESSION_SECRET_KEY,
   },
 }
 

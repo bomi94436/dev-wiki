@@ -1,6 +1,8 @@
-import * as redis from 'redis'
+import { createClient } from 'redis'
 import config from '../../config'
 
-export const redisClient = redis.createClient({
+export const redisClient = createClient({
   url: `redis://${config.redis.host}:${config.redis.port}`,
+  legacyMode: true,
 })
+redisClient.connect().catch(console.error)
