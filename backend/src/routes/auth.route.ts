@@ -1,7 +1,7 @@
 import express from 'express'
 import { authController } from '../controllers'
 import { asyncMiddleware } from '../utils'
-import authValidator from '../vaildator/auth.validator'
+import authValidator from '../middlewares/vaildator/auth.validator'
 
 const authRouter = express.Router()
 

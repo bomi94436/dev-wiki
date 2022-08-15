@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'production') {
 } else if (process.env.NODE_ENV === 'development') {
   dotenv.config({ path: path.join(__dirname, '../..', '/.env.development') })
 } else {
-  throw new Error('process.env.NODE_ENV 를 설정하지 않았습니다!')
+  dotenv.config({ path: path.join(__dirname, '../..', '/.env.local') })
 }
 
 const config = {
