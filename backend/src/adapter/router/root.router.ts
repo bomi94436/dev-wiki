@@ -1,6 +1,6 @@
 import express from 'express'
-import { rootController } from '../controllers'
-import { asyncMiddleware } from '../utils'
+import { rootController } from '../controller'
+import { asyncMiddleware } from '../../utils'
 
 const rootRouter = express.Router()
 

@@ -1,4 +1,4 @@
-import { DataRegExp, DataType, validator } from '.'
+import { DataRegExp, DataType, validator } from './index'
 
 const authValidator = {
   signup: validator('body', {

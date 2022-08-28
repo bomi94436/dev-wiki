@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import { CustomError } from '../../utils'
+import { CustomError } from '../../../utils'
 
 export const DataType = {
   number: 'Number',

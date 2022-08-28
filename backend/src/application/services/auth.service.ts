@@ -1,5 +1,5 @@
-import User from '../repositories/user.repository'
-import { CustomError } from '../utils'
+import User from '../../adapter/repository/user.repository'
+import { CustomError } from '../../utils'
 import { stringify as uuidStringify } from 'uuid'
 
 const authService = {

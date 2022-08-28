@@ -1,11 +1,11 @@
 import express, { ErrorRequestHandler } from 'express'
-import loaders from './loaders/index'
+import loaders from './adapter/infra/loader'
 
 const startServer = async () => {
   const app = express()
   const port = process.env.PORT || 5001
 
-  loaders.init({ app })
+  await loaders.init({ app })
 
   app.use(<ErrorRequestHandler>((error, req, res, next) => {
     res.status(error.status || 500).json({ message: error.message })

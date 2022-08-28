@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import { authService } from '../services'
+import { authService } from '../../application/services'
 
 type AuthControllerKeys = 'signup' | 'login' | 'logout'
 

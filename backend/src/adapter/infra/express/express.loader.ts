@@ -3,7 +3,7 @@ import session from 'express-session'
 import connectRedis from 'connect-redis'
 import { v4 as uuidv4 } from 'uuid'
 
-import { authRouter, rootRouter } from '../../routes'
+import { authRouter, rootRouter } from '../../router'
 import { redisClient } from '../redis/usecase'
 import config from '../../config'
 
@@ -12,6 +12,7 @@ const RedisStore = connectRedis(session)
 const expressLoader = async ({ app }: { app: express.Express }) => {
   app.use(express.json())
   app.use(express.urlencoded({ extended: false }))
+
   /**
    * redis를 store로 한 session 설정
    */
