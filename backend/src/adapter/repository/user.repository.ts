@@ -1,15 +1,20 @@
 import { ResultSetHeader, RowDataPacket } from 'mysql2/promise'
-import { v4 as uuidv4 } from 'uuid'
+import { stringify as uuidStringify, v4 as uuidv4 } from 'uuid'
+
 import { getConnectionPool } from '../infra/mysql/usecase'
-import { User } from '../../domain/user.model'
 import { parseUuidToBinary } from '../../utils'
 
-const UserModel = {
-  create: async (user: {
+import { User } from '../../domain/user/user.model'
+import { UserRepositoryImpl } from '../../domain/user/user.repository.impl'
+
+class UserRepository implements UserRepositoryImpl {
+  constructor() {}
+
+  public async create(user: {
     email: string
     password: string
     nickname: string
-  }): Promise<Partial<User>> => {
+  }): Promise<Partial<User>> {
     const connection = await getConnectionPool()
     const id = uuidv4()
 
@@ -27,8 +32,9 @@ const UserModel = {
     } finally {
       connection.release()
     }
-  },
-  getUserByEmail: async ({ email }: { email: string }) => {
+  }
+
+  public async getUserByEmail({ email }: { email: string }): Promise<User | null> {
     const connection = await getConnectionPool()
 
     try {
@@ -37,12 +43,20 @@ const UserModel = {
         email
       )
 
-      return rows
+      if (rows.length) {
+        return {
+          ...rows[0],
+          id: uuidStringify(rows[0].id),
+        } as User
+      } else {
+        return null
+      }
     } finally {
       connection.release()
     }
-  },
-  getUserByNickname: async ({ nickname }: { nickname: string }) => {
+  }
+
+  public async getUserByNickname({ nickname }: { nickname: string }): Promise<User | null> {
     const connection = await getConnectionPool()
 
     try {
@@ -51,11 +65,18 @@ const UserModel = {
         nickname
       )
 
-      return rows
+      if (rows.length) {
+        return {
+          ...rows[0],
+          id: uuidStringify(rows[0].id),
+        } as User
+      } else {
+        return null
+      }
     } finally {
       connection.release()
     }
-  },
+  }
 }
 
-export default UserModel
+export default UserRepository
