@@ -1,18 +1,12 @@
-import { getConnectionPool } from './usecase'
-import { CreateUserTable, DropUserTable } from './initQuery'
+import dataSource from './dataSource'
 
 const mysqlLoader = async () => {
-  const connection = await getConnectionPool()
-
-  await connection.query(
-    'CREATE DATABASE IF NOT EXISTS dev_wiki_db default CHARACTER SET UTF8;'
-  )
-  await connection.query('USE dev_wiki_db;')
-
-  await connection.query(DropUserTable)
-  await connection.query(CreateUserTable)
-
-  connection.release()
+  dataSource
+    .initialize()
+    .then(() => {
+      console.log('typeorm app data source is ready')
+    })
+    .catch((error) => console.error(error))
 }
 
 export default mysqlLoader

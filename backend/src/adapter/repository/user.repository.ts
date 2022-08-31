@@ -1,81 +1,34 @@
-import { ResultSetHeader, RowDataPacket } from 'mysql2/promise'
-import { stringify as uuidStringify, v4 as uuidv4 } from 'uuid'
-
-import { getConnectionPool } from '../infra/mysql/usecase'
-import { parseUuidToBinary } from '../../utils'
-
+import dataSource from '../infra/mysql/dataSource'
 import { User } from '../../domain/user/user.model'
-import { UserRepositoryImpl } from '../../domain/user/user.repository.impl'
+import { IUserRepository } from '../../domain/user/user.repository.interface'
 
-class UserRepository implements UserRepositoryImpl {
+class UserRepository implements IUserRepository {
   constructor() {}
 
-  public async create(user: {
+  public async create({
+    email,
+    password,
+    nickname,
+  }: {
     email: string
     password: string
     nickname: string
-  }): Promise<Partial<User>> {
-    const connection = await getConnectionPool()
-    const id = uuidv4()
+  }) {
+    const user = new User({
+      email,
+      password,
+      nickname,
+    })
 
-    try {
-      await connection.query<ResultSetHeader>(
-        'INSERT INTO user (id, email, password, nickname, is_verificated) VALUES (?,?,?,?,?)',
-        [parseUuidToBinary(id), user.email, user.password, user.nickname, false]
-      )
-
-      return {
-        id,
-        email: user.email,
-        nickname: user.nickname,
-      }
-    } finally {
-      connection.release()
-    }
+    return await dataSource.manager.save(user)
   }
 
-  public async getUserByEmail({ email }: { email: string }): Promise<User | null> {
-    const connection = await getConnectionPool()
-
-    try {
-      const [rows] = await connection.query<RowDataPacket[]>(
-        'SELECT * FROM user WHERE email = ?',
-        email
-      )
-
-      if (rows.length) {
-        return {
-          ...rows[0],
-          id: uuidStringify(rows[0].id),
-        } as User
-      } else {
-        return null
-      }
-    } finally {
-      connection.release()
-    }
+  public async findOneByEmail({ email }: { email: string }) {
+    return await dataSource.getRepository(User).findOneBy({ email })
   }
 
-  public async getUserByNickname({ nickname }: { nickname: string }): Promise<User | null> {
-    const connection = await getConnectionPool()
-
-    try {
-      const [rows] = await connection.query<RowDataPacket[]>(
-        'SELECT id, nickname FROM user WHERE nickname = ?',
-        nickname
-      )
-
-      if (rows.length) {
-        return {
-          ...rows[0],
-          id: uuidStringify(rows[0].id),
-        } as User
-      } else {
-        return null
-      }
-    } finally {
-      connection.release()
-    }
+  public async findOneByNickname({ nickname }: { nickname: string }) {
+    return await dataSource.getRepository(User).findOneBy({ nickname })
   }
 }
 

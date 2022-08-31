@@ -5,7 +5,7 @@ const authService = {
   signup: async (user: { email: string; password: string; nickname: string }) => {
     const userRepository = new UserRepository()
 
-    const duplicateEmailUsers = await userRepository.getUserByEmail({
+    const duplicateEmailUsers = await userRepository.findOneByEmail({
       email: user.email,
     })
 
@@ -13,21 +13,20 @@ const authService = {
       throw new CustomError(409, 'already exist same email user')
     }
 
-    const duplicateNicknameUsers = await userRepository.getUserByNickname({
+    const duplicateNicknameUsers = await userRepository.findOneByNickname({
       nickname: user.nickname,
     })
     if (duplicateNicknameUsers) {
       throw new CustomError(409, 'already exist same nickname user')
     }
 
-    const createdUser = await userRepository.create(user)
-    return createdUser
+    return await userRepository.create(user)
   },
 
   login: async ({ email, password }: { email: string; password: string }) => {
     const userRepository = new UserRepository()
 
-    const user = await userRepository.getUserByEmail({
+    const user = await userRepository.findOneByEmail({
       email,
     })
 
