@@ -1,32 +1,73 @@
-import UserRepository from '../../adapter/repository/user.repository'
 import { CustomError } from '../../utils'
+import { UserRepository } from '../../domain/user/user.repository'
+import { User } from '../../domain/user/user.entity'
+import UuidService from '../../domain/uuidService'
+import PasswordService from '../../domain/passwordService'
 
-const authService = {
-  signup: async (user: { email: string; password: string; nickname: string }) => {
-    const userRepository = new UserRepository()
+class AuthService {
+  private userRepository: UserRepository
+  private uuidService: UuidService
+  private passwordService: PasswordService
 
-    const duplicateEmailUsers = await userRepository.findOneByEmail({
-      email: user.email,
+  constructor({
+    userRepository,
+    uuidService,
+    passwordService,
+  }: {
+    userRepository: UserRepository
+    uuidService: UuidService
+    passwordService: PasswordService
+  }) {
+    this.userRepository = userRepository
+    this.uuidService = uuidService
+    this.passwordService = passwordService
+  }
+
+  public async findDuplicateEmailUser({ email }: { email: string }) {
+    return await this.userRepository.findOneBy({
+      email,
+    })
+  }
+
+  public async findDuplicateNicknameUser({ nickname }: { nickname: string }) {
+    return await this.userRepository.findOneBy({
+      nickname,
+    })
+  }
+
+  public async signup({
+    email,
+    password,
+    nickname,
+  }: {
+    email: string
+    password: string
+    nickname: string
+  }) {
+    const duplicateEmailUser = await this.findDuplicateEmailUser({
+      email,
     })
 
-    if (duplicateEmailUsers) {
+    if (duplicateEmailUser) {
       throw new CustomError(409, 'already exist same email user')
     }
 
-    const duplicateNicknameUsers = await userRepository.findOneByNickname({
-      nickname: user.nickname,
+    const duplicateNicknameUsers = await this.findDuplicateNicknameUser({
+      nickname,
     })
     if (duplicateNicknameUsers) {
       throw new CustomError(409, 'already exist same nickname user')
     }
 
-    return await userRepository.create(user)
-  },
+    const userId = this.uuidService.generateUuid()
+    const hashedPassword = this.passwordService.encryptPassword(password)
+    const user = new User({ id: userId, email, password: hashedPassword, nickname })
 
-  login: async ({ email, password }: { email: string; password: string }) => {
-    const userRepository = new UserRepository()
+    return await this.userRepository.create(user)
+  }
 
-    const user = await userRepository.findOneByEmail({
+  public async login({ email, password }: { email: string; password: string }) {
+    const user = await this.userRepository.findOneBy({
       email,
     })
 
@@ -34,8 +75,7 @@ const authService = {
       throw new CustomError(404, 'not exist user with matching email')
     }
 
-    // TODO: password 복호화
-    if (user.password !== password) {
+    if (!user.checkIsMatchPassword(password)) {
       throw new CustomError(404, "doesn't not match password")
     }
 
@@ -44,7 +84,7 @@ const authService = {
       email: user.email,
       nickname: user.nickname,
     }
-  },
+  }
 }
 
-export default authService
+export default AuthService

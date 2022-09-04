@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
-import { parseUuidToBinary } from '../../utils'
-import { stringify as uuidStringify, v4 as uuidv4 } from 'uuid'
+import uuidService from '../uuidService'
+import Password from '../passwordService'
+import PasswordService from '../passwordService'
 
 @Entity({ database: 'dev_wiki_db', name: 'user' })
 export class User {
@@ -9,9 +10,8 @@ export class User {
     length: 20,
     unique: true,
     transformer: {
-      // TODO: 구현 기술이 드러나지 않도록 응집화할 것
-      from: (value: Buffer) => uuidStringify(value),
-      to: (value: string) => parseUuidToBinary(value),
+      from: (value: Buffer) => new uuidService().parseBufferToString(value),
+      to: (value: string) => new uuidService().parseStringToBuffer(value),
     },
   })
   id: string
@@ -49,22 +49,30 @@ export class User {
 
   constructor(
     {
+      id,
       email,
       password,
       nickname,
     }: {
+      id: string
       email: string
       password: string
       nickname: string
     } = {
+      id: '',
       email: '',
       password: '',
       nickname: '',
     }
   ) {
-    this.id = uuidv4()
+    this.id = id
     this.email = email
     this.password = password
     this.nickname = nickname
+  }
+
+  public checkIsMatchPassword(password: string): boolean {
+    const passwordService = new PasswordService()
+    return passwordService.comparePassword(password, this.password)
   }
 }
