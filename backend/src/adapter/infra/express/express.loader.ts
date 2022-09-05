@@ -2,6 +2,7 @@ import express from 'express'
 import session from 'express-session'
 import connectRedis from 'connect-redis'
 import { v4 as uuidv4 } from 'uuid'
+import cors, { CorsOptions } from 'cors'
 
 import { authRouter, rootRouter } from '../../router'
 import { redisClient } from '../redis/usecase'
@@ -9,9 +10,21 @@ import config from '../../config'
 
 const RedisStore = connectRedis(session)
 
+const whitelist = ['http://localhost:3000']
+const corsOptions: CorsOptions = {
+  origin: function (origin, callback) {
+    if (origin && whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+}
+
 const expressLoader = async ({ app }: { app: express.Express }) => {
   app.use(express.json())
   app.use(express.urlencoded({ extended: false }))
+  app.use(cors(corsOptions))
 
   /**
    * redis를 store로 한 session 설정
