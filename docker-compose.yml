@@ -21,7 +21,7 @@ services:
     container_name: nodejs-backend
     build:
       context: ./backend
-      dockerfile: ./Dockerfile.backend
+      dockerfile: Dockerfile.backend
     ports:
       - 5001:5001
     volumes:
@@ -30,3 +30,15 @@ services:
     depends_on:
       - mysql
       - redis
+
+  frontend:
+      container_name: react-frontend
+      build:
+        context: ./frontend
+        dockerfile: Dockerfile.frontend
+      ports:
+        - 3000:3000
+      volumes:
+        - ./frontend:/usr/src/app/frontend
+        - /usr/src/app/frontend/node_modules
+      stdin_open: true
