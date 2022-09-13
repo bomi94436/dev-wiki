@@ -50,26 +50,6 @@ module.exports = {
           limit: 10000,
         },
       },
-      {
-        test: /\.less$/i,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' },
-          {
-            loader: 'less-loader',
-            options: {
-              // antd customize theme config
-              lessOptions: {
-                modifyVars: {
-                  'primary-color': '#222324',
-                  'border-radius-base': '0.7rem',
-                },
-                javascriptEnabled: true,
-              },
-            },
-          },
-        ],
-      },
     ],
   },
   plugins: [
@@ -78,7 +58,9 @@ module.exports = {
     }),
   ],
   devServer: {
+    historyApiFallback: true,
     host: '0.0.0.0',
     port: 3000,
+    hot: true,
   },
 }

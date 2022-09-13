@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-h1 {
-  color: green;
+* {
+  box-sizing: border-box;
 }

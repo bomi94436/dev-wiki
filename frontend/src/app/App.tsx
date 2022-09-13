@@ -1,18 +1,20 @@
 import React from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import './App.less'
 
-import Signup from '@/auth/Signup'
+import PageRouter from '@/global/router'
+import { ThemeProvider } from '@mui/material'
+import theme from './theme'
 
 const queryClient = new QueryClient()
 
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="w-screen h-screen">
-        {/* TODO: router 설정 */}
-        <Signup />
-      </div>
+      <ThemeProvider theme={theme}>
+        <div className="w-screen h-screen">
+          <PageRouter />
+        </div>
+      </ThemeProvider>
     </QueryClientProvider>
   )
 }

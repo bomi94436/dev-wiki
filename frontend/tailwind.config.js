@@ -5,8 +5,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  // tailwindcss + antd config
-  corePlugins: {
-    preflight: false,
-  },
 }
