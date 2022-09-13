@@ -14,3 +14,9 @@
 
 - `Medis`: redis GUI
 - `MySQLWorkbench`: mysql GUI
+
+### 서버 실행
+
+```
+docker-compose up --build
+```
