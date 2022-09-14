@@ -1,5 +1,5 @@
 import express from 'express'
-import { asyncMiddleware } from '../../utils'
+import { asyncMiddleware } from '../../global/utils'
 import authValidator from '../middleware/vaildator/auth.validator'
 import AuthController from '../controller/auth.controller'
 

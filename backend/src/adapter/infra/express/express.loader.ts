@@ -7,6 +7,7 @@ import cors, { CorsOptions } from 'cors'
 import { authRouter, rootRouter } from '../../router'
 import { redisClient } from '../redis/usecase'
 import config from '../../config'
+import { SESSION_KEY } from '../../../global/constant'
 
 const RedisStore = connectRedis(session)
 
@@ -36,11 +37,12 @@ const expressLoader = async ({ app }: { app: express.Express }) => {
       saveUninitialized: false,
       secret: config.redis.secretKey,
       resave: false,
+      name: SESSION_KEY,
       genid: () => uuidv4(),
       cookie: {
-        secure: false, // if true only transmit cookie over https
-        httpOnly: false, // if true prevent client side JS from reading the cookie
-        maxAge: 1000 * 60 * 10, // session max age in miliseconds
+        secure: false,
+        httpOnly: false,
+        maxAge: 1000 * 60 * 60,
       },
     })
   )

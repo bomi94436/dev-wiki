@@ -1,4 +1,4 @@
-import { CustomError } from '../../utils'
+import { CustomError } from '../../global/utils'
 import { UserRepository } from '../../domain/user/user.repository'
 import { User } from '../../domain/user/user.entity'
 import UuidService from '../../domain/uuidService'

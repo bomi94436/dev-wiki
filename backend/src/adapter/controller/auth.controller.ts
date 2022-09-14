@@ -3,6 +3,7 @@ import AuthService from '../../application/services/auth.service'
 import UserRepositoryImpl from '../repository/user.repository.impl'
 import UuidService from '../../domain/uuidService'
 import PasswordService from '../../domain/passwordService'
+import { SESSION_KEY } from '../../global/constant'
 
 class AuthController {
   authService: AuthService
@@ -26,7 +27,6 @@ class AuthController {
   public async login(req: Request, res: Response, next: NextFunction) {
     const user = await this.authService.login(req.body)
 
-    // TODO: 이미 세션이 있다면 ?
     req.session.userid = user.id
 
     res.status(200).json({
@@ -39,9 +39,9 @@ class AuthController {
     if (req.session.userid) {
       req.session.destroy(console.error)
 
+      res.clearCookie(SESSION_KEY)
       res.status(200).json({
         message: 'success logout',
-        // sid: req.sessionID,
       })
     } else {
       res.status(404).json({
