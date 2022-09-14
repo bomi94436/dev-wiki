@@ -29,6 +29,8 @@ import {
 import AppBar from './components/AppBar'
 import Drawer from './components/Drawer'
 import DrawerHeader from './components/DrawerHeader'
+import API from '@/global/api'
+import { useMutation } from 'react-query'
 
 const menuId = 'primary-search-account-menu'
 
@@ -54,6 +56,11 @@ const PageLayout = () => {
   const handleMenuClose = () => {
     setAnchorEl(null)
   }
+  const { mutate: callLogout } = useMutation(() => API.post('/auth/logout'), {
+    onSuccess: () => {
+      navigate('/login')
+    },
+  })
 
   const renderMenu = (
     <Menu
@@ -79,6 +86,16 @@ const PageLayout = () => {
       >
         로그인
       </MenuItem>
+
+      <MenuItem
+        onClick={() => {
+          callLogout()
+          setAnchorEl(null)
+        }}
+      >
+        로그아웃
+      </MenuItem>
+
       <MenuItem
         onClick={() => {
           navigate('/signup')

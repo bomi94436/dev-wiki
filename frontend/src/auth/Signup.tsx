@@ -61,20 +61,23 @@ const Signup = () => {
     }
   )
 
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = useCallback((e) => {
-    e.preventDefault()
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = useCallback(
+    (e) => {
+      e.preventDefault()
 
-    if (inputData.password !== inputData.passwordConfirm) {
-      setErrorMessage('비밀번호가 일치하지 않습니다.')
-      return
-    }
+      if (inputData.password !== inputData.passwordConfirm) {
+        setErrorMessage('비밀번호가 일치하지 않습니다.')
+        return
+      }
 
-    callSignup({
-      email: inputData.email,
-      password: inputData.password,
-      nickname: inputData.nickname,
-    })
-  }, [])
+      callSignup({
+        email: inputData.email,
+        password: inputData.password,
+        nickname: inputData.nickname,
+      })
+    },
+    [inputData]
+  )
 
   return (
     <div className="w-full h-full flex justify-center items-center">

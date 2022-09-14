@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const API = axios.create({
   baseURL: 'http://localhost:5001',
+  withCredentials: true,
 })
 
 // 요청 인터셉터 추가하기
