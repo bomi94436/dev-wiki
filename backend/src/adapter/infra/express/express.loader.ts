@@ -19,6 +19,7 @@ const corsOptions: CorsOptions = {
       callback(new Error('Not allowed by CORS'))
     }
   },
+  credentials: true,
 }
 
 const expressLoader = async ({ app }: { app: express.Express }) => {
