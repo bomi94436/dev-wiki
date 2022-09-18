@@ -23,18 +23,6 @@ class AuthService {
     this.passwordService = passwordService
   }
 
-  public async findDuplicateEmailUser({ email }: { email: string }) {
-    return await this.userRepository.findOneBy({
-      email,
-    })
-  }
-
-  public async findDuplicateNicknameUser({ nickname }: { nickname: string }) {
-    return await this.userRepository.findOneBy({
-      nickname,
-    })
-  }
-
   public async signup({
     email,
     password,
@@ -44,7 +32,7 @@ class AuthService {
     password: string
     nickname: string
   }) {
-    const duplicateEmailUser = await this.findDuplicateEmailUser({
+    const duplicateEmailUser = await this.userRepository.findOneBy({
       email,
     })
 
@@ -52,7 +40,7 @@ class AuthService {
       throw new CustomError(409, 'already exist same email user')
     }
 
-    const duplicateNicknameUsers = await this.findDuplicateNicknameUser({
+    const duplicateNicknameUsers = await this.userRepository.findOneBy({
       nickname,
     })
     if (duplicateNicknameUsers) {
