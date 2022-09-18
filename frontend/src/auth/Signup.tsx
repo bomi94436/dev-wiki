@@ -2,11 +2,11 @@ import React, { useCallback, useState } from 'react'
 import { useMutation } from 'react-query'
 import { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { Button, Typography } from '@mui/material'
+import { Button, Link, Typography } from '@mui/material'
 
 import API from '@/global/api'
-import { useSnackbar } from '@/global/hook'
 import { Input, PasswordInput } from '@/global/ui'
+import useSnackbar from '@/global/hook/useSnackbar'
 
 const Signup = () => {
   const navigate = useNavigate()
@@ -85,9 +85,15 @@ const Signup = () => {
       <ErrorSnackbar />
 
       <div className="w-[350px] h-[50vh] flex flex-col justify-center">
-        <Typography variant="h5" gutterBottom className="!font-semibold">
-          회원가입
-        </Typography>
+        <div className="flex items-center justify-between">
+          <Typography variant="h5" gutterBottom className="!font-semibold">
+            회원가입
+          </Typography>
+
+          <Link className="hover:cursor-pointer" onClick={() => navigate('/login')}>
+            로그인 하러가기
+          </Link>
+        </div>
 
         <form onSubmit={onSubmit} className="flex flex-col gap-5 w-full">
           <div className="flex w-full gap-3">

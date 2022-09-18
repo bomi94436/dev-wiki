@@ -2,11 +2,15 @@ import React, { useCallback, useState } from 'react'
 import { useMutation } from 'react-query'
 import API from '@/global/api'
 import { AxiosError } from 'axios'
-import { Button, Typography } from '@mui/material'
+import { Button, Link, Typography } from '@mui/material'
 
 import { Input, PasswordInput } from '@/global/ui'
+import { useUserInfo } from '@/global/hook'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const navigate = useNavigate()
+  const { refetch } = useUserInfo()
   const [inputData, setInputData] = useState<{
     email: string
     password: string
@@ -30,7 +34,8 @@ const Login = () => {
       }),
     {
       onSuccess: () => {
-        // TODO: redirect home
+        refetch()
+        navigate('/')
       },
       onError: (error) => {
         const err = error as AxiosError
@@ -49,9 +54,15 @@ const Login = () => {
   return (
     <div className="w-full h-full flex justify-center items-center">
       <div className="w-[350px] h-[50vh] flex flex-col justify-center">
-        <Typography variant="h5" gutterBottom className="!font-semibold">
-          로그인
-        </Typography>
+        <div className="flex items-center justify-between">
+          <Typography variant="h5" gutterBottom className="!font-semibold">
+            로그인
+          </Typography>
+
+          <Link className="hover:cursor-pointer" onClick={() => navigate('/signup')}>
+            회원가입 하러가기
+          </Link>
+        </div>
 
         <form className="flex flex-col gap-5 w-full" onSubmit={onSubmit}>
           <Input
