@@ -31,11 +31,17 @@ import Drawer from './components/Drawer'
 import DrawerHeader from './components/DrawerHeader'
 import API from '@/global/api'
 import { useMutation } from 'react-query'
+import { useUserInfo } from '@/global/hook'
 
 const menuId = 'primary-search-account-menu'
 
-const PageLayout = () => {
+interface PageLayoutProps {
+  children: JSX.Element
+}
+
+const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
   const navigate = useNavigate()
+  const { refetch } = useUserInfo()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const theme = useTheme()
@@ -58,6 +64,7 @@ const PageLayout = () => {
   }
   const { mutate: callLogout } = useMutation(() => API.post('/auth/logout'), {
     onSuccess: () => {
+      refetch()
       navigate('/login')
     },
   })
@@ -80,29 +87,11 @@ const PageLayout = () => {
     >
       <MenuItem
         onClick={() => {
-          navigate('/login')
-          setAnchorEl(null)
-        }}
-      >
-        로그인
-      </MenuItem>
-
-      <MenuItem
-        onClick={() => {
           callLogout()
           setAnchorEl(null)
         }}
       >
         로그아웃
-      </MenuItem>
-
-      <MenuItem
-        onClick={() => {
-          navigate('/signup')
-          setAnchorEl(null)
-        }}
-      >
-        회원가입
       </MenuItem>
     </Menu>
   )
@@ -110,7 +99,7 @@ const PageLayout = () => {
   return (
     <Box className="h-full" sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar open={open}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -211,7 +200,8 @@ const PageLayout = () => {
       </Drawer>
 
       <Box component="main" className="!p-0" sx={{ flexGrow: 1, p: 3 }}>
-        <Outlet />
+        <Toolbar />
+        {children}
       </Box>
     </Box>
   )

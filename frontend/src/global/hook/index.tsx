@@ -1,26 +1,25 @@
-import React, { useCallback, useState } from 'react'
-import { Alert, Snackbar } from '@mui/material'
+import { useState } from 'react'
+import { useQuery } from 'react-query'
+import API from '../api'
+import { User } from '../entity'
 
-export const useSnackbar = ({ type }: { type: 'success' | 'info' | 'warning' | 'error' }) => {
-  const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null)
+export const useUserInfo = () => {
+  const [data, setData] = useState<User | null>(null)
 
-  const CustomSnackbar = useCallback(
-    (): JSX.Element => (
-      <Snackbar
-        open={!!snackbarMessage}
-        autoHideDuration={6000}
-        onClose={() => setSnackbarMessage(null)}
-      >
-        <Alert onClose={() => setSnackbarMessage(null)} severity={type}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
-    ),
-    [snackbarMessage]
-  )
+  const { refetch, isFetching } = useQuery(['me'], () => API.get<{ user: User }>('/users/me'), {
+    staleTime: 1000 * 60,
+    retry: 0,
+    onSuccess: (res) => {
+      setData(res?.data?.user || null)
+    },
+    onError: () => {
+      setData(null)
+    },
+  })
 
   return {
-    setSnackbarMessage,
-    CustomSnackbar,
+    user: data,
+    isFetching,
+    refetch,
   }
 }
