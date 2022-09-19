@@ -1,5 +1,10 @@
 {
+  "ts-node": {
+    "files": true
+  },
+  "files": ["src/global/global.d.ts"],
   "compilerOptions": {
+    "experimentalDecorators": true,
     "target": "es6",
     "module": "commonjs",
     "outDir": "./dist",
@@ -7,6 +12,10 @@
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "jsx": "react"
-  }
+    "jsx": "react",
+    "strictPropertyInitialization": false,
+    "emitDecoratorMetadata": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

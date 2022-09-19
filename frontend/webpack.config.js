@@ -1,7 +1,7 @@
 // webpack.config.js
 
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   name: 'react-webpack-setting',
@@ -11,7 +11,7 @@ module.exports = {
     extensions: ['.js', '.jsx', '.ts', '.tsx', 'css'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
-      '@asset': path.resolve(__dirname, 'src/asset'),
+      '@public': path.resolve(__dirname, 'public'),
     },
   },
   entry: {
@@ -40,7 +40,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
       {
         test: /\.(ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -58,7 +58,9 @@ module.exports = {
     }),
   ],
   devServer: {
-    host: 'localhost',
+    historyApiFallback: true,
+    host: '0.0.0.0',
     port: 3000,
+    hot: true,
   },
-};
+}
