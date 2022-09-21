@@ -5,11 +5,15 @@ import PasswordService from '../passwordService'
 @Entity({ database: 'dev_wiki_db', name: 'user' })
 export class User {
   @PrimaryColumn({
-    type: 'binary',
-    length: 17,
+    name: 'user_id',
+    type: 'varbinary',
+    length: 16,
     unique: true,
     transformer: {
-      from: (value: Buffer) => new uuidService().parseBufferToString(value),
+      from: (value: Buffer) => {
+        if (typeof value === 'string') return value
+        else return new uuidService().parseBufferToString(value)
+      },
       to: (value: string) => new uuidService().parseStringToBuffer(value),
     },
   })

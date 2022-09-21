@@ -9,7 +9,7 @@ class UserService {
   }
 
   public async findme({ id }: { id: string }) {
-    const user = await this.userRepository.findOneById({
+    const user = await this.userRepository.findOneBy({
       id,
     })
 

@@ -1,6 +1,6 @@
 import express from 'express'
 import { asyncMiddleware } from '../../global/utils'
-import UserController from '../controller/user.controller'
+import { UserController } from '../controller'
 
 const userRouter = express.Router()
 const userController = new UserController()
