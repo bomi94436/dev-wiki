@@ -44,7 +44,7 @@ const Signup = () => {
     {
       onSuccess: () => {
         setSuccessMessage('회원가입이 완료되었습니다.')
-        navigate('/login')
+        navigate('/auth/login')
       },
       onError: (error) => {
         const err = error as AxiosError
@@ -90,7 +90,7 @@ const Signup = () => {
             회원가입
           </Typography>
 
-          <Link className="hover:cursor-pointer" onClick={() => navigate('/login')}>
+          <Link className="hover:cursor-pointer" onClick={() => navigate('/auth/login')}>
             로그인 하러가기
           </Link>
         </div>

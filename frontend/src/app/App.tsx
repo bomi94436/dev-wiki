@@ -1,7 +1,7 @@
 import React from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
-import PageRouter from '@/global/router'
+import PageRouter from './router'
 import { ThemeProvider } from '@mui/material'
 import theme from './theme'
 
