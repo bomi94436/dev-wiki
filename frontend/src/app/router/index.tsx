@@ -43,8 +43,7 @@ const PageRouter = () => {
             <Route
               path="write"
               element={
-                // <RouteOption isAuthenticated>
-                <RouteOption>
+                <RouteOption isAuthenticated>
                   <ArticleEditor />
                 </RouteOption>
               }

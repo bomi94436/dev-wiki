@@ -1,3 +1,4 @@
+import { ColumnOptions, PrimaryColumnOptions } from 'typeorm'
 import { parse as uuidParse, stringify as uuidStringify, v4 as uuidv4 } from 'uuid'
 
 class UuidService {
@@ -7,12 +8,30 @@ class UuidService {
     return uuidv4()
   }
 
-  public parseBufferToString(uuid: Buffer): string {
-    return uuidStringify(uuid)
+  public parseBufferToString(uuid: Buffer | string): string {
+    if (typeof uuid === 'string') return uuid
+    else return uuidStringify(uuid)
   }
 
   public parseStringToBuffer(uuid: string): Buffer {
     return Buffer.from(Object.values(uuidParse(uuid)))
+  }
+
+  /**
+   * @returns type, length, transformer가 정의된 typeorm column option
+   */
+  public uuidColumnOptions(option: PrimaryColumnOptions): PrimaryColumnOptions {
+    const uuidSerivce = new UuidService()
+
+    return {
+      ...option,
+      type: 'varbinary',
+      length: 16,
+      transformer: {
+        from: uuidSerivce.parseBufferToString,
+        to: uuidSerivce.parseStringToBuffer,
+      },
+    }
   }
 }
 

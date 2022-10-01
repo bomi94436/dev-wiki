@@ -6,7 +6,7 @@ class UserRepositoryImpl implements UserRepository {
   constructor() {}
 
   public async create(user: User) {
-    return await dataSource.manager.save(user)
+    return await dataSource.getRepository(User).save(user)
   }
 
   public async findOneBy(user: Pick<User, 'email'> | Pick<User, 'nickname'> | Pick<User, 'id'>) {

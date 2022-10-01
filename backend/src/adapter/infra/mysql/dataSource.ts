@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm'
 import config from '../../config'
 import { User } from '../../../domain/user/user.entity'
+import { Article } from '../../../domain/article/article.entity'
 
 const dataSource = new DataSource({
   type: 'mysql',
@@ -12,7 +13,7 @@ const dataSource = new DataSource({
   timezone: '+09:00',
   synchronize: true,
   logging: true,
-  entities: [User],
+  entities: [User, Article],
   subscribers: [],
   migrations: [],
 })

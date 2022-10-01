@@ -9,6 +9,7 @@ import { redisClient } from '../redis/usecase'
 import config from '../../config'
 import { SESSION_KEY } from '../../../global/constant'
 import userRouter from '../../router/user.router'
+import articleRouter from '../../router/article.router'
 
 const RedisStore = connectRedis(session)
 
@@ -51,6 +52,7 @@ const expressLoader = async ({ app }: { app: express.Express }) => {
   app.use('/', rootRouter)
   app.use('/auth', authRouter)
   app.use('/users', userRouter)
+  app.use('/article', articleRouter)
 }
 
 export default expressLoader

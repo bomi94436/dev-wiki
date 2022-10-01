@@ -1,22 +1,15 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
-import uuidService from '../uuidService'
+import UuidService from '../uuidService'
 import PasswordService from '../passwordService'
 
 @Entity({ database: 'dev_wiki_db', name: 'user' })
 export class User {
-  @PrimaryColumn({
-    name: 'user_id',
-    type: 'varbinary',
-    length: 16,
-    unique: true,
-    transformer: {
-      from: (value: Buffer) => {
-        if (typeof value === 'string') return value
-        else return new uuidService().parseBufferToString(value)
-      },
-      to: (value: string) => new uuidService().parseStringToBuffer(value),
-    },
-  })
+  @PrimaryColumn(
+    new UuidService().uuidColumnOptions({
+      name: 'user_id',
+      unique: true,
+    })
+  )
   id: string
 
   @Column({
