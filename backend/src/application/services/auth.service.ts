@@ -2,25 +2,20 @@ import { CustomError } from '../../global/utils'
 import { UserRepository } from '../../domain/user/user.repository'
 import { User } from '../../domain/user/user.entity'
 import UuidService from '../../domain/uuidService'
-import PasswordService from '../../domain/passwordService'
 
 class AuthService {
   private userRepository: UserRepository
   private uuidService: UuidService
-  private passwordService: PasswordService
 
   constructor({
     userRepository,
     uuidService,
-    passwordService,
   }: {
     userRepository: UserRepository
     uuidService: UuidService
-    passwordService: PasswordService
   }) {
     this.userRepository = userRepository
     this.uuidService = uuidService
-    this.passwordService = passwordService
   }
 
   public async signup({
@@ -48,8 +43,7 @@ class AuthService {
     }
 
     const userId = this.uuidService.generateUuid()
-    const hashedPassword = this.passwordService.encryptPassword(password)
-    const user = new User({ id: userId, email, password: hashedPassword, nickname })
+    const user = new User({ id: userId, email, password, nickname })
 
     return await this.userRepository.create(user)
   }

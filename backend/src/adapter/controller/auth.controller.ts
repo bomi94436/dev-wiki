@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express'
 import AuthService from '../../application/services/auth.service'
 import UserRepositoryImpl from '../repository/user.repository.impl'
 import UuidService from '../../domain/uuidService'
-import PasswordService from '../../domain/passwordService'
 import { SESSION_KEY } from '../../global/constant'
 
 class AuthController {
@@ -11,8 +10,7 @@ class AuthController {
   constructor() {
     const userRepository = new UserRepositoryImpl()
     const uuidService = new UuidService()
-    const passwordService = new PasswordService()
-    this.authService = new AuthService({ userRepository, uuidService, passwordService })
+    this.authService = new AuthService({ userRepository, uuidService })
   }
 
   public async signup(req: Request, res: Response, next: NextFunction) {
