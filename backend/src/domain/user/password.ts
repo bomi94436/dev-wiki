@@ -5,6 +5,7 @@ const saltRounds = 10
 export class Password {
   @Column({
     length: 200,
+    name: 'password',
   })
   value: string
 

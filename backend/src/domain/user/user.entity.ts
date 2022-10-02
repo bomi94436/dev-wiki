@@ -18,7 +18,9 @@ export class User {
   })
   email: string
 
-  @Column(() => Password)
+  @Column(() => Password, {
+    prefix: false,
+  })
   password: Password
 
   @Column({
