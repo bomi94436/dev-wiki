@@ -14,7 +14,7 @@ class UserService {
     })
 
     if (!user) {
-      throw new CustomError(404, 'not found user')
+      throw new CustomError(404, 'Not found user')
     }
 
     return {
