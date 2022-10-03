@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button } from '@mui/material'
 import MDEditor from '@uiw/react-md-editor'
 import API from '@/global/api'
+import { AxiosError } from 'axios'
 
 const insertToTextArea = (intsertString: string) => {
   const textarea = document.querySelector('textarea')
@@ -41,13 +42,33 @@ const onImagePasted = async (
 
   await Promise.all(
     files.map(async (file) => {
-      // TODO: image upload
-      const url = await API.post('/upload', file).catch(() => 'test_url')
-      const insertedMarkdown = insertToTextArea(`![](${url})`)
-      if (!insertedMarkdown) {
+      const formdata = new FormData()
+      formdata.append('image', file)
+
+      try {
+        const response = await API.post<{
+          file: {
+            filename: string
+            mimetype: string
+            size: number
+            path: string
+          }
+        }>('/upload', formdata)
+
+        const insertedMarkdown = insertToTextArea(`![](${response.data.file.path})`)
+        if (!insertedMarkdown) {
+          return
+        }
+        setMarkdown(insertedMarkdown)
+      } catch (err) {
+        const error = err as AxiosError
+        if (error.response.status === 422) {
+          alert('파일 업로드에 실패하였습니다. 파일 형식은 jpg, jpeg, png만 가능합니다.')
+        } else {
+          alert('파일 업로드에 실패하였습니다.')
+        }
         return
       }
-      setMarkdown(insertedMarkdown)
     })
   )
 }
@@ -79,8 +100,10 @@ const ArticleEditor: React.FC = () => {
         onChange={setContent}
         height={400}
         onPaste={async (event) => {
-          event.preventDefault()
-          await onImagePasted(event.clipboardData, setContent)
+          if (event.clipboardData.files.length) {
+            event.preventDefault()
+            await onImagePasted(event.clipboardData, setContent)
+          }
         }}
         onDrop={async (event) => {
           event.preventDefault()

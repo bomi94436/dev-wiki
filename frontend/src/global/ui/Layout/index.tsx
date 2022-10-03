@@ -120,7 +120,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
             variant="h6"
             noWrap
             component="div"
-            className="!font-semibold grow cursor-pointer"
+            className="!font-semibold cursor-pointer !mr-auto"
             onClick={() => navigate('/')}
           >
             Dev Wiki
