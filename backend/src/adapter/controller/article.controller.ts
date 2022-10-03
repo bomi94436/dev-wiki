@@ -10,7 +10,7 @@ class ArticleController {
   }
 
   public async createArticle(req: Request, res: Response, next: NextFunction) {
-    const article = this.articleService.createArticle({
+    const article = await this.articleService.createArticle({
       ...req.body,
       writerId: req.session.userid,
     })
