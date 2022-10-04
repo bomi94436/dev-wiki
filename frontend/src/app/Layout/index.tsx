@@ -21,10 +21,9 @@ import {
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
-  MoveToInbox as InboxIcon,
-  Mail as MailIcon,
   AccountCircle as AccountCircle,
   Create as CreateIcon,
+  Description as DescriptionIcon,
 } from '@mui/icons-material'
 
 import AppBar from './components/AppBar'
@@ -156,59 +155,17 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
 
         <List>
           <DrawerItem text="아티클 쓰기" link="/article/write">
-            <CreateIcon />
+            <CreateIcon color="primary" />
           </DrawerItem>
 
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          <DrawerItem text="아티클 목록 조회" link="/article">
+            <DescriptionIcon color="primary" />
+          </DrawerItem>
         </List>
 
         <Divider />
 
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+        <List></List>
       </Drawer>
 
       <Box component="main" className="!p-0" sx={{ flexGrow: 1, p: 3 }}>

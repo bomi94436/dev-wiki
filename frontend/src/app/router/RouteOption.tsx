@@ -1,5 +1,5 @@
 import React from 'react'
-import { PageLayout } from '../../global/ui'
+import PageLayout from '../Layout'
 import AuthenticatedRoute from './AuthenticatedRoute'
 import UnauthenticatedRoute from './UnauthenticatedRoute'
 
