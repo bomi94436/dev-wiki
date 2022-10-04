@@ -4,6 +4,7 @@ import path from 'path'
 import express from 'express'
 import { STATIC_UPLOAD_FOLDER_PATH } from '../../global/constant'
 import { CustomError } from '../../global/utils'
+import { checkIsLoggedInUser } from '../middleware/checkAuthentification'
 
 const uploadsFolder = path.join(__dirname, '..', '..', '..', 'uploads')
 
@@ -35,7 +36,7 @@ const upload = multer({
 
 const uploadRouter = express.Router()
 
-uploadRouter.post('/', upload.single('image'), (req, res, next) => {
+uploadRouter.post('/', checkIsLoggedInUser, upload.single('image'), (req, res, next) => {
   if (req.file) {
     res.status(201).json({
       message: 'success upload file',

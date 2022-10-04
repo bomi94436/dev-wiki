@@ -21,8 +21,8 @@ class ArticleController {
     })
   }
 
-  public async getArticles(req: Request, res: Response, next: NextFunction) {
-    const articles = await this.articleService.getArticles()
+  public async getMyArticles(req: Request, res: Response, next: NextFunction) {
+    const articles = await this.articleService.getArticles() // TODO: get my article
 
     res.status(200).json({
       message: 'success get articles',
