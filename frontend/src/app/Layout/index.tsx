@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   Box,
   CssBaseline,
@@ -23,7 +23,7 @@ import {
   ChevronRight as ChevronRightIcon,
   AccountCircle as AccountCircle,
   Create as CreateIcon,
-  Description as DescriptionIcon,
+  ViewList as ViewListIcon,
 } from '@mui/icons-material'
 
 import AppBar from './components/AppBar'
@@ -158,8 +158,8 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
             <CreateIcon color="primary" />
           </DrawerItem>
 
-          <DrawerItem text="아티클 목록 조회" link="/article">
-            <DescriptionIcon color="primary" />
+          <DrawerItem text="아티클 조회" link="/article">
+            <ViewListIcon color="primary" />
           </DrawerItem>
         </List>
 
