@@ -1,11 +1,13 @@
 import React from 'react'
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material'
+import { Article } from '@/global/entity'
 
 interface ArticleProps {
   thumbnailUrl?: string
+  article: Article
 }
 
-const Article: React.FC<ArticleProps> = ({ thumbnailUrl }) => (
+const Article: React.FC<ArticleProps> = ({ thumbnailUrl, article }) => (
   <Card variant="outlined">
     <CardActionArea>
       <div className="w-full h-[300px]">
@@ -20,20 +22,20 @@ const Article: React.FC<ArticleProps> = ({ thumbnailUrl }) => (
 
             <CardContent className="h-1/2 w-full">
               <Typography gutterBottom variant="h5" component="div">
-                title
+                {article.title}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                contents
+                {article.content}
               </Typography>
             </CardContent>
           </>
         ) : (
           <CardContent className="h-full w-full">
             <Typography gutterBottom variant="h5" component="div">
-              title
+              {article.title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              contents
+              {article.content}
             </Typography>
           </CardContent>
         )}

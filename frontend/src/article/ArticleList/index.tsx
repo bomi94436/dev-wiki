@@ -4,8 +4,12 @@ import SearchIcon from '@mui/icons-material/Search'
 import thumbnail from '@/asset/hi.png'
 
 import Article from './Article'
+import { useQuery } from 'react-query'
+import { getArticle } from '@/global/api/funcs'
 
 const ArticleList: React.FC = () => {
+  const { data: articles, isLoading } = useQuery(['article'], getArticle)
+
   return (
     <div className="flex justify-center p-5">
       <div className="max-w-[1000px] w-full">
@@ -32,11 +36,12 @@ const ArticleList: React.FC = () => {
         <Divider className="!my-4" />
 
         <div className="grid grid-cols-3 gap-4 py-2">
-          {Array.from(Array(5)).map((_, index) => (
-            <React.Fragment key={`grid-item-${index}`}>
-              <Article thumbnailUrl={!index ? thumbnail : undefined} />
-            </React.Fragment>
-          ))}
+          {!isLoading &&
+            articles.map((article, index) => (
+              <React.Fragment key={`grid-item-${article.id}`}>
+                <Article thumbnailUrl={!index ? thumbnail : undefined} article={article} />
+              </React.Fragment>
+            ))}
         </div>
       </div>
     </div>
