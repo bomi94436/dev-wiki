@@ -1,21 +1,17 @@
 import React from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
 
 import PageRouter from './router'
-import { ThemeProvider } from '@mui/material'
-import theme from './theme'
-
-const queryClient = new QueryClient()
+import useSnackbar from '@/global/hook/useSnackbar'
 
 const App = () => {
+  const { CustomSnackbar } = useSnackbar()
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <div className="w-screen h-screen">
-          <PageRouter />
-        </div>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <div className="w-screen h-screen">
+      <CustomSnackbar />
+
+      <PageRouter />
+    </div>
   )
 }
 
