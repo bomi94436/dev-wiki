@@ -6,6 +6,7 @@ import Signup from '@/auth/Signup'
 import RouteOption from './RouteOption'
 import ArticleEditor from '@/article/ArticleEditor'
 import ArticleList from '@/article/ArticleList'
+import ArticleDetail from '@/article/ArticleDetail'
 
 const PageRouter = () => {
   return (
@@ -54,6 +55,14 @@ const PageRouter = () => {
               element={
                 <RouteOption isAuthenticated>
                   <ArticleEditor />
+                </RouteOption>
+              }
+            />
+            <Route
+              path=":id"
+              element={
+                <RouteOption isAuthenticated>
+                  <ArticleDetail />
                 </RouteOption>
               }
             />
