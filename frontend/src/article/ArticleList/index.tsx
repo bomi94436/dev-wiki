@@ -5,10 +5,10 @@ import thumbnail from '@/asset/hi.png'
 
 import Article from './Article'
 import { useQuery } from 'react-query'
-import { getArticle } from '@/global/api/funcs'
+import { getArticles } from '@/global/api/funcs'
 
 const ArticleList: React.FC = () => {
-  const { data: articles, isLoading } = useQuery(['article'], getArticle)
+  const { data: articles, isLoading } = useQuery(['articles'], getArticles)
 
   return (
     <div className="flex justify-center p-5">
