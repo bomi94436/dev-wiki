@@ -18,6 +18,10 @@ class ArticleService {
   public async getArticles() {
     return await this.articleRepository.getList()
   }
+
+  public async getArticle(id: number) {
+    return await this.articleRepository.getOne({ id })
+  }
 }
 
 export default ArticleService

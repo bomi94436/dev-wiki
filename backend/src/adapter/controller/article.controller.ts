@@ -29,6 +29,22 @@ class ArticleController {
       articles,
     })
   }
+
+  public async getArticle(req: Request, res: Response, next: NextFunction) {
+    const articleId = Number(req.params.articleId)
+    const article = await this.articleService.getArticle(articleId)
+
+    if (article) {
+      res.status(200).json({
+        message: 'success get article',
+        article,
+      })
+    } else {
+      res.status(404).json({
+        message: 'fail get article',
+      })
+    }
+  }
 }
 
 export default ArticleController

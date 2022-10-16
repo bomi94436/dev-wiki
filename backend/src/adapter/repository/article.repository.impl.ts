@@ -12,6 +12,12 @@ class ArticleRepositoryImpl implements ArticleRepository {
   public async getList(): Promise<Article[]> {
     return await dataSource.getRepository(Article).find()
   }
+
+  public async getOne({ id }: Article): Promise<Article | null> {
+    return await dataSource.getRepository(Article).findOneBy({
+      id,
+    })
+  }
 }
 
 export default ArticleRepositoryImpl

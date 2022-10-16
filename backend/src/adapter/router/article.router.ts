@@ -13,6 +13,13 @@ articleRouter.get(
   asyncMiddleware((req, res, next) => articleController.getMyArticles(req, res, next))
 )
 
+// TODO: validatte params articleId
+articleRouter.get(
+  '/:articleId',
+  checkIsLoggedInUser,
+  asyncMiddleware((req, res, next) => articleController.getArticle(req, res, next))
+)
+
 articleRouter.post(
   '/',
   checkIsLoggedInUser,

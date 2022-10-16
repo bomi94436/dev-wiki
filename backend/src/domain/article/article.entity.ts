@@ -6,6 +6,7 @@ import {
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm'
 import { User } from '../user/user.entity'
 import UuidService from '../uuidService'
@@ -23,6 +24,16 @@ export class Article {
   title: string
 
   @Column({
+    length: 2000,
+  })
+  thumbnail: string
+
+  @Column({
+    length: 150,
+  })
+  short_description: string
+
+  @Column({
     type: 'text',
   })
   content: string
@@ -30,14 +41,8 @@ export class Article {
   @CreateDateColumn()
   created_at: Date
 
-  @Column({ nullable: true })
-  next_article_id: number
-
-  @OneToOne(() => Article)
-  @JoinColumn({
-    name: 'next_article_id',
-  })
-  article: Article
+  @UpdateDateColumn()
+  updated_at: Date
 
   @Column(
     new UuidService().uuidColumnOptions({
