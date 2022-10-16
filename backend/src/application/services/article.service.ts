@@ -1,9 +1,13 @@
-import { FindManyOptions } from 'typeorm'
 import { Article } from '../../domain/article/article.entity'
 import { ArticleRepository } from '../../domain/article/article.repository'
+import { ArticleHistoryRepository } from '../../domain/article/articleHistory.repository'
+import { CustomError } from '../../global/utils'
 
 class ArticleService {
-  constructor(private articleRepository: ArticleRepository) {}
+  constructor(
+    private articleRepository: ArticleRepository,
+    private articleHistoryRepository: ArticleHistoryRepository
+  ) {}
 
   public async createArticle({
     title,
@@ -29,6 +33,19 @@ class ArticleService {
     articleId: number,
     data: Pick<Article, 'title' | 'thumbnail' | 'short_description' | 'content'>
   ) {
+    const article = await this.getArticle(articleId)
+
+    if (!article) {
+      throw new CustomError(404, 'Not found article')
+    }
+
+    await this.articleHistoryRepository.create({
+      title: article.title,
+      thumbnail: article.thumbnail,
+      short_description: article.short_description,
+      content: article.content,
+      article_id: articleId,
+    })
     return await this.articleRepository.updateOne(articleId, data)
   }
 }

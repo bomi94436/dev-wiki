@@ -6,7 +6,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { Article } from '../article/article.entity'
+import { Article } from './article.entity'
 
 @Entity({ database: 'dev_wiki_db', name: 'article_history' })
 export class ArticleHistory {

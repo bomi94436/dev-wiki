@@ -1,4 +1,3 @@
-import { FindManyOptions } from 'typeorm'
 import { Article } from './article.entity'
 
 export interface ArticleRepository {

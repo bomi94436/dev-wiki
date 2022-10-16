@@ -1,12 +1,14 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express'
 import ArticleService from '../../application/services/article.service'
 import ArticleRepositoryImpl from '../repository/article.repository.impl'
+import ArticleHistoryRepositoryImpl from '../repository/articleHistory.repository.impl'
 
 class ArticleController {
   private articleService: ArticleService
   constructor() {
     const articleRepository = new ArticleRepositoryImpl()
-    this.articleService = new ArticleService(articleRepository)
+    const articleHistoryRepository = new ArticleHistoryRepositoryImpl()
+    this.articleService = new ArticleService(articleRepository, articleHistoryRepository)
   }
 
   public async createArticle(req: Request, res: Response, next: NextFunction) {

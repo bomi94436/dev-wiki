@@ -1,7 +1,7 @@
 import dataSource from '../infra/mysql/dataSource'
 import { ArticleRepository } from '../../domain/article/article.repository'
 import { Article } from '../../domain/article/article.entity'
-import { FindManyOptions, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 
 class ArticleRepositoryImpl implements ArticleRepository {
   private repository: Repository<Article>
