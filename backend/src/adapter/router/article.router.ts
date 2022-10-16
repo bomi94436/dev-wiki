@@ -27,4 +27,11 @@ articleRouter.post(
   asyncMiddleware((req, res, next) => articleController.createArticle(req, res, next))
 )
 
+// TODO: validatte params articleId, body
+articleRouter.patch(
+  '/:articleId',
+  checkIsLoggedInUser,
+  asyncMiddleware((req, res, next) => articleController.updateArticle(req, res, next))
+)
+
 export default articleRouter

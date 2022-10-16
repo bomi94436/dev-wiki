@@ -22,10 +22,9 @@ class ArticleController {
   }
 
   public async getMyArticles(req: Request, res: Response, next: NextFunction) {
+    // TODO: pagination
     const articles = await this.articleService.getArticles({
-      where: {
-        writer_id: req.session.userid,
-      },
+      writer_id: req.session.userid,
     })
 
     res.status(200).json({
@@ -46,6 +45,23 @@ class ArticleController {
     } else {
       res.status(404).json({
         message: 'fail get article',
+      })
+    }
+  }
+
+  public updateArticle: RequestHandler = async (req, res, next) => {
+    const articleId = Number(req.params.articleId)
+
+    const article = await this.articleService.updateArticle(articleId, req.body)
+
+    if (article) {
+      res.status(200).json({
+        message: 'success update article',
+        article,
+      })
+    } else {
+      res.status(400).json({
+        message: 'fail update article',
       })
     }
   }
