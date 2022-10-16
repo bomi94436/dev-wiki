@@ -1,6 +1,7 @@
 import dataSource from '../infra/mysql/dataSource'
 import { ArticleRepository } from '../../domain/article/article.repository'
 import { Article } from '../../domain/article/article.entity'
+import { FindManyOptions } from 'typeorm'
 
 class ArticleRepositoryImpl implements ArticleRepository {
   constructor() {}
@@ -9,8 +10,8 @@ class ArticleRepositoryImpl implements ArticleRepository {
     return await dataSource.getRepository(Article).save(article)
   }
 
-  public async getList(): Promise<Article[]> {
-    return await dataSource.getRepository(Article).find()
+  public async getList(option?: FindManyOptions<Article>): Promise<Article[]> {
+    return await dataSource.getRepository(Article).find(option)
   }
 
   public async getOne({ id }: Article): Promise<Article | null> {

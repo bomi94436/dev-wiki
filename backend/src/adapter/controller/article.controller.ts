@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express'
+import { NextFunction, Request, RequestHandler, Response } from 'express'
 import ArticleService from '../../application/services/article.service'
 import ArticleRepositoryImpl from '../repository/article.repository.impl'
 
@@ -22,7 +22,11 @@ class ArticleController {
   }
 
   public async getMyArticles(req: Request, res: Response, next: NextFunction) {
-    const articles = await this.articleService.getArticles() // TODO: get my article
+    const articles = await this.articleService.getArticles({
+      where: {
+        writer_id: req.session.userid,
+      },
+    })
 
     res.status(200).json({
       message: 'success get articles',

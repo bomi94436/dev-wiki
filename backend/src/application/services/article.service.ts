@@ -1,3 +1,5 @@
+import { FindManyOptions } from 'typeorm'
+import { Article } from '../../domain/article/article.entity'
 import { ArticleRepository } from '../../domain/article/article.repository'
 
 class ArticleService {
@@ -15,8 +17,8 @@ class ArticleService {
     return await this.articleRepository.create({ title, content, writer_id: writerId })
   }
 
-  public async getArticles() {
-    return await this.articleRepository.getList()
+  public async getArticles(option?: FindManyOptions<Article>) {
+    return await this.articleRepository.getList(option)
   }
 
   public async getArticle(id: number) {
