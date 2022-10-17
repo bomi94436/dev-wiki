@@ -25,13 +25,15 @@ export class Article {
 
   @Column({
     length: 2000,
+    nullable: true,
   })
-  thumbnail: string
+  thumbnail?: string
 
   @Column({
     length: 150,
+    nullable: true,
   })
-  short_description: string
+  short_description?: string
 
   @Column({
     type: 'text',
@@ -56,4 +58,34 @@ export class Article {
     name: 'writer_id',
   })
   writer: User
+
+  constructor(
+    {
+      id,
+      title,
+      thumbnail,
+      short_description,
+      content,
+      writer_id,
+    }: {
+      title: string
+      content: string
+      id?: number
+      thumbnail?: string
+      short_description?: string
+      writer_id?: string
+    } = {
+      title: '',
+      content: '',
+    }
+  ) {
+    this.title = title
+    this.content = content
+
+    this.thumbnail = thumbnail
+    this.short_description = short_description
+
+    if (id) this.id = id
+    if (writer_id) this.writer_id = writer_id
+  }
 }

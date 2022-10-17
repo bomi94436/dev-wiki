@@ -22,13 +22,15 @@ export class ArticleHistory {
 
   @Column({
     length: 2000,
+    nullable: true,
   })
-  thumbnail: string
+  thumbnail?: string
 
   @Column({
     length: 150,
+    nullable: true,
   })
-  short_description: string
+  short_description?: string
 
   @Column({
     type: 'text',
@@ -38,7 +40,7 @@ export class ArticleHistory {
   @CreateDateColumn()
   created_at: Date
 
-  @Column({ name: 'article_id' })
+  @Column({ name: 'article_id', comment: '원본 아티클 id' })
   article_id: number
 
   @ManyToOne(() => Article)
@@ -46,4 +48,31 @@ export class ArticleHistory {
     name: 'article_id',
   })
   article: Article
+
+  constructor(
+    {
+      title,
+      thumbnail,
+      short_description,
+      content,
+      article_id,
+    }: {
+      title: string
+      content: string
+      thumbnail?: string
+      short_description?: string
+      article_id?: number
+    } = {
+      title: '',
+      content: '',
+    }
+  ) {
+    this.title = title
+    this.content = content
+
+    this.thumbnail = thumbnail
+    this.short_description = short_description
+
+    if (article_id) this.article_id = article_id
+  }
 }

@@ -1,7 +1,7 @@
 import dataSource from '../infra/mysql/dataSource'
 import { ArticleRepository } from '../../domain/article/article.repository'
 import { Article } from '../../domain/article/article.entity'
-import { Repository } from 'typeorm'
+import { FindOptionsWhere, Repository } from 'typeorm'
 
 class ArticleRepositoryImpl implements ArticleRepository {
   private repository: Repository<Article>
@@ -14,7 +14,7 @@ class ArticleRepositoryImpl implements ArticleRepository {
     return await this.repository.save(article)
   }
 
-  public async getList(option?: Partial<Omit<Article, 'writer'>>): Promise<Article[]> {
+  public async getList(option?: FindOptionsWhere<Article>): Promise<Article[]> {
     return await this.repository.find({
       where: option,
     })
@@ -26,16 +26,8 @@ class ArticleRepositoryImpl implements ArticleRepository {
     })
   }
 
-  public async updateOne(
-    articleId: number,
-    data: Pick<Article, 'title' | 'thumbnail' | 'short_description' | 'content'>
-  ) {
-    const result = await this.repository.update(articleId, {
-      title: data.title,
-      thumbnail: data.thumbnail,
-      short_description: data.short_description,
-      content: data.content,
-    })
+  public async updateOne(articleId: number, article: Article) {
+    const result = await this.repository.update(articleId, article)
 
     if (result) {
       return await this.repository.findOneBy({

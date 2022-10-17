@@ -1,7 +1,9 @@
+import { FindOptionsWhere } from 'typeorm'
 import { Article } from '../../domain/article/article.entity'
 import { ArticleRepository } from '../../domain/article/article.repository'
 import { ArticleHistoryRepository } from '../../domain/article/articleHistory.repository'
 import { CustomError } from '../../global/utils'
+import { ArticleHistory } from '../../domain/article/articleHistory.entity'
 
 class ArticleService {
   constructor(
@@ -12,16 +14,32 @@ class ArticleService {
   public async createArticle({
     title,
     content,
+    thumbnail,
+    short_description,
     writerId,
   }: {
     title: string
+    thumbnail?: string
+    short_description?: string
     content: string
     writerId: string
   }) {
-    return await this.articleRepository.create({ title, content, writer_id: writerId })
+    const article = new Article({
+      title,
+      content,
+      thumbnail,
+      short_description,
+      writer_id: writerId,
+    })
+
+    return await this.articleRepository.create(article)
   }
 
-  public async getArticles(option?: Partial<Article>) {
+  public async getArticles(
+    option?: Partial<
+      Pick<Article, 'title' | 'content' | 'thumbnail' | 'short_description' | 'writer_id' | 'id'>
+    >
+  ) {
     return await this.articleRepository.getList(option)
   }
 
@@ -39,14 +57,14 @@ class ArticleService {
       throw new CustomError(404, 'Not found article')
     }
 
-    await this.articleHistoryRepository.create({
-      title: article.title,
-      thumbnail: article.thumbnail,
-      short_description: article.short_description,
-      content: article.content,
+    const articleHistory = new ArticleHistory({
+      ...article,
       article_id: articleId,
     })
-    return await this.articleRepository.updateOne(articleId, data)
+    await this.articleHistoryRepository.create(articleHistory)
+
+    const updateArticle = new Article(data)
+    return await this.articleRepository.updateOne(articleId, updateArticle)
   }
 }
 
