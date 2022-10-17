@@ -1,4 +1,4 @@
-import { DataRegExp, DataType, validator } from './index'
+import { DataType, validator } from './index'
 
 const articleValidator = {
   create: validator('body', {
@@ -15,6 +15,46 @@ const articleValidator = {
       required: true,
       length: {
         min: 1,
+      },
+    },
+    thumbnail: {
+      type: DataType.string,
+      length: {
+        max: 2000,
+      },
+    },
+    short_description: {
+      type: DataType.string,
+      length: {
+        max: 150,
+      },
+    },
+  }),
+
+  update: validator('body', {
+    title: {
+      type: DataType.string,
+      length: {
+        min: 1,
+        max: 100,
+      },
+    },
+    content: {
+      type: DataType.string,
+      length: {
+        min: 1,
+      },
+    },
+    thumbnail: {
+      type: DataType.string,
+      length: {
+        max: 2000,
+      },
+    },
+    short_description: {
+      type: DataType.string,
+      length: {
+        max: 150,
       },
     },
   }),

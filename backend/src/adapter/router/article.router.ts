@@ -13,7 +13,6 @@ articleRouter.get(
   asyncMiddleware((req, res, next) => articleController.getMyArticles(req, res, next))
 )
 
-// TODO: validatte params articleId
 articleRouter.get(
   '/:articleId',
   checkIsLoggedInUser,
@@ -27,10 +26,10 @@ articleRouter.post(
   asyncMiddleware((req, res, next) => articleController.createArticle(req, res, next))
 )
 
-// TODO: validatte params articleId, body
 articleRouter.patch(
   '/:articleId',
   checkIsLoggedInUser,
+  articleValidator.update,
   asyncMiddleware((req, res, next) => articleController.updateArticle(req, res, next))
 )
 
