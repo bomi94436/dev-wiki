@@ -69,7 +69,7 @@ const PageRouter = () => {
           </Route>
         </Route>
 
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="*" element={<Navigate to="/auth/login" />} />
       </Routes>
     </BrowserRouter>
   )

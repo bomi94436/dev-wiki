@@ -1,7 +1,6 @@
 import React from 'react'
 import { Divider, IconButton, InputBase, Paper, Typography } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import thumbnail from '@/asset/hi.png'
 
 import Article from './Article'
 import { useQuery } from 'react-query'
@@ -37,9 +36,9 @@ const ArticleList: React.FC = () => {
 
         <div className="grid grid-cols-3 gap-4 py-2">
           {!isLoading &&
-            articles.map((article, index) => (
+            articles.map((article) => (
               <React.Fragment key={`grid-item-${article.id}`}>
-                <Article thumbnailUrl={!index ? thumbnail : undefined} article={article} />
+                <Article article={article} />
               </React.Fragment>
             ))}
         </div>

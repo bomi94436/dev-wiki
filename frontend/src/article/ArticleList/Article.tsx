@@ -4,23 +4,22 @@ import { Article } from '@/global/entity'
 import { useNavigate } from 'react-router-dom'
 
 interface ArticleProps {
-  thumbnailUrl?: string
   article: Article
 }
 
-const Article: React.FC<ArticleProps> = ({ thumbnailUrl, article }) => {
+const Article: React.FC<ArticleProps> = ({ article }) => {
   const navigate = useNavigate()
 
   return (
     <Card variant="outlined">
       <CardActionArea onClick={() => navigate(`/article/${article.id}`)}>
         <div className="w-full h-[300px]">
-          {thumbnailUrl ? (
+          {article.thumbnail ? (
             <>
               <CardMedia
                 component="img"
                 className="w-full h-1/2 object-cover"
-                src={thumbnailUrl}
+                src={article.thumbnail}
                 alt="green iguana"
               />
 
