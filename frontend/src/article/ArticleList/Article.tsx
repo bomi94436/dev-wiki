@@ -28,7 +28,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                   {article.title}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {article.content}
+                  {article.short_description}
                 </Typography>
               </CardContent>
             </>
@@ -38,7 +38,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                 {article.title}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {article.content}
+                {article.short_description}
               </Typography>
             </CardContent>
           )}

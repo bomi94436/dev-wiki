@@ -1,14 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import MDEditor from '@uiw/react-md-editor'
 import { Button } from '@mui/material'
 import { AxiosError } from 'axios'
-import { useMutation } from 'react-query'
-import { useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 
 import API from '@/global/api'
 import { snackbarState } from '@/global/atom/index'
-import { postArticle } from '@/global/api/funcs'
 
 const insertToTextArea = (intsertString: string) => {
   const textarea = document.querySelector('textarea')
@@ -32,30 +29,22 @@ const insertToTextArea = (intsertString: string) => {
   return sentence
 }
 
-const ArticleEditor: React.FC = () => {
-  const navigate = useNavigate()
-  const [title, setTitle] = useState<string>('')
-  const [content, setContent] = useState<string>('')
+interface EditorProps {
+  title: string
+  setTitle: React.Dispatch<React.SetStateAction<string>>
+  content: string
+  setContent: React.Dispatch<React.SetStateAction<string>>
+  onClickNextPage: React.MouseEventHandler<HTMLButtonElement>
+}
 
+const Editor: React.FC<EditorProps> = ({
+  title,
+  setTitle,
+  content,
+  setContent,
+  onClickNextPage,
+}) => {
   const [, setSnackbar] = useRecoilState(snackbarState)
-
-  const { mutate: createArticle } = useMutation(postArticle, {
-    onError: (err) => {
-      if ((err as AxiosError).response.status === 422) {
-        setSnackbar({
-          message: '제목 또는 내용을 입력하세요.',
-          type: 'error',
-        })
-      }
-    },
-    onSuccess: () => {
-      setSnackbar({
-        message: '아티클이 추가되었습니다.',
-        type: 'success',
-      })
-      navigate('/article')
-    },
-  })
 
   const onImagePasted = async (
     dataTransfer: DataTransfer,
@@ -110,21 +99,13 @@ const ArticleEditor: React.FC = () => {
     )
   }
 
-  const onSubmitCreateArticle: React.FormEventHandler = (e) => {
-    e.preventDefault()
-
-    createArticle({
-      title,
-      content,
-    })
-  }
-
   return (
-    <form className="w-full p-8" data-color-mode="light" onSubmit={onSubmitCreateArticle}>
+    <section className="w-full p-8" data-color-mode="light">
       <div className="pb-6">
         <input
-          className="outline-none text-3xl"
+          className="outline-none text-3xl w-full"
           placeholder="제목을 입력하세요"
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
@@ -149,12 +130,12 @@ const ArticleEditor: React.FC = () => {
       />
 
       <div className="pt-6 flex justify-end">
-        <Button variant="contained" type="submit">
-          작성 완료
+        <Button variant="outlined" onClick={onClickNextPage}>
+          다음
         </Button>
       </div>
-    </form>
+    </section>
   )
 }
 
-export default ArticleEditor
+export default Editor
