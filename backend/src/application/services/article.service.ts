@@ -66,6 +66,16 @@ class ArticleService {
     const updateArticle = new Article(data)
     return await this.articleRepository.updateOne(articleId, updateArticle)
   }
+
+  public async deleteArticle(articleId: number) {
+    const article = await this.getArticle(articleId)
+
+    if (!article) {
+      throw new CustomError(404, 'Not found article')
+    }
+
+    return await this.articleRepository.deleteOne(articleId)
+  }
 }
 
 export default ArticleService

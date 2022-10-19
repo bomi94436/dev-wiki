@@ -11,4 +11,5 @@ export interface ArticleRepository {
   ): Promise<Article[]>
   getOne(article: Pick<Article, 'id'>): Promise<Article | null>
   updateOne(articleId: number, article: Article): Promise<Article | null>
+  deleteOne(articleId: number): Promise<void>
 }

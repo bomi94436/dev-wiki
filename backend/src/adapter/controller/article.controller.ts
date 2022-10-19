@@ -67,6 +67,17 @@ class ArticleController {
       })
     }
   }
+
+  public deleteArticle: RequestHandler = async (req, res, next) => {
+    const articleId = Number(req.params.articleId)
+
+    await this.articleService.deleteArticle(articleId)
+
+    res.status(200).json({
+      message: 'success delete article',
+      article_id: articleId,
+    })
+  }
 }
 
 export default ArticleController

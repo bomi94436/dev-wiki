@@ -33,4 +33,10 @@ articleRouter.patch(
   asyncMiddleware((req, res, next) => articleController.updateArticle(req, res, next))
 )
 
+articleRouter.delete(
+  '/:articleId',
+  checkIsLoggedInUser,
+  asyncMiddleware((req, res, next) => articleController.deleteArticle(req, res, next))
+)
+
 export default articleRouter

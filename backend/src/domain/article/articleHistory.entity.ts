@@ -43,7 +43,10 @@ export class ArticleHistory {
   @Column({ name: 'article_id', comment: '원본 아티클 id' })
   article_id: number
 
-  @ManyToOne(() => Article)
+  @ManyToOne(() => Article, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({
     name: 'article_id',
   })

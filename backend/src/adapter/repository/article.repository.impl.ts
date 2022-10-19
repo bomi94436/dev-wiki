@@ -37,6 +37,11 @@ class ArticleRepositoryImpl implements ArticleRepository {
       return null
     }
   }
+
+  public async deleteOne(articleId: number) {
+    await this.repository.delete(articleId)
+    return
+  }
 }
 
 export default ArticleRepositoryImpl

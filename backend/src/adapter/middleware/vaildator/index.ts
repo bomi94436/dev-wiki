@@ -48,7 +48,7 @@ export const validator =
         throw new CustomError(422, `${field} is required in ${property}`)
       }
 
-      if (data !== undefined) {
+      if (data !== undefined && data !== null) {
         if (!validateDataType[`is${option.type}`](data)) {
           throw new CustomError(422, `${field} must be a ${option.type.toLocaleLowerCase()}`)
         }
