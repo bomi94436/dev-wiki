@@ -58,3 +58,11 @@ export const patchArticle = async ({ id, body }: PatchArticleParams) => {
     throw err as AxiosError
   }
 }
+
+export const deleteArticle = async (id: number) => {
+  try {
+    await API.delete(`/article/${id}`)
+  } catch (err) {
+    throw err as AxiosError
+  }
+}

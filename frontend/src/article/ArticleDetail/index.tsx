@@ -1,13 +1,15 @@
 import React from 'react'
 import { Divider, IconButton, Typography } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useQuery } from 'react-query'
-import { getArticle } from '@/global/api/funcs'
+import { useMutation, useQuery } from 'react-query'
+import { deleteArticle, getArticle } from '@/global/api/funcs'
 import MDEditor from '@uiw/react-md-editor'
 import {
   DriveFileRenameOutline as DriveFileRenameOutlineIcon,
   DeleteOutline as DeleteOutlineIcon,
 } from '@mui/icons-material'
+import { snackbarState } from '@/global/atom'
+import { useRecoilState } from 'recoil'
 
 const ArticleDetail: React.FC = () => {
   const navigate = useNavigate()
@@ -15,6 +17,22 @@ const ArticleDetail: React.FC = () => {
   const { data: article } = useQuery(['article', articleId], () => getArticle(Number(articleId)), {
     enabled: !!articleId,
   })
+  const [, setSnackbar] = useRecoilState(snackbarState)
+  const { mutate: removeArticle } = useMutation(deleteArticle, {
+    onSuccess: () => {
+      setSnackbar({
+        type: 'success',
+        message: '성공적으로 삭제되었습니다.',
+      })
+      navigate('/article')
+    },
+  })
+
+  const onClickRemoveArticle = () => {
+    if (window.confirm('해당 아티클을 삭제하시겠습니까?')) {
+      removeArticle(Number(articleId))
+    }
+  }
 
   return (
     <div className="flex justify-center p-5">
@@ -33,7 +51,12 @@ const ArticleDetail: React.FC = () => {
                 <DriveFileRenameOutlineIcon color="primary" fontSize="inherit" />
               </IconButton>
 
-              <IconButton className="!ml-1" aria-label="delete" size="large">
+              <IconButton
+                className="!ml-1"
+                aria-label="delete"
+                size="large"
+                onClick={onClickRemoveArticle}
+              >
                 <DeleteOutlineIcon color="primary" fontSize="inherit" />
               </IconButton>
             </div>
