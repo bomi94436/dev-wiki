@@ -40,6 +40,12 @@ export class Article {
   })
   content: string
 
+  @Column({
+    type: 'int',
+    default: 0,
+  })
+  my_views: number
+
   @CreateDateColumn()
   created_at: Date
 
@@ -87,5 +93,9 @@ export class Article {
 
     if (id) this.id = id
     if (writer_id) this.writer_id = writer_id
+  }
+
+  public increaseMyViews(): void {
+    this.my_views += 1
   }
 }

@@ -44,14 +44,21 @@ class ArticleService {
   }
 
   public async getArticle(id: number) {
-    return await this.articleRepository.getOne({ id })
+    const article = await this.articleRepository.getOne({ id })
+
+    if (article) {
+      article.increaseMyViews()
+      return this.articleRepository.updateOne(id, article)
+    } else {
+      return null
+    }
   }
 
   public async updateArticle(
     articleId: number,
     data: Pick<Article, 'title' | 'thumbnail' | 'short_description' | 'content'>
   ) {
-    const article = await this.getArticle(articleId)
+    const article = await this.articleRepository.getOne({ id: articleId })
 
     if (!article) {
       throw new CustomError(404, 'Not found article')
@@ -68,7 +75,7 @@ class ArticleService {
   }
 
   public async deleteArticle(articleId: number) {
-    const article = await this.getArticle(articleId)
+    const article = await this.articleRepository.getOne({ id: articleId })
 
     if (!article) {
       throw new CustomError(404, 'Not found article')
