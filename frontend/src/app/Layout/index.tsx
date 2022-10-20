@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   Box,
   CssBaseline,
@@ -21,9 +21,9 @@ import {
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
-  MoveToInbox as InboxIcon,
-  Mail as MailIcon,
   AccountCircle as AccountCircle,
+  Create as CreateIcon,
+  ViewList as ViewListIcon,
 } from '@mui/icons-material'
 
 import AppBar from './components/AppBar'
@@ -32,6 +32,7 @@ import DrawerHeader from './components/DrawerHeader'
 import API from '@/global/api'
 import { useMutation } from 'react-query'
 import { useUserInfo } from '@/global/hook'
+import DrawerItem from './components/DrawerItem'
 
 const menuId = 'primary-search-account-menu'
 
@@ -41,7 +42,7 @@ interface PageLayoutProps {
 
 const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
   const navigate = useNavigate()
-  const { refetch } = useUserInfo()
+  const { remove } = useUserInfo()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const theme = useTheme()
@@ -64,8 +65,8 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
   }
   const { mutate: callLogout } = useMutation(() => API.post('/auth/logout'), {
     onSuccess: () => {
-      refetch()
-      navigate('/login')
+      remove()
+      navigate('/auth/login')
     },
   })
 
@@ -114,7 +115,13 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
             <MenuIcon />
           </IconButton>
 
-          <Typography variant="h6" noWrap component="div" className="!font-semibold grow">
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            className="!font-semibold cursor-pointer !mr-auto"
+            onClick={() => navigate('/')}
+          >
             Dev Wiki
           </Typography>
 
@@ -147,56 +154,18 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
         <Divider />
 
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          <DrawerItem text="아티클 쓰기" link="/article/write">
+            <CreateIcon color="primary" />
+          </DrawerItem>
+
+          <DrawerItem text="아티클 조회" link="/article">
+            <ViewListIcon color="primary" />
+          </DrawerItem>
         </List>
 
         <Divider />
 
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+        <List></List>
       </Drawer>
 
       <Box component="main" className="!p-0" sx={{ flexGrow: 1, p: 3 }}>

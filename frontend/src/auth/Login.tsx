@@ -59,7 +59,7 @@ const Login = () => {
             로그인
           </Typography>
 
-          <Link className="hover:cursor-pointer" onClick={() => navigate('/signup')}>
+          <Link className="hover:cursor-pointer" onClick={() => navigate('/auth/signup')}>
             회원가입 하러가기
           </Link>
         </div>

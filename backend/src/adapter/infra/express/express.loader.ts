@@ -3,12 +3,12 @@ import session from 'express-session'
 import connectRedis from 'connect-redis'
 import { v4 as uuidv4 } from 'uuid'
 import cors, { CorsOptions } from 'cors'
+import path from 'path'
 
-import { authRouter, rootRouter } from '../../router'
+import { articleRouter, authRouter, rootRouter, uploadRouter, userRouter } from '../../router'
 import { redisClient } from '../redis/usecase'
 import config from '../../config'
-import { SESSION_KEY } from '../../../global/constant'
-import userRouter from '../../router/user.router'
+import { SESSION_KEY, STATIC_UPLOAD_FOLDER_PATH } from '../../../global/constant'
 
 const RedisStore = connectRedis(session)
 
@@ -27,6 +27,13 @@ const corsOptions: CorsOptions = {
 const expressLoader = async ({ app }: { app: express.Express }) => {
   app.use(express.json())
   app.use(express.urlencoded({ extended: false }))
+  /**
+   * 정적 파일 제공, 정적파일 접근은 cors whitelist 적용 X
+   */
+  app.use(
+    STATIC_UPLOAD_FOLDER_PATH,
+    express.static(path.join(__dirname, '..', '..', '..', '..', 'uploads'))
+  )
   app.use(cors(corsOptions))
 
   /**
@@ -51,6 +58,8 @@ const expressLoader = async ({ app }: { app: express.Express }) => {
   app.use('/', rootRouter)
   app.use('/auth', authRouter)
   app.use('/users', userRouter)
+  app.use('/article', articleRouter)
+  app.use('/upload', uploadRouter)
 }
 
 export default expressLoader

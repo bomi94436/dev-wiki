@@ -1,20 +1,19 @@
 import React from 'react'
-import { IndexRouteProps, LayoutRouteProps, PathRouteProps, Route } from 'react-router-dom'
-import { PageLayout } from '../ui'
+import PageLayout from '../Layout'
 import AuthenticatedRoute from './AuthenticatedRoute'
 import UnauthenticatedRoute from './UnauthenticatedRoute'
 
 type RouteOptionProps = {
   isAuthenticated?: boolean
-  withLayout?: boolean
+  withoutLayout?: boolean
   children: JSX.Element
 }
 
-const RouteOption: React.FC<RouteOptionProps> = ({ isAuthenticated, withLayout, children }) => {
+const RouteOption: React.FC<RouteOptionProps> = ({ isAuthenticated, withoutLayout, children }) => {
   let component: JSX.Element = children
 
   // 레이아웃 적용 여부
-  if (withLayout) {
+  if (!withoutLayout) {
     component = <PageLayout>{component}</PageLayout>
   }
 

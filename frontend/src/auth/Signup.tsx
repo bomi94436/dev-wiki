@@ -3,19 +3,17 @@ import { useMutation } from 'react-query'
 import { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { Button, Link, Typography } from '@mui/material'
+import { useRecoilState } from 'recoil'
 
 import API from '@/global/api'
 import { Input, PasswordInput } from '@/global/ui'
-import useSnackbar from '@/global/hook/useSnackbar'
+import { snackbarState } from '@/global/atom'
 
 const Signup = () => {
   const navigate = useNavigate()
-  const { setSnackbarMessage: setSuccessMessage, CustomSnackbar: SuccessSnackbar } = useSnackbar({
-    type: 'success',
-  })
-  const { setSnackbarMessage: setErrorMessage, CustomSnackbar: ErrorSnackbar } = useSnackbar({
-    type: 'error',
-  })
+
+  const [, setSnackbar] = useRecoilState(snackbarState)
+
   const [inputData, setInputData] = useState<{
     email: string
     password: string
@@ -43,19 +41,28 @@ const Signup = () => {
       }),
     {
       onSuccess: () => {
-        setSuccessMessage('회원가입이 완료되었습니다.')
-        navigate('/login')
+        setSnackbar({
+          message: '회원가입이 완료되었습니다.',
+          type: 'success',
+        })
+        navigate('/auth/login')
       },
       onError: (error) => {
         const err = error as AxiosError
 
         if (err.response.status === 409) {
-          // duplicate error
-          setErrorMessage('이미 존재하는 사용자입니다.')
+          setSnackbar({
+            message: '이미 존재하는 사용자입니다.',
+            type: 'error',
+          })
         }
 
         if (err.response.status === 422) {
           // validate error
+          setSnackbar({
+            message: '정확한 정보를 입력하세요.',
+            type: 'error',
+          })
         }
       },
     }
@@ -66,7 +73,10 @@ const Signup = () => {
       e.preventDefault()
 
       if (inputData.password !== inputData.passwordConfirm) {
-        setErrorMessage('비밀번호가 일치하지 않습니다.')
+        setSnackbar({
+          message: '비밀번호가 일치하지 않습니다.',
+          type: 'error',
+        })
         return
       }
 
@@ -81,16 +91,13 @@ const Signup = () => {
 
   return (
     <div className="w-full h-full flex justify-center items-center">
-      <SuccessSnackbar />
-      <ErrorSnackbar />
-
       <div className="w-[350px] h-[50vh] flex flex-col justify-center">
         <div className="flex items-center justify-between">
           <Typography variant="h5" gutterBottom className="!font-semibold">
             회원가입
           </Typography>
 
-          <Link className="hover:cursor-pointer" onClick={() => navigate('/login')}>
+          <Link className="hover:cursor-pointer" onClick={() => navigate('/auth/login')}>
             로그인 하러가기
           </Link>
         </div>

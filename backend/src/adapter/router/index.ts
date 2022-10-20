@@ -1,2 +1,5 @@
 export { default as rootRouter } from './root.router'
 export { default as authRouter } from './auth.router'
+export { default as userRouter } from './user.router'
+export { default as articleRouter } from './article.router'
+export { default as uploadRouter } from './upload.router'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useUserInfo } from '../hook'
+import { useUserInfo } from '../../global/hook'
 import { Navigate } from 'react-router-dom'
 
 interface UnauthenticatedRouteProps {

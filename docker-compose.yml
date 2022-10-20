@@ -26,6 +26,7 @@ services:
       - 5001:5001
     volumes:
       - ./backend/src:/usr/src/app/src
+      - ./backend/uploads:/usr/src/app/uploads
       - /usr/src/app/node_modules
     depends_on:
       - mysql

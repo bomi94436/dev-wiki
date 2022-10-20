@@ -1,26 +1,44 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import { Alert, Snackbar } from '@mui/material'
+import { useRecoilState } from 'recoil'
 
-const useSnackbar = ({ type }: { type: 'success' | 'info' | 'warning' | 'error' }) => {
-  const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null)
+import { snackbarState } from '../atom'
+import { Portal } from '@/global/ui'
+
+const useSnackbar = () => {
+  const [snackbar, setSnackbar] = useRecoilState(snackbarState)
 
   const CustomSnackbar = useCallback(
     (): JSX.Element => (
-      <Snackbar
-        open={!!snackbarMessage}
-        autoHideDuration={6000}
-        onClose={() => setSnackbarMessage(null)}
-      >
-        <Alert onClose={() => setSnackbarMessage(null)} severity={type}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+      <Portal>
+        <Snackbar
+          className="z-30"
+          open={!!snackbar.message}
+          autoHideDuration={6000}
+          onClose={() =>
+            setSnackbar({
+              type: null,
+              message: null,
+            })
+          }
+          anchorOrigin={{
+            horizontal: 'center',
+            vertical: 'top',
+          }}
+        >
+          <Alert
+            onClose={() => setSnackbar({ type: null, message: null })}
+            severity={snackbar.type}
+          >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
+      </Portal>
     ),
-    [snackbarMessage]
+    [snackbar]
   )
 
   return {
-    setSnackbarMessage,
     CustomSnackbar,
   }
 }

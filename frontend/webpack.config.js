@@ -18,6 +18,7 @@ module.exports = {
     app: ['./src/index.tsx'],
   },
   output: {
+    publicPath: '/',
     path: path.join(__dirname, '/dist'),
     filename: '[name].js',
   },

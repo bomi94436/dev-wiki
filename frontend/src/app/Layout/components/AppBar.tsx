@@ -16,7 +16,7 @@ const AppBar = styled(MuiAppBar, {
   }),
   color: theme.palette.primary.main,
   borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-  backdropFilter: 'blur(20px)',
+  backdropFilter: 'blur(7px)',
   backgroundColor: 'rgba(255, 255, 255, 0.7)',
   ...(open && {
     marginLeft: drawerWidth,

@@ -1,7 +1,7 @@
 import express from 'express'
 import { asyncMiddleware } from '../../global/utils'
+import { AuthController } from '../controller'
 import authValidator from '../middleware/vaildator/auth.validator'
-import AuthController from '../controller/auth.controller'
 
 const authRouter = express.Router()
 const authController = new AuthController()
@@ -9,7 +9,7 @@ const authController = new AuthController()
 authRouter.post(
   '/signup',
   authValidator.signup,
-  asyncMiddleware(asyncMiddleware((req, res, next) => authController.signup(req, res, next)))
+  asyncMiddleware((req, res, next) => authController.signup(req, res, next))
 )
 authRouter.post(
   '/login',

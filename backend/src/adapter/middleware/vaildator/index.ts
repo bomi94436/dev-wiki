@@ -44,34 +44,36 @@ export const validator =
     Object.entries(options).forEach(([field, option]) => {
       const data = req[property][field]
 
-      if (!validateDataType[`is${option.type}`](data)) {
-        throw new CustomError(422, `${field} must be a ${option.type.toLocaleLowerCase()}`)
-      }
-
       if (option.required && !data) {
         throw new CustomError(422, `${field} is required in ${property}`)
       }
 
-      if (option.length?.min) {
-        if (
-          (validateDataType.isNumber(data) && data < option.length.min) ||
-          (validateDataType.isString(data) && data.length < option.length.min)
-        ) {
-          throw new CustomError(422, `${field} must be greater than ${option.length.min}`)
+      if (data !== undefined && data !== null) {
+        if (!validateDataType[`is${option.type}`](data)) {
+          throw new CustomError(422, `${field} must be a ${option.type.toLocaleLowerCase()}`)
         }
-      }
 
-      if (option.length?.max) {
-        if (
-          (validateDataType.isNumber(data) && data > option.length.max) ||
-          (validateDataType.isString(data) && data.length > option.length.max)
-        ) {
-          throw new CustomError(422, `${field} must be less than ${option.length.max}`)
+        if (option.length?.min) {
+          if (
+            (validateDataType.isNumber(data) && data < option.length.min) ||
+            (validateDataType.isString(data) && data.length < option.length.min)
+          ) {
+            throw new CustomError(422, `${field} must be greater than ${option.length.min}`)
+          }
         }
-      }
 
-      if (option.regexp && !data.match(option.regexp)) {
-        throw new CustomError(422, `${field} must fit the following pattern: ${option.regexp}`)
+        if (option.length?.max) {
+          if (
+            (validateDataType.isNumber(data) && data > option.length.max) ||
+            (validateDataType.isString(data) && data.length > option.length.max)
+          ) {
+            throw new CustomError(422, `${field} must be less than ${option.length.max}`)
+          }
+        }
+
+        if (option.regexp && !data.match(option.regexp)) {
+          throw new CustomError(422, `${field} must fit the following pattern: ${option.regexp}`)
+        }
       }
     })
 

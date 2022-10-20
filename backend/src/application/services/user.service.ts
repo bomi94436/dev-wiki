@@ -9,12 +9,12 @@ class UserService {
   }
 
   public async findme({ id }: { id: string }) {
-    const user = await this.userRepository.findOneById({
+    const user = await this.userRepository.findOneBy({
       id,
     })
 
     if (!user) {
-      throw new CustomError(404, 'not found user')
+      throw new CustomError(404, 'Not found user')
     }
 
     return {

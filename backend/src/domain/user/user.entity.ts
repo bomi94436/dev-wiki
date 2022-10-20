@@ -1,18 +1,15 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
-import uuidService from '../uuidService'
-import PasswordService from '../passwordService'
+import UuidService from '../uuidService'
+import { Password } from './password'
 
 @Entity({ database: 'dev_wiki_db', name: 'user' })
 export class User {
-  @PrimaryColumn({
-    type: 'binary',
-    length: 17,
-    unique: true,
-    transformer: {
-      from: (value: Buffer) => new uuidService().parseBufferToString(value),
-      to: (value: string) => new uuidService().parseStringToBuffer(value),
-    },
-  })
+  @PrimaryColumn(
+    new UuidService().uuidColumnOptions({
+      name: 'user_id',
+      unique: true,
+    })
+  )
   id: string
 
   @Column({
@@ -21,10 +18,10 @@ export class User {
   })
   email: string
 
-  @Column({
-    length: 200,
+  @Column(() => Password, {
+    prefix: false,
   })
-  password: string
+  password: Password
 
   @Column({
     length: 20,
@@ -66,12 +63,11 @@ export class User {
   ) {
     this.id = id
     this.email = email
-    this.password = password
+    this.password = new Password(password)
     this.nickname = nickname
   }
 
   public checkIsMatchPassword(password: string): boolean {
-    const passwordService = new PasswordService()
-    return passwordService.comparePassword(password, this.password)
+    return this.password.comparePassword(password)
   }
 }
