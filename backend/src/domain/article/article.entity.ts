@@ -1,3 +1,5 @@
+import { User } from 'domain/user/user.entity'
+import UuidService from 'domain/uuidService'
 import {
   Column,
   CreateDateColumn,
@@ -8,8 +10,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import { User } from '../user/user.entity'
-import UuidService from '../uuidService'
 
 @Entity({ database: 'dev_wiki_db', name: 'article' })
 export class Article {
