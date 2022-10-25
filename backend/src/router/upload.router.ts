@@ -3,11 +3,11 @@ import fs from 'fs'
 import path from 'path'
 import express from 'express'
 
-import { CustomError } from 'global/utils'
+import { CustomError, getRelativePathOfProjectRootPath } from 'global/utils'
 import { checkIsLoggedInUser } from 'middleware/checkAuthentification'
 import { STATIC_UPLOAD_FOLDER_PATH } from 'global/constant'
 
-const uploadsFolder = path.join(__dirname, '..', '..', '..', 'uploads')
+const uploadsFolder = path.join(__dirname, getRelativePathOfProjectRootPath(__dirname), 'uploads')
 
 try {
   fs.accessSync(uploadsFolder)
