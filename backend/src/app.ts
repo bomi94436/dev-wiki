@@ -1,5 +1,5 @@
 import express, { ErrorRequestHandler } from 'express'
-import loaders from './adapter/infra/loader'
+import loaders from 'infra/loader'
 
 const startServer = async () => {
   const app = express()

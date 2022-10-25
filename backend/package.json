@@ -5,9 +5,9 @@
   "scripts": {
     "start": "NODE_ENV=development node dist/src/app.js",
     "build": "tsc -p .",
-    "start:local": "nodemon --watch 'src/**/*.ts' --exec ts-node src/app.ts",
-    "start:dev": "NODE_ENV=development nodemon --watch 'src/**/*.ts' --exec ts-node src/app.ts",
-    "start:prod": "tsc -p . && NODE_ENV=production node dist/src/app.js",
+    "start:local": "nodemon",
+    "start:dev": "NODE_ENV=development nodemon",
+    "start:prod": "npm run build && NODE_ENV=production node dist/src/app.js",
     "test": "echo 'Error: no test specified' && exit 1"
   },
   "keywords": [],
@@ -39,6 +39,7 @@
     "nodemon": "^2.0.16",
     "prettier": "^2.6.2",
     "ts-node": "^10.8.0",
+    "tsconfig-paths": "^4.1.0",
     "typescript": "^4.6.4"
   }
 }
