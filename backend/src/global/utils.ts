@@ -1,4 +1,5 @@
 import { RequestHandler, Request, Response, NextFunction } from 'express'
+import path from 'path'
 
 export const asyncMiddleware =
   (fn: RequestHandler) => (req: Request, res: Response, next: NextFunction) => {
@@ -14,3 +15,8 @@ export class CustomError extends Error {
     }
   }
 }
+
+export const getProjectRootPath = (dirname: string) => dirname.slice(0, dirname.lastIndexOf('/src'))
+
+export const getRelativePathOfProjectRootPath = (dirname: string) =>
+  path.relative(dirname, getProjectRootPath(dirname))

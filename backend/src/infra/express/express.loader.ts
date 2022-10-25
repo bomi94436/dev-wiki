@@ -9,6 +9,7 @@ import { SESSION_KEY, STATIC_UPLOAD_FOLDER_PATH } from 'global/constant'
 import { redisClient } from 'infra/redis/usecase'
 import config from 'config'
 import { articleRouter, authRouter, rootRouter, uploadRouter, userRouter } from 'router'
+import { getRelativePathOfProjectRootPath } from 'global/utils'
 
 const RedisStore = connectRedis(session)
 
@@ -27,12 +28,13 @@ const corsOptions: CorsOptions = {
 const expressLoader = async ({ app }: { app: express.Express }) => {
   app.use(express.json())
   app.use(express.urlencoded({ extended: false }))
+
   /**
    * 정적 파일 제공, 정적파일 접근은 cors whitelist 적용 X
    */
   app.use(
     STATIC_UPLOAD_FOLDER_PATH,
-    express.static(path.join(__dirname, '..', '..', '..', '..', 'uploads'))
+    express.static(path.join(__dirname, getRelativePathOfProjectRootPath(__dirname), 'uploads'))
   )
   app.use(cors(corsOptions))
 
