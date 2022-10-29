@@ -6,10 +6,17 @@ import cors, { CorsOptions } from 'cors'
 import path from 'path'
 
 import { SESSION_KEY, STATIC_UPLOAD_FOLDER_PATH } from 'global/constant'
+import { getRelativePathOfProjectRootPath } from 'global/utils'
 import { redisClient } from 'infra/redis/usecase'
 import config from 'config'
-import { articleRouter, authRouter, rootRouter, uploadRouter, userRouter } from 'router'
-import { getRelativePathOfProjectRootPath } from 'global/utils'
+import {
+  articleRouter,
+  authRouter,
+  rootRouter,
+  taskCardRouter,
+  uploadRouter,
+  userRouter,
+} from 'router'
 
 const RedisStore = connectRedis(session)
 
@@ -62,6 +69,7 @@ const expressLoader = async ({ app }: { app: express.Express }) => {
   app.use('/users', userRouter)
   app.use('/article', articleRouter)
   app.use('/upload', uploadRouter)
+  app.use('/task-card', taskCardRouter)
 }
 
 export default expressLoader
