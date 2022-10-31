@@ -62,7 +62,7 @@ class ArticleController {
         article,
       })
     } else {
-      res.status(400).json({
+      res.status(500).json({
         message: 'fail update article',
       })
     }

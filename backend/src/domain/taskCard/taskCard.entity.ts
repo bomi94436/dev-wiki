@@ -9,9 +9,9 @@ export class TaskCard {
   name: string
 
   @Column({ nullable: true, length: 500 })
-  description: string
+  description?: string
 
-  @Column({ type: 'boolean' })
+  @Column({ type: 'boolean', default: false })
   is_closed: boolean
 
   constructor() {}

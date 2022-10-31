@@ -20,16 +20,17 @@ export class Task {
   content: string
 
   @Column({ type: 'date', nullable: true, comment: 'task 완료 목표 날짜' })
-  date: DateString
+  date?: DateString
 
   @Column({ type: 'time', nullable: true, comment: 'task 완료 목표 시간' })
-  time: TimeString
+  time?: TimeString
 
-  @Column({ type: 'boolean', comment: 'task 완료 여부' })
-  is_completed: boolean
-
-  @Column({ type: 'timestamp', nullable: true, comment: 'task 완료 시각' })
-  completed_at: Date
+  @Column({
+    type: 'timestamp',
+    nullable: true,
+    comment: 'task 완료 시각, 값이 존재하면 완료한 task라는 의미',
+  })
+  completed_at?: Date
 
   @CreateDateColumn()
   created_at: Date
