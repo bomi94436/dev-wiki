@@ -64,6 +64,28 @@ const expressLoader = async ({ app }: { app: express.Express }) => {
     })
   )
 
+  /**
+   * query string type parsing
+   */
+  app.use((req, res, next) => {
+    if (Object.keys(req.query).length) {
+      req.query = Object.entries(req.query).reduce(
+        (acc, [key, value]) => ({
+          ...acc,
+          [key]:
+            value === 'true' || value === 'false'
+              ? JSON.parse(value)
+              : !isNaN(Number(value))
+              ? Number(value)
+              : value,
+        }),
+        {}
+      )
+    }
+
+    next()
+  })
+
   app.use('/', rootRouter)
   app.use('/auth', authRouter)
   app.use('/users', userRouter)
