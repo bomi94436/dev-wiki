@@ -25,6 +25,12 @@ class TaskCardRepositoryImpl implements TaskCardRepository {
       },
     })
   }
+
+  public async getOne({ id }: Pick<TaskCard, 'id'>): Promise<TaskCard | null> {
+    return await this.repository.findOneBy({
+      id,
+    })
+  }
 }
 
 export default TaskCardRepositoryImpl

@@ -22,6 +22,12 @@ taskCardRouter.post(
 )
 
 taskCardRouter.get(
+  '/:taskCardId',
+  checkIsLoggedInUser,
+  asyncMiddleware((req, res, next) => taskCardController.getTaskCard(req, res, next))
+)
+
+taskCardRouter.get(
   '/:taskCardId/task',
   checkIsLoggedInUser,
   asyncMiddleware((req, res, next) => taskController.getTasks(req, res, next))

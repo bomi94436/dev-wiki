@@ -33,6 +33,16 @@ class TaskCardController {
       task_cards: taskCards,
     })
   }
+
+  public getTaskCard: RequestHandler = async (req, res, next) => {
+    const taskCardId = Number(req.params.taskCardId)
+    const taskCard = await this.taskCardService.getTaskCard({ id: taskCardId })
+
+    res.status(200).json({
+      message: 'success get task card',
+      task_card: taskCard,
+    })
+  }
 }
 
 export default TaskCardController

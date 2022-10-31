@@ -17,6 +17,10 @@ class TaskCardService {
       is_closed: findOption?.is_closed,
     })
   }
+
+  public async getTaskCard({ id }: Pick<TaskCard, 'id'>) {
+    return await this.taskCardRepository.getOne({ id })
+  }
 }
 
 export default TaskCardService

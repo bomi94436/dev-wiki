@@ -5,4 +5,5 @@ export interface TaskCardRepository {
   getList(
     findOption?: Partial<Pick<TaskCard, 'name' | 'description' | 'is_closed'>>
   ): Promise<TaskCard[]>
+  getOne({ id }: Pick<TaskCard, 'id'>): Promise<TaskCard | null>
 }
