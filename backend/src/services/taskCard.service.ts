@@ -1,5 +1,6 @@
 import { TaskCard } from 'domain/taskCard/taskCard.entity'
 import { TaskCardRepository } from 'domain/taskCard/taskCard.repository'
+import { CustomError } from 'global/utils'
 
 class TaskCardService {
   constructor(private taskCardRepository: TaskCardRepository) {}
@@ -20,6 +21,16 @@ class TaskCardService {
 
   public async getTaskCard({ id }: Pick<TaskCard, 'id'>) {
     return await this.taskCardRepository.getOne({ id })
+  }
+
+  public async deleteTaskCard({ id }: Pick<TaskCard, 'id'>) {
+    const taskCard = await this.taskCardRepository.getOne({ id })
+
+    if (!taskCard) {
+      throw new CustomError(404, 'Not found task card')
+    }
+
+    return await this.taskCardRepository.deleteOne({ id })
   }
 }
 

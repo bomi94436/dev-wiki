@@ -27,6 +27,12 @@ taskCardRouter.get(
   asyncMiddleware((req, res, next) => taskCardController.getTaskCard(req, res, next))
 )
 
+taskCardRouter.delete(
+  '/:taskCardId',
+  checkIsLoggedInUser,
+  asyncMiddleware((req, res, next) => taskCardController.deleteTaskCard(req, res, next))
+)
+
 taskCardRouter.get(
   '/:taskCardId/task',
   checkIsLoggedInUser,

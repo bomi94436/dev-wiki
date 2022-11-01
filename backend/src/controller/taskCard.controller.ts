@@ -43,6 +43,15 @@ class TaskCardController {
       task_card: taskCard,
     })
   }
+
+  public deleteTaskCard: RequestHandler = async (req, res, next) => {
+    const taskCardId = Number(req.params.taskCardId)
+    await this.taskCardService.deleteTaskCard({ id: taskCardId })
+
+    res.status(200).json({
+      message: 'success delete task card',
+    })
+  }
 }
 
 export default TaskCardController

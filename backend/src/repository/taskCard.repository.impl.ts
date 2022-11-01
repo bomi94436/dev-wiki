@@ -31,6 +31,10 @@ class TaskCardRepositoryImpl implements TaskCardRepository {
       id,
     })
   }
+
+  public async deleteOne({ id }: Pick<TaskCard, 'id'>) {
+    await this.repository.delete({ id })
+  }
 }
 
 export default TaskCardRepositoryImpl
