@@ -9,34 +9,34 @@ const taskCardRouter = express.Router()
 const taskController = new TaskController()
 const taskCardController = new TaskCardController()
 
-taskCardRouter.get(
-  '/',
-  checkIsLoggedInUser,
-  asyncMiddleware((req, res, next) => taskCardController.getTaskCards(req, res, next))
-)
+taskCardRouter.get('/', checkIsLoggedInUser, asyncMiddleware(taskCardController.getTaskCards))
 
-taskCardRouter.post(
-  '/',
-  checkIsLoggedInUser,
-  asyncMiddleware((req, res, next) => taskCardController.createTaskCard(req, res, next))
-)
+// TODO: validation
+taskCardRouter.post('/', checkIsLoggedInUser, asyncMiddleware(taskCardController.createTaskCard))
 
 taskCardRouter.get(
   '/:taskCardId',
   checkIsLoggedInUser,
-  asyncMiddleware((req, res, next) => taskCardController.getTaskCard(req, res, next))
+  asyncMiddleware(taskCardController.getTaskCard)
 )
+
+// // TODO: validation
+// taskCardRouter.patch(
+//   '/:taskCardId',
+//   checkIsLoggedInUser,
+//   asyncMiddleware(taskCardController.updateTaskCard)
+// )
 
 taskCardRouter.delete(
   '/:taskCardId',
   checkIsLoggedInUser,
-  asyncMiddleware((req, res, next) => taskCardController.deleteTaskCard(req, res, next))
+  asyncMiddleware(taskCardController.deleteTaskCard)
 )
 
 taskCardRouter.get(
   '/:taskCardId/task',
   checkIsLoggedInUser,
-  asyncMiddleware((req, res, next) => taskController.getTasks(req, res, next))
+  asyncMiddleware(taskController.getTasks)
 )
 
 export default taskCardRouter

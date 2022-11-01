@@ -1,8 +1,9 @@
-import { RequestHandler, Request, Response, NextFunction } from 'express'
+import { RequestHandler } from 'express'
 import path from 'path'
 
 export const asyncMiddleware =
-  (fn: RequestHandler) => (req: Request, res: Response, next: NextFunction) => {
+  (fn: RequestHandler): RequestHandler =>
+  (req, res, next) => {
     Promise.resolve(fn(req, res, next)).catch(next)
   }
 

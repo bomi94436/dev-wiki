@@ -7,36 +7,28 @@ import articleValidator from 'middleware/vaildator/article.validator'
 const articleRouter = express.Router()
 const articleController = new ArticleController()
 
-articleRouter.get(
-  '/',
-  checkIsLoggedInUser,
-  asyncMiddleware((req, res, next) => articleController.getMyArticles(req, res, next))
-)
+articleRouter.get('/', checkIsLoggedInUser, asyncMiddleware(articleController.getMyArticles))
 
-articleRouter.get(
-  '/:articleId',
-  checkIsLoggedInUser,
-  asyncMiddleware((req, res, next) => articleController.getArticle(req, res, next))
-)
+articleRouter.get('/:articleId', checkIsLoggedInUser, asyncMiddleware(articleController.getArticle))
 
 articleRouter.post(
   '/',
   checkIsLoggedInUser,
   articleValidator.create,
-  asyncMiddleware((req, res, next) => articleController.createArticle(req, res, next))
+  asyncMiddleware(articleController.createArticle)
 )
 
 articleRouter.patch(
   '/:articleId',
   checkIsLoggedInUser,
   articleValidator.update,
-  asyncMiddleware((req, res, next) => articleController.updateArticle(req, res, next))
+  asyncMiddleware(articleController.updateArticle)
 )
 
 articleRouter.delete(
   '/:articleId',
   checkIsLoggedInUser,
-  asyncMiddleware((req, res, next) => articleController.deleteArticle(req, res, next))
+  asyncMiddleware(articleController.deleteArticle)
 )
 
 export default articleRouter

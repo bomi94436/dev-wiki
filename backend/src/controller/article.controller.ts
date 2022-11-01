@@ -1,4 +1,4 @@
-import { NextFunction, Request, RequestHandler, Response } from 'express'
+import { RequestHandler } from 'express'
 import ArticleRepositoryImpl from 'repository/article.repository.impl'
 import ArticleHistoryRepositoryImpl from 'repository/articleHistory.repository.impl'
 import ArticleService from 'services/article.service'
@@ -11,7 +11,7 @@ class ArticleController {
     this.articleService = new ArticleService(articleRepository, articleHistoryRepository)
   }
 
-  public async createArticle(req: Request, res: Response, next: NextFunction) {
+  public createArticle: RequestHandler = async (req, res, next) => {
     const article = await this.articleService.createArticle({
       ...req.body,
       writerId: req.session.userid,
@@ -23,7 +23,7 @@ class ArticleController {
     })
   }
 
-  public async getMyArticles(req: Request, res: Response, next: NextFunction) {
+  public getMyArticles: RequestHandler = async (req, res, next) => {
     // TODO: pagination
     const articles = await this.articleService.getArticles({
       writer_id: req.session.userid,
@@ -35,7 +35,7 @@ class ArticleController {
     })
   }
 
-  public async getArticle(req: Request, res: Response, next: NextFunction) {
+  public getArticle: RequestHandler = async (req, res, next) => {
     const articleId = Number(req.params.articleId)
     const article = await this.articleService.getArticle(articleId)
 

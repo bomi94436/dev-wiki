@@ -1,5 +1,5 @@
 import UuidService from 'domain/uuidService'
-import { NextFunction, Request, Response } from 'express'
+import { RequestHandler } from 'express'
 import { SESSION_KEY } from 'global/constant'
 import UserRepositoryImpl from 'repository/user.repository.impl'
 import AuthService from 'services/auth.service'
@@ -13,7 +13,7 @@ class AuthController {
     this.authService = new AuthService({ userRepository, uuidService })
   }
 
-  public async signup(req: Request, res: Response, next: NextFunction) {
+  public signup: RequestHandler = async (req, res, next) => {
     const user = await this.authService.signup(req.body)
 
     res.status(200).json({
@@ -22,7 +22,7 @@ class AuthController {
     })
   }
 
-  public async login(req: Request, res: Response, next: NextFunction) {
+  public login: RequestHandler = async (req, res, next) => {
     const user = await this.authService.login(req.body)
 
     req.session.userid = user.id
@@ -33,7 +33,7 @@ class AuthController {
     })
   }
 
-  public async logout(req: Request, res: Response, next: NextFunction) {
+  public logout: RequestHandler = async (req, res, next) => {
     if (req.session.userid) {
       req.session.destroy(console.error)
 
