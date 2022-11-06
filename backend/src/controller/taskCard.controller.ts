@@ -44,6 +44,22 @@ class TaskCardController {
     })
   }
 
+  public updateTaskCard: RequestHandler = async (req, res, next) => {
+    const taskCardId = Number(req.params.taskCardId)
+    const taskCard = await this.taskCardService.updateTaskCard(taskCardId, req.body)
+
+    if (taskCard) {
+      res.status(200).json({
+        message: 'success update task card',
+        task_card: taskCard,
+      })
+    } else {
+      res.status(500).json({
+        message: 'fail udpate task card',
+      })
+    }
+  }
+
   public deleteTaskCard: RequestHandler = async (req, res, next) => {
     const taskCardId = Number(req.params.taskCardId)
     await this.taskCardService.deleteTaskCard({ id: taskCardId })

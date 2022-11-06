@@ -21,11 +21,11 @@ taskCardRouter.get(
 )
 
 // // TODO: validation
-// taskCardRouter.patch(
-//   '/:taskCardId',
-//   checkIsLoggedInUser,
-//   asyncMiddleware(taskCardController.updateTaskCard)
-// )
+taskCardRouter.patch(
+  '/:taskCardId',
+  checkIsLoggedInUser,
+  asyncMiddleware(taskCardController.updateTaskCard)
+)
 
 taskCardRouter.delete(
   '/:taskCardId',

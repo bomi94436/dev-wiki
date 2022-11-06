@@ -32,6 +32,21 @@ class TaskCardRepositoryImpl implements TaskCardRepository {
     })
   }
 
+  public async updateOne(
+    taskCardId: number,
+    data: Partial<Pick<TaskCard, 'name' | 'description' | 'is_closed'>>
+  ): Promise<TaskCard | null> {
+    const result = await this.repository.update(taskCardId, data)
+
+    if (result) {
+      return await this.repository.findOneBy({
+        id: taskCardId,
+      })
+    } else {
+      return null
+    }
+  }
+
   public async deleteOne({ id }: Pick<TaskCard, 'id'>) {
     await this.repository.delete({ id })
   }

@@ -23,6 +23,21 @@ class TaskCardService {
     return await this.taskCardRepository.getOne({ id })
   }
 
+  public async updateTaskCard(
+    taskCardId: number,
+    { name, description, is_closed }: Partial<Pick<TaskCard, 'name' | 'description' | 'is_closed'>>
+  ) {
+    const taskCard = await this.taskCardRepository.getOne({
+      id: taskCardId,
+    })
+
+    if (!taskCard) {
+      throw new CustomError(404, 'not found task card')
+    }
+
+    return await this.taskCardRepository.updateOne(taskCardId, { name, description, is_closed })
+  }
+
   public async deleteTaskCard({ id }: Pick<TaskCard, 'id'>) {
     const taskCard = await this.taskCardRepository.getOne({ id })
 
