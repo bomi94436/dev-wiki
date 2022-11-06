@@ -34,9 +34,12 @@ class TaskCardRepositoryImpl implements TaskCardRepository {
   }
 
   public async getOne({ id }: Pick<TaskCard, 'id'>): Promise<TaskCard | null> {
-    return await this.repository.findOneBy({
-      id,
-    })
+    return await this.repository
+      .createQueryBuilder('task_card')
+      .select()
+      .leftJoinAndSelect('task_card.tasks', 'Task')
+      .where({ id })
+      .getOne()
   }
 
   public async updateOne(
