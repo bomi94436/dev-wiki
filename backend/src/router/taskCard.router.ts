@@ -4,6 +4,7 @@ import { asyncMiddleware } from 'global/utils'
 
 import TaskController from 'controller/task.controller'
 import TaskCardController from 'controller/taskCard.controller'
+import taskCardValidator from 'middleware/vaildator/taskCard.validator'
 
 const taskCardRouter = express.Router()
 const taskController = new TaskController()
@@ -11,8 +12,12 @@ const taskCardController = new TaskCardController()
 
 taskCardRouter.get('/', checkIsLoggedInUser, asyncMiddleware(taskCardController.getTaskCards))
 
-// TODO: validation
-taskCardRouter.post('/', checkIsLoggedInUser, asyncMiddleware(taskCardController.createTaskCard))
+taskCardRouter.post(
+  '/',
+  checkIsLoggedInUser,
+  taskCardValidator.create,
+  asyncMiddleware(taskCardController.createTaskCard)
+)
 
 taskCardRouter.get(
   '/:taskCardId',
@@ -20,10 +25,10 @@ taskCardRouter.get(
   asyncMiddleware(taskCardController.getTaskCard)
 )
 
-// // TODO: validation
 taskCardRouter.patch(
   '/:taskCardId',
   checkIsLoggedInUser,
+  taskCardValidator.update,
   asyncMiddleware(taskCardController.updateTaskCard)
 )
 
