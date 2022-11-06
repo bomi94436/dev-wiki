@@ -45,10 +45,10 @@ export class Task {
   @Column({ nullable: true, comment: '상위 task id, null일 경우 최상위 task' })
   parent_task_id: number
 
-  @ManyToOne(() => Task, (task) => task.tasks, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @ManyToOne(() => Task, (task) => task.sub_tasks, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   @JoinColumn({ name: 'parent_task_id' })
   parent_task: Task
 
   @OneToMany(() => Task, (task) => task.parent_task)
-  tasks: Task[]
+  sub_tasks: Task[]
 }

@@ -15,8 +15,8 @@ class TaskRepositoryImpl implements TaskRepository {
       .createQueryBuilder()
       .select(['t1'])
       .from(Task, 't1')
-      .leftJoinAndMapMany('t1.tasks', 'task', 't2', 't1.task_id = t2.parent_task_id')
-      .leftJoinAndMapMany('t2.tasks', 'task', 't3', 't2.task_id = t3.parent_task_id')
+      .leftJoinAndMapMany('t1.sub_tasks', 'task', 't2', 't1.task_id = t2.parent_task_id')
+      .leftJoinAndMapMany('t2.sub_tasks', 'task', 't3', 't2.task_id = t3.parent_task_id')
       .where('t1.parent_task_id IS NULL')
 
     if (taskCardId) {
