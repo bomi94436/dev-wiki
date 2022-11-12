@@ -3,16 +3,15 @@ import { Divider, IconButton, InputBase, Paper, Typography } from '@mui/material
 import SearchIcon from '@mui/icons-material/Search'
 
 import Article from './Article'
-import { useQuery } from 'react-query'
-import { getArticles } from '@/global/api/funcs'
+import { useArticles } from '../api/hook'
 
 const ArticleList: React.FC = () => {
-  const { data: articles, isLoading } = useQuery(['articles'], getArticles)
+  const { articles, isLoading } = useArticles()
 
   return (
     <div className="flex justify-center p-5">
       <div className="max-w-[1000px] w-full">
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom className="!font-semibold">
           아티클 리스트
         </Typography>
 

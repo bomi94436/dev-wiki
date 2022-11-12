@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios'
 
 import API from '@/global/api'
-import { Article } from '../entity'
+import { Article } from './entity'
 
 export const postArticle = async ({
   title,

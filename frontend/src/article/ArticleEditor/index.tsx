@@ -4,11 +4,12 @@ import { useMutation, useQuery } from 'react-query'
 import { useRecoilState } from 'recoil'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import { getArticle, patchArticle, PatchArticleParams, postArticle } from '@/global/api/funcs'
 import { snackbarState } from '@/global/atom'
 import Editor from './Editor'
 import SettingArticleDetail from './SettingArticleDetail'
 import { parseImageMarkdown } from '../usecase'
+import { useArticle } from '../api/hook'
+import { patchArticle, PatchArticleParams, postArticle } from '../api/funcs'
 
 const ArticleEditor: React.FC = () => {
   const navigate = useNavigate()
@@ -16,9 +17,7 @@ const ArticleEditor: React.FC = () => {
 
   const [query] = useSearchParams()
   const articleId = !isNaN(parseInt(query.get('id'))) ? parseInt(query.get('id')) : null
-  const { data: article } = useQuery(['article', articleId], () => getArticle(articleId), {
-    enabled: !!articleId,
-  })
+  const { article } = useArticle({ id: articleId })
 
   const [title, setTitle] = useState<string>(article ? article.title : '')
   const [content, setContent] = useState<string>(article ? article.content : '')

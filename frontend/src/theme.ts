@@ -2,7 +2,7 @@ import { createTheme, Shadows } from '@mui/material'
 
 const theme = createTheme({
   shape: {
-    borderRadius: 8,
+    borderRadius: 12,
   },
   palette: {
     primary: {

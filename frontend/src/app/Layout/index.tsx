@@ -6,10 +6,6 @@ import {
   Divider,
   IconButton,
   List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Menu,
   MenuItem,
   Toolbar,
@@ -24,6 +20,8 @@ import {
   AccountCircle as AccountCircle,
   Create as CreateIcon,
   ViewList as ViewListIcon,
+  Style as StyleIcon,
+  ViewKanban as ViewKanbanIcon,
 } from '@mui/icons-material'
 
 import AppBar from './components/AppBar'
@@ -31,7 +29,7 @@ import Drawer from './components/Drawer'
 import DrawerHeader from './components/DrawerHeader'
 import API from '@/global/api'
 import { useMutation } from 'react-query'
-import { useUserInfo } from '@/global/hook'
+import { useUserInfo } from '@/global/api/hook'
 import DrawerItem from './components/DrawerItem'
 
 const menuId = 'primary-search-account-menu'
@@ -158,17 +156,25 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
             <CreateIcon color="primary" />
           </DrawerItem>
 
-          <DrawerItem text="아티클 조회" link="/article">
-            <ViewListIcon color="primary" />
+          <DrawerItem text="아티클 리스트" link="/article">
+            <StyleIcon color="primary" />
           </DrawerItem>
         </List>
 
         <Divider />
 
-        <List></List>
+        <List>
+          <DrawerItem text="태스크 리스트" link="/task">
+            <ViewListIcon color="primary" />
+          </DrawerItem>
+
+          {/* <DrawerItem text="태스크 칸반" link="/task">
+            <ViewKanbanIcon color="primary" />
+          </DrawerItem> */}
+        </List>
       </Drawer>
 
-      <Box component="main" className="!p-0" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" className="!p-0 bg-slate-50" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
         {children}
       </Box>

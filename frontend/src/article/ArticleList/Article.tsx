@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material'
-import { Article } from '@/global/entity'
+import { Article } from '@/article/api/entity'
 import { useNavigate } from 'react-router-dom'
 
 interface ArticleProps {
