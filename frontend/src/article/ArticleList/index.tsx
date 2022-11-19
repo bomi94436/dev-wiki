@@ -6,7 +6,7 @@ import Article from './Article'
 import { useArticles } from '../api/hook'
 
 const ArticleList: React.FC = () => {
-  const { articles, isLoading } = useArticles()
+  const { articles } = useArticles()
 
   return (
     <div className="flex justify-center p-5">
@@ -34,12 +34,11 @@ const ArticleList: React.FC = () => {
         <Divider className="!my-4" />
 
         <div className="grid grid-cols-3 gap-4 py-2">
-          {!isLoading &&
-            articles.map((article) => (
-              <React.Fragment key={`grid-item-${article.id}`}>
-                <Article article={article} />
-              </React.Fragment>
-            ))}
+          {articles?.map((article) => (
+            <React.Fragment key={`grid-item-${article.id}`}>
+              <Article article={article} />
+            </React.Fragment>
+          ))}
         </div>
       </div>
     </div>

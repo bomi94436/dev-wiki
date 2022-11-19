@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom'
 interface DrawerItemProps {
   text: string
   children: JSX.Element
-  link?: string
+  link: string
+  open: boolean
 }
 
-const DrawerItem: React.FC<DrawerItemProps> = ({ text, children, link }) => {
+const DrawerItem: React.FC<DrawerItemProps> = ({ text, children, link, open }) => {
   const navigate = useNavigate()
 
   return (

@@ -7,7 +7,7 @@ export const useArticles = () => {
   return { articles, isLoading, refetch }
 }
 
-export const useArticle = ({ id }: { id?: number } = {}) => {
+export const useArticle = ({ id }: { id: number | null }) => {
   const {
     data: article,
     isLoading,

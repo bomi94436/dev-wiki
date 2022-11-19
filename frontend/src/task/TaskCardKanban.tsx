@@ -1,7 +1,7 @@
 import React from 'react'
 import { Typography } from '@mui/material'
 
-const TaskKanban: React.FC = () => {
+const TaskCardKanban: React.FC = () => {
   return (
     <div className="flex justify-center p-5">
       <div className="max-w-[1000px] w-full">
@@ -43,4 +43,4 @@ const TaskKanban: React.FC = () => {
   )
 }
 
-export default TaskKanban
+export default TaskCardKanban

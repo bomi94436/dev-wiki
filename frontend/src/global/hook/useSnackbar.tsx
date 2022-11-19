@@ -28,7 +28,7 @@ const useSnackbar = () => {
         >
           <Alert
             onClose={() => setSnackbar({ type: null, message: null })}
-            severity={snackbar.type}
+            severity={snackbar.type!}
           >
             {snackbar.message}
           </Alert>

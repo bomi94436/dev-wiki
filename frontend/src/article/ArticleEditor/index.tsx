@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { AxiosError } from 'axios'
-import { useMutation, useQuery } from 'react-query'
+import { useMutation } from 'react-query'
 import { useRecoilState } from 'recoil'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
@@ -10,27 +10,30 @@ import SettingArticleDetail from './SettingArticleDetail'
 import { parseImageMarkdown } from '../usecase'
 import { useArticle } from '../api/hook'
 import { patchArticle, PatchArticleParams, postArticle } from '../api/funcs'
+import { parseStringToInt } from '@/global/util/funcs'
 
 const ArticleEditor: React.FC = () => {
   const navigate = useNavigate()
   const [editorPage, setEditorPage] = useState<1 | 2>(1)
 
   const [query] = useSearchParams()
-  const articleId = !isNaN(parseInt(query.get('id'))) ? parseInt(query.get('id')) : null
+  const articleId = parseStringToInt(query.get('id'))
   const { article } = useArticle({ id: articleId })
 
   const [title, setTitle] = useState<string>(article ? article.title : '')
   const [content, setContent] = useState<string>(article ? article.content : '')
-  const [thumbnail, setThumbnail] = useState<string | null>(article ? article.thumbnail : null)
-  const [shortDescription, setShortDescription] = useState<string | null>(
-    article ? article.short_description : null
+  const [thumbnail, setThumbnail] = useState<string | undefined>(
+    article ? article.thumbnail : undefined
+  )
+  const [shortDescription, setShortDescription] = useState<string | undefined>(
+    article ? article.short_description : undefined
   )
 
   const [, setSnackbar] = useRecoilState(snackbarState)
 
   const { mutate: createArticle } = useMutation(postArticle, {
     onError: (err) => {
-      if ((err as AxiosError).response.status === 422) {
+      if ((err as AxiosError).response?.status === 422) {
         setSnackbar({
           message: '제목 또는 내용을 입력하세요.',
           type: 'error',
@@ -48,7 +51,7 @@ const ArticleEditor: React.FC = () => {
 
   const { mutate: updateArticle } = useMutation((data: PatchArticleParams) => patchArticle(data), {
     onError: (err) => {
-      if ((err as AxiosError).response.status === 422) {
+      if ((err as AxiosError).response?.status === 422) {
         setSnackbar({
           message: '제목 또는 내용을 입력하세요.',
           type: 'error',

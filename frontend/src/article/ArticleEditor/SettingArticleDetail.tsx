@@ -11,10 +11,10 @@ interface SettingArticleDetailProps {
   onClickPrevPage: React.MouseEventHandler<HTMLButtonElement>
   onSubmitArticle: React.MouseEventHandler<HTMLButtonElement>
 
-  thumbnail: string | null
-  setThumbnail: React.Dispatch<React.SetStateAction<string | null>>
-  shortDescription: string
-  setShortDescription: React.Dispatch<React.SetStateAction<string>>
+  thumbnail?: string
+  setThumbnail: React.Dispatch<React.SetStateAction<string | undefined>>
+  shortDescription?: string
+  setShortDescription: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
 const SettingArticleDetail: React.FC<SettingArticleDetailProps> = ({
@@ -44,7 +44,7 @@ const SettingArticleDetail: React.FC<SettingArticleDetailProps> = ({
       },
       onError: (err) => {
         const error = err as AxiosError
-        if (error.response.status === 422) {
+        if (error.response?.status === 422) {
           setSnackbar({
             message: '파일 업로드에 실패하였습니다. 파일 형식은 jpg, jpeg, png만 가능합니다.',
             type: 'error',
@@ -60,7 +60,7 @@ const SettingArticleDetail: React.FC<SettingArticleDetailProps> = ({
   )
 
   const onChangeThumbnail: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
-    const file = e.target.files[0]
+    const file = e.target.files![0]
     const formdata = new FormData()
     formdata.append('image', file)
 
@@ -87,7 +87,7 @@ const SettingArticleDetail: React.FC<SettingArticleDetailProps> = ({
               size="small"
               color="error"
               className="!absolute right-2 bottom-2"
-              onClick={() => setThumbnail(null)}
+              onClick={() => setThumbnail(undefined)}
             >
               삭제
             </Button>
@@ -98,7 +98,7 @@ const SettingArticleDetail: React.FC<SettingArticleDetailProps> = ({
               variant="outlined"
               className="!bg-white"
               onClick={() => {
-                uploadInputRef.current.click()
+                uploadInputRef.current?.click()
               }}
             >
               썸네일 업로드

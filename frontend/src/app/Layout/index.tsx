@@ -152,11 +152,11 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
         <Divider />
 
         <List>
-          <DrawerItem text="아티클 쓰기" link="/article/write">
+          <DrawerItem text="아티클 쓰기" link="/article/write" open={open}>
             <CreateIcon color="primary" />
           </DrawerItem>
 
-          <DrawerItem text="아티클 리스트" link="/article">
+          <DrawerItem text="아티클 리스트" link="/article" open={open}>
             <StyleIcon color="primary" />
           </DrawerItem>
         </List>
@@ -164,7 +164,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
         <Divider />
 
         <List>
-          <DrawerItem text="태스크 리스트" link="/task">
+          <DrawerItem text="태스크 리스트" link="/task" open={open}>
             <ViewListIcon color="primary" />
           </DrawerItem>
 

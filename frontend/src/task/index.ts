@@ -1,2 +1,2 @@
-export { default as TaskKanban } from './TaskKanban'
-export { default as TaskList } from './TaskList'
+export { default as TaskCardKanban } from './TaskCardKanban'
+export { default as TaskCardList } from './TaskCardList'

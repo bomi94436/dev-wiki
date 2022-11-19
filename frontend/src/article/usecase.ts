@@ -1,2 +1,2 @@
-export const parseImageMarkdown = (str: string): string | null =>
-  str.match(/(?<alt>!\[[^\]]*\])\((?<filename>.*?)(?=\"|\))\)/)?.groups?.filename || null
+export const parseImageMarkdown = (str: string): string | undefined =>
+  str.match(/(?<alt>!\[[^\]]*\])\((?<filename>.*?)(?=\"|\))\)/)?.groups?.filename || undefined

@@ -82,7 +82,7 @@ const Editor: React.FC<EditorProps> = ({
           setMarkdown(insertedMarkdown)
         } catch (err) {
           const error = err as AxiosError
-          if (error.response.status === 422) {
+          if (error.response?.status === 422) {
             setSnackbar({
               message: '파일 업로드에 실패하였습니다. 파일 형식은 jpg, jpeg, png만 가능합니다.',
               type: 'error',
@@ -112,7 +112,7 @@ const Editor: React.FC<EditorProps> = ({
 
       <MDEditor
         value={content}
-        onChange={setContent}
+        onChange={(value) => setContent(value || '')}
         height={400}
         onPaste={async (event) => {
           if (event.clipboardData.files.length) {
