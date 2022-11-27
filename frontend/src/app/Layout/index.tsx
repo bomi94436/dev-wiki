@@ -164,17 +164,17 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
         <Divider />
 
         <List>
-          <DrawerItem text="태스크 리스트" link="/task" open={open}>
+          <DrawerItem text="태스크 리스트" link="/task/list" open={open}>
             <ViewListIcon color="primary" />
           </DrawerItem>
 
-          {/* <DrawerItem text="태스크 칸반" link="/task">
+          {/* <DrawerItem text="태스크 칸반" link="/task/kanban" open={open}>
             <ViewKanbanIcon color="primary" />
           </DrawerItem> */}
         </List>
       </Drawer>
 
-      <Box component="main" className="!p-0 bg-slate-50" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" className="!p-0 bg-background" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
         {children}
       </Box>

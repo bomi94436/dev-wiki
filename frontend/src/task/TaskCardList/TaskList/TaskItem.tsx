@@ -51,12 +51,13 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
         <div className="grid grid-cols-1 gap-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
+              {/* TODO: update task api */}
               <Checkbox checked={!!task.completed_at} readOnly />
 
               <p>{task.content}</p>
             </div>
 
-            {/* <div>
+            <div>
               <IconButton
                 aria-label="more"
                 id="more-button"
@@ -85,7 +86,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
                   horizontal: 'right',
                 }}
               >
-                <MenuItem
+                {/* <MenuItem
                   onClick={() =>
                     setMenu((prev) => ({
                       date: !prev.date,
@@ -93,7 +94,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
                     }))
                   }
                 >
-                  <Checkbox checked={menu.date} readOnly />
+                  <Checkbox checked={menu.date} readOnly className="!p-0 !mr-2" />
                   {MenuLabel.date}
                 </MenuItem>
 
@@ -106,12 +107,32 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
                       }))
                     }
                   >
-                    <Checkbox checked={menu.time} readOnly />
+                    <Checkbox checked={menu.time} readOnly className="!p-0 !mr-2" />
                     {MenuLabel.time}
                   </MenuItem>
-                )}
+                )} */}
+
+                <MenuItem
+                  onClick={() => {
+                    // TODO: add task api
+                    setIsOpenSubTask(true)
+                    setAnchorEl(null)
+                  }}
+                >
+                  하위 Task 추가
+                </MenuItem>
+
+                <MenuItem
+                  className="!text-red-600"
+                  onClick={() => {
+                    // TODO: delete task api
+                    setAnchorEl(null)
+                  }}
+                >
+                  삭제
+                </MenuItem>
               </Menu>
-            </div> */}
+            </div>
           </div>
 
           {/* <div>

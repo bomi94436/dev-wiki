@@ -5,7 +5,7 @@ import RouteOption from './RouteOption'
 
 import { Login, Signup } from '@/auth'
 import { ArticleDetail, ArticleEditor, ArticleList } from '@/article'
-import { TaskCardList } from '@/task'
+import { TaskCardKanban, TaskCardList } from '@/task'
 
 const PageRouter = () => {
   return (
@@ -54,7 +54,8 @@ const PageRouter = () => {
               </RouteOption>
             }
           >
-            <Route index element={<TaskCardList />} />
+            <Route path="list" element={<TaskCardList />} />
+            <Route path="kanban" element={<TaskCardKanban />} />
           </Route>
         </Route>
 

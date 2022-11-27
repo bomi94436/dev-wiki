@@ -26,6 +26,9 @@ const TaskList: React.FC<TaskListProps> = ({ taskCard }) => {
         {tasks?.map((task) => (
           <TaskItem key={`task-item-${task.id}`} task={task} />
         ))}
+        <li className="border border-dashed border-gray-300 bg-gray-200 text-gray-400 font-semibold rounded-xl py-2 m-2 flex justify-center items-center cursor-pointer">
+          <span>+</span>
+        </li>
       </ul>
     </div>
   )

@@ -103,7 +103,7 @@ const Editor: React.FC<EditorProps> = ({
     <section className="w-full p-8" data-color-mode="light">
       <div className="pb-6">
         <input
-          className="outline-none text-3xl w-full bg-slate-50"
+          className="outline-none text-3xl w-full bg-none bg-background"
           placeholder="제목을 입력하세요"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
