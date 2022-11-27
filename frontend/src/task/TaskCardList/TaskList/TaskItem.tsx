@@ -56,7 +56,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
               <p>{task.content}</p>
             </div>
 
-            <div>
+            {/* <div>
               <IconButton
                 aria-label="more"
                 id="more-button"
@@ -111,10 +111,10 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
                   </MenuItem>
                 )}
               </Menu>
-            </div>
+            </div> */}
           </div>
 
-          <div>
+          {/* <div>
             <TextField
               type="date"
               size="small"
@@ -135,7 +135,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
                 step: 300, // 5 min
               }}
             />
-          </div>
+          </div> */}
         </div>
       </div>
 
