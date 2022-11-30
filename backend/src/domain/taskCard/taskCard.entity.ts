@@ -18,11 +18,20 @@ export class TaskCard {
   @OneToMany(() => Task, (task) => task.task_card)
   tasks?: Task[]
 
-  task_count: number
+  total_task_count: number = 0
+  completed_task_count: number = 0
+
+  getTotalTaskCount() {
+    this.total_task_count = this.tasks?.length || 0
+  }
+  getCompletedTaskCount() {
+    this.completed_task_count = this.tasks?.filter((task) => task.completed_at).length || 0
+  }
 
   @AfterLoad()
-  getTasksCount() {
-    this.task_count = this.tasks?.length || 0
+  afterLoad() {
+    this.getTotalTaskCount()
+    this.getCompletedTaskCount()
     delete this.tasks
   }
 
