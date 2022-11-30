@@ -43,7 +43,7 @@ export class Task {
   task_card: TaskCard
 
   @Column({ nullable: true, comment: '상위 task id, null일 경우 최상위 task' })
-  parent_task_id: number
+  parent_task_id: number | null
 
   @ManyToOne(() => Task, (task) => task.sub_tasks, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   @JoinColumn({ name: 'parent_task_id' })

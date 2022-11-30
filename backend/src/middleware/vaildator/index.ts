@@ -44,7 +44,7 @@ export const validator =
     Object.entries(options).forEach(([field, option]) => {
       const data = req[property][field]
 
-      if (option.required && !data) {
+      if (option.required && (data === undefined || data === null)) {
         throw new CustomError(422, `${field} is required in ${property}`)
       }
 
