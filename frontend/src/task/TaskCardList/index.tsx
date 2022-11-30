@@ -31,13 +31,13 @@ const TaskCardList: React.FC = () => {
               </div>
 
               <div className="flex items-center">
-                {taskCard.task_count ? (
+                {taskCard.total_task_count ? (
                   <React.Fragment>
                     <span className="mr-3 text-slate-500">
-                      {3} / {taskCard.task_count}
+                      {taskCard.completed_task_count} / {taskCard.total_task_count}
                     </span>
 
-                    <TaskCircle completed={3} total={taskCard.task_count} />
+                    <TaskCircle completed={3} total={taskCard.total_task_count} />
                   </React.Fragment>
                 ) : null}
               </div>

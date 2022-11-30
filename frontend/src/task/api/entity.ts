@@ -3,7 +3,8 @@ export interface TaskCard {
   name: string
   description?: string
   is_closed: boolean
-  task_count: number
+  total_task_count: number
+  completed_task_count: number
 }
 
 export interface Task {
