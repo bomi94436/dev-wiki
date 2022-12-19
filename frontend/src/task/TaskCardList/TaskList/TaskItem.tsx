@@ -1,10 +1,12 @@
 import React, { useMemo, useState } from 'react'
 import cx from 'classnames'
-import { Checkbox, IconButton, Menu, MenuItem, TextField } from '@mui/material'
+import { Checkbox, IconButton, Menu, MenuItem } from '@mui/material'
 import { MoreVert as MoreVertIcon } from '@mui/icons-material'
 
 import { FolderToggleButton } from '@/global/ui'
 import { Task } from '../../api/entity'
+import EditTaskModal from './EditTaskModal'
+import useCreateTask from '@/task/hook/useCreateTask'
 
 const MenuLabel = {
   date: '목표일 설정',
@@ -13,12 +15,13 @@ const MenuLabel = {
 
 interface TaskItemProps {
   task: Task
+  refetch: () => void
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
-  const [isOpenSubTask, setIsOpenSubTask] = useState<boolean>(false)
-  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null)
-  const open = Boolean(anchorEl)
+const TaskItem: React.FC<TaskItemProps> = ({ task, refetch }) => {
+  const [isOpenSubTask, setIsOpenSubTask] = useState<boolean>(false) // 하위 task open 여부
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null) // more icon element
+  const isOpenMore = Boolean(anchorEl)
   const [menu, setMenu] = useState<{
     [key in keyof typeof MenuLabel]: boolean
   }>({
@@ -27,6 +30,11 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
   })
 
   const hasSubTask = useMemo(() => !!task.sub_tasks?.length, [task])
+  const { isOpen, open, close, submit } = useCreateTask({
+    refetch,
+    task_card_id: task.task_card_id,
+    parent_task_id: task.id,
+  })
 
   return (
     <li
@@ -61,8 +69,8 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
               <IconButton
                 aria-label="more"
                 id="more-button"
-                aria-controls={open ? 'more-menu' : undefined}
-                aria-expanded={open ? 'true' : undefined}
+                aria-controls={isOpenMore ? 'more-menu' : undefined}
+                aria-expanded={isOpenMore ? 'true' : undefined}
                 aria-haspopup="true"
                 onClick={(e) => setAnchorEl(e.currentTarget)}
               >
@@ -75,7 +83,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
                   'aria-labelledby': 'more-button',
                 }}
                 anchorEl={anchorEl}
-                open={open}
+                open={isOpenMore}
                 onClose={() => setAnchorEl(null)}
                 anchorOrigin={{
                   vertical: 'bottom',
@@ -115,7 +123,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
                 <MenuItem
                   onClick={() => {
                     // TODO: add task api
-                    setIsOpenSubTask(true)
+                    open()
                     setAnchorEl(null)
                   }}
                 >
@@ -164,11 +172,13 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
         <div className="border-l border-gray-300 ml-3">
           <ul className="ml-7 mt-4">
             {task.sub_tasks!.map((t) => (
-              <TaskItem key={`sub-task-item-${t.id}`} task={t} />
+              <TaskItem key={`sub-task-item-${t.id}`} task={t} refetch={refetch} />
             ))}
           </ul>
         </div>
       ) : null}
+
+      {isOpen && <EditTaskModal isOpen={isOpen} close={close} submit={submit} />}
     </li>
   )
 }

@@ -18,3 +18,12 @@ export const getTasks = async ({ taskCardId }: { taskCardId: number }) => {
     throw err
   }
 }
+
+export const postTask = async (data: Pick<Task, 'content' | 'task_card_id' | 'parent_task_id'>) => {
+  try {
+    const response = await API.post<{ task: Task }>(`/task`, data)
+    return response?.data
+  } catch (err) {
+    throw err
+  }
+}
