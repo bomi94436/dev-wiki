@@ -26,10 +26,10 @@ export const validateDataType = {
 }
 
 export const validator =
-  (
+  <T extends Object>(
     property: 'body' | 'params',
     options: {
-      [field: string]: {
+      [field in keyof T]: {
         type: typeof DataType[keyof typeof DataType]
         required?: Boolean
         length?: {

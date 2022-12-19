@@ -1,7 +1,8 @@
 import { DataType, validator } from './index'
+import { CreateTaskDTO, UpdateTaskDTO } from 'types/task.dto'
 
 const taskValidator = {
-  create: validator('body', {
+  create: validator<CreateTaskDTO>('body', {
     content: {
       required: true,
       type: DataType.string,
@@ -19,7 +20,7 @@ const taskValidator = {
     },
   }),
 
-  update: validator('body', {
+  update: validator<UpdateTaskDTO>('body', {
     content: {
       type: DataType.string,
       length: {
