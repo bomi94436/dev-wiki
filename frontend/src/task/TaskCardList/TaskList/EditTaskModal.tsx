@@ -14,7 +14,7 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({ isOpen, close, submit, ta
 
   return (
     <Dialog open={isOpen} onClose={close}>
-      <DialogTitle>{task ? 'Task 수정' : 'Task 추가'}</DialogTitle>
+      <DialogTitle>{task ? '태스크 수정' : '태스크 추가'}</DialogTitle>
 
       <DialogContent>
         <TextField

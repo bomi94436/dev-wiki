@@ -11,20 +11,20 @@ const useCreateTask = ({
   task_card_id,
   parent_task_id,
 }: { refetch: () => void } & Pick<Task, 'task_card_id' | 'parent_task_id'>) => {
-  const [isOpenEditTaskModal, setIsOpenEditTaskModal] = useState<boolean>(false) // task 생성 또는 수정 모달 open 여부
+  const [isOpenAddTaskModal, setIsOpenAddTaskModal] = useState<boolean>(false)
   const [, setSnackbar] = useRecoilState(snackbarState)
 
   const open = () => {
-    setIsOpenEditTaskModal(true)
+    setIsOpenAddTaskModal(true)
   }
   const close = () => {
-    setIsOpenEditTaskModal(false)
+    setIsOpenAddTaskModal(false)
   }
   const { mutate: createTask } = useMutation(postTask, {
     onSuccess: () => {
       setSnackbar({
         type: 'success',
-        message: 'Task가 추가되었습니다.',
+        message: '태스크가 추가되었습니다.',
       })
 
       refetch()
@@ -50,7 +50,7 @@ const useCreateTask = ({
 
   return {
     submit: submitCreateTask,
-    isOpen: isOpenEditTaskModal,
+    isOpen: isOpenAddTaskModal,
     open,
     close,
   }
