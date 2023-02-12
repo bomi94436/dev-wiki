@@ -36,3 +36,20 @@ export const postTaskCard = async (data: Pick<TaskCard, 'name' | 'description'>)
     throw err
   }
 }
+
+export const patchTask = async ({
+  id,
+  body,
+}: {
+  id: number
+  body: Partial<
+    Pick<Task, 'content' | 'date' | 'time' | 'completed_at' | 'task_card_id' | 'parent_task_id'>
+  >
+}) => {
+  try {
+    const response = await API.patch<{ task: Task }>(`/task/${id}`, body)
+    return response?.data
+  } catch (err) {
+    throw err
+  }
+}

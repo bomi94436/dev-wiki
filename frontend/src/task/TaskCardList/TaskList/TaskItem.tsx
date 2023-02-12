@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import cx from 'classnames'
 import { Checkbox, IconButton, Menu, MenuItem } from '@mui/material'
 import { MoreVert as MoreVertIcon } from '@mui/icons-material'
@@ -7,6 +7,8 @@ import { FolderToggleButton } from '@/global/ui'
 import { Task } from '../../api/entity'
 import EditTaskModal from './EditTaskModal'
 import useCreateTask from '@/task/hook/useCreateTask'
+import { patchTask } from '@/task/api/funcs'
+import { useMutation } from 'react-query'
 
 const MenuLabel = {
   date: '목표일 설정',
@@ -35,6 +37,29 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, refetch }) => {
     task_card_id: task.task_card_id,
     parent_task_id: task.id,
   })
+  const { mutate: updateTask } = useMutation(patchTask, {
+    onSuccess: () => {
+      refetch()
+    },
+  })
+
+  const onClickCheckbox = useCallback(
+    ({
+        id,
+        checked,
+      }: {
+        id: number
+        checked: boolean
+      }): React.MouseEventHandler<HTMLButtonElement> =>
+      () => {
+        if (checked) {
+          updateTask({ id, body: { completed_at: null } })
+        } else {
+          updateTask({ id, body: { completed_at: new Date().toISOString() } })
+        }
+      },
+    []
+  )
 
   return (
     <li
@@ -59,8 +84,10 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, refetch }) => {
         <div className="grid grid-cols-1 gap-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              {/* TODO: update task api */}
-              <Checkbox checked={!!task.completed_at} readOnly />
+              <Checkbox
+                checked={!!task.completed_at}
+                onClick={onClickCheckbox({ id: task.id, checked: !!task.completed_at })}
+              />
 
               <p>{task.content}</p>
             </div>
