@@ -25,6 +25,7 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({ isOpen, close, submit, ta
           type="text"
           fullWidth
           variant="standard"
+          value={input?.content}
           onChange={(e) =>
             setInput((prev) => ({
               ...prev,

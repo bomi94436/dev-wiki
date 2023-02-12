@@ -6,7 +6,7 @@ import { MoreVert as MoreVertIcon } from '@mui/icons-material'
 import { FolderToggleButton } from '@/global/ui'
 import { Task } from '../../api/entity'
 import EditTaskModal from './EditTaskModal'
-import useCreateTask from '@/task/hook/useCreateTask'
+import useEditTask from '@/task/hook/useEditTask'
 import { patchTask } from '@/task/api/funcs'
 import { useMutation } from 'react-query'
 
@@ -18,7 +18,9 @@ const MenuLabel = {
 interface TaskItemProps {
   task: Task
   refetch: () => void
-  foldMode: 'expand_all' | 'collapse_all' | null
+  foldMode: {
+    mode: 'expand_all' | 'collapse_all' | null
+  }
 }
 
 const TaskItem: React.FC<TaskItemProps> = ({ task, refetch, foldMode }) => {
@@ -33,10 +35,9 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, refetch, foldMode }) => {
   })
 
   const hasSubTask = useMemo(() => !!task.sub_tasks?.length, [task])
-  const { isOpen, open, close, submit } = useCreateTask({
+  const { isOpen, open, close, mode, submitCreateTask, submitUpdateTask } = useEditTask({
     refetch,
     task_card_id: task.task_card_id,
-    parent_task_id: task.id,
   })
   const { mutate: updateTask } = useMutation(patchTask, {
     onSuccess: () => {
@@ -63,10 +64,10 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, refetch, foldMode }) => {
   )
 
   useEffect(() => {
-    if (foldMode === 'expand_all') {
+    if (foldMode.mode === 'expand_all') {
       setIsOpenSubTask(true)
     }
-    if (foldMode === 'collapse_all') {
+    if (foldMode.mode === 'collapse_all') {
       setIsOpenSubTask(false)
     }
   }, [foldMode])
@@ -159,12 +160,20 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, refetch, foldMode }) => {
 
                 <MenuItem
                   onClick={() => {
-                    // TODO: add task api
-                    open()
+                    open('create')
                     setAnchorEl(null)
                   }}
                 >
                   하위 태스크 추가
+                </MenuItem>
+
+                <MenuItem
+                  onClick={() => {
+                    open('update')
+                    setAnchorEl(null)
+                  }}
+                >
+                  수정
                 </MenuItem>
 
                 <MenuItem
@@ -220,7 +229,21 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, refetch, foldMode }) => {
         </div>
       ) : null}
 
-      {isOpen && <EditTaskModal isOpen={isOpen} close={close} submit={submit} />}
+      {isOpen && (
+        <EditTaskModal
+          isOpen={isOpen}
+          close={close}
+          submit={({ content }: Partial<Pick<Task, 'content'>>) => {
+            if (mode === 'create') {
+              submitCreateTask({ content, parent_task_id: task.id })
+              setIsOpenSubTask(true)
+            } else {
+              submitUpdateTask({ id: task.id, content })
+            }
+          }}
+          task={mode === 'update' ? task : undefined}
+        />
+      )}
     </li>
   )
 }
