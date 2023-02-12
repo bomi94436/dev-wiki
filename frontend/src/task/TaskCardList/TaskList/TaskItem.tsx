@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import cx from 'classnames'
 import { Checkbox, IconButton, Menu, MenuItem } from '@mui/material'
 import { MoreVert as MoreVertIcon } from '@mui/icons-material'
@@ -18,9 +18,10 @@ const MenuLabel = {
 interface TaskItemProps {
   task: Task
   refetch: () => void
+  foldMode: 'expand_all' | 'collapse_all' | null
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ task, refetch }) => {
+const TaskItem: React.FC<TaskItemProps> = ({ task, refetch, foldMode }) => {
   const [isOpenSubTask, setIsOpenSubTask] = useState<boolean>(false) // 하위 task open 여부
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null) // more icon element
   const isOpenMore = Boolean(anchorEl)
@@ -60,6 +61,15 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, refetch }) => {
       },
     []
   )
+
+  useEffect(() => {
+    if (foldMode === 'expand_all') {
+      setIsOpenSubTask(true)
+    }
+    if (foldMode === 'collapse_all') {
+      setIsOpenSubTask(false)
+    }
+  }, [foldMode])
 
   return (
     <li
@@ -154,7 +164,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, refetch }) => {
                     setAnchorEl(null)
                   }}
                 >
-                  하위 Task 추가
+                  하위 태스크 추가
                 </MenuItem>
 
                 <MenuItem
@@ -199,7 +209,12 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, refetch }) => {
         <div className="border-l border-gray-300 ml-3">
           <ul className="ml-7 mt-4">
             {task.sub_tasks!.map((t) => (
-              <TaskItem key={`sub-task-item-${t.id}`} task={t} refetch={refetch} />
+              <TaskItem
+                key={`sub-task-item-${t.id}`}
+                task={t}
+                refetch={refetch}
+                foldMode={foldMode}
+              />
             ))}
           </ul>
         </div>

@@ -58,7 +58,7 @@ const TaskCardList: React.FC = () => {
             태스크 카드 리스트
           </Typography>
 
-          <IconButton onClick={() => setIsOpenAddTaskCardModal(true)}>
+          <IconButton onClick={() => setIsOpenAddTaskCardModal(true)} title="태스크 카드 추가">
             <LibraryAddIcon color="primary" />
           </IconButton>
         </div>
