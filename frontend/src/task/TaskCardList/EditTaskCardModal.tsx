@@ -13,8 +13,8 @@ import { TaskCard } from '@/task/api/entity'
 interface EditTaskCardModalProps {
   isOpen: boolean
   close: () => void
-  submit: (data: Partial<Pick<TaskCard, 'name' | 'description'>>) => void
-  taskCard?: Pick<TaskCard, 'name' | 'description'>
+  submit: (data: Partial<Pick<TaskCard, 'name' | 'description' | 'is_closed'>>) => void
+  taskCard?: Partial<Pick<TaskCard, 'name' | 'description' | 'is_closed'>>
 }
 
 const EditTaskCardModal: React.FC<EditTaskCardModalProps> = ({
@@ -23,7 +23,7 @@ const EditTaskCardModal: React.FC<EditTaskCardModalProps> = ({
   taskCard,
   submit,
 }) => {
-  const [input, setInput] = useState<typeof taskCard | undefined>(taskCard)
+  const [input, setInput] = useState<typeof taskCard>(taskCard)
 
   return (
     <Dialog open={isOpen} onClose={close}>
@@ -38,6 +38,7 @@ const EditTaskCardModal: React.FC<EditTaskCardModalProps> = ({
           type="text"
           fullWidth
           variant="standard"
+          value={input?.name}
           onChange={(e) =>
             setInput((prev) => ({
               ...prev,
@@ -51,6 +52,7 @@ const EditTaskCardModal: React.FC<EditTaskCardModalProps> = ({
           placeholder="설명"
           minRows={3}
           className="w-full"
+          value={input?.description}
           onChange={(e) =>
             setInput((prev) => ({
               ...prev,
@@ -58,6 +60,8 @@ const EditTaskCardModal: React.FC<EditTaskCardModalProps> = ({
             }))
           }
         />
+
+        {/* TODO: close 여부 */}
       </DialogContent>
 
       <DialogActions>

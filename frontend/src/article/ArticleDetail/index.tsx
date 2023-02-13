@@ -46,18 +46,12 @@ const ArticleDetail: React.FC = () => {
               <IconButton
                 className="!ml-auto"
                 aria-label="delete"
-                size="large"
                 onClick={() => navigate(`/article/write?id=${articleId}`)}
               >
                 <DriveFileRenameOutlineIcon color="primary" fontSize="inherit" />
               </IconButton>
 
-              <IconButton
-                className="!ml-1"
-                aria-label="delete"
-                size="large"
-                onClick={onClickRemoveArticle}
-              >
+              <IconButton className="!ml-1" aria-label="delete" onClick={onClickRemoveArticle}>
                 <DeleteOutlineIcon color="primary" fontSize="inherit" />
               </IconButton>
             </div>

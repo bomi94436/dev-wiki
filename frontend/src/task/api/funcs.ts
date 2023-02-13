@@ -37,6 +37,21 @@ export const postTaskCard = async (data: Pick<TaskCard, 'name' | 'description'>)
   }
 }
 
+export const patchTaskCard = async ({
+  id,
+  body,
+}: {
+  id: number
+  body: Partial<Pick<TaskCard, 'name' | 'description' | 'is_closed'>>
+}) => {
+  try {
+    const response = await API.patch<{ task_card: TaskCard }>(`/task-card/${id}`, body)
+    return response?.data
+  } catch (err) {
+    throw err
+  }
+}
+
 export const patchTask = async ({
   id,
   body,
