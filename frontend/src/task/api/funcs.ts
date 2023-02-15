@@ -54,8 +54,7 @@ export const patchTaskCard = async ({
 
 export const deleteTaskCard = async ({ id }: { id: number }) => {
   try {
-    const response = await API.delete<{ task_card: TaskCard }>(`/task-card/${id}`)
-    return response?.data
+    await API.delete(`/task-card/${id}`)
   } catch (err) {
     throw err
   }
@@ -73,6 +72,14 @@ export const patchTask = async ({
   try {
     const response = await API.patch<{ task: Task }>(`/task/${id}`, body)
     return response?.data
+  } catch (err) {
+    throw err
+  }
+}
+
+export const deleteTask = async ({ id }: { id: number }) => {
+  try {
+    await API.delete(`/task/${id}`)
   } catch (err) {
     throw err
   }

@@ -2,13 +2,15 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import cx from 'classnames'
 import { Checkbox, IconButton, Menu, MenuItem } from '@mui/material'
 import { MoreVert as MoreVertIcon } from '@mui/icons-material'
+import { useRecoilState } from 'recoil'
+import { useMutation } from 'react-query'
 
+import { snackbarState } from '@/global/atom'
 import { FolderToggleButton } from '@/global/ui'
+import useEditTask from '@/task/hook/useEditTask'
+import { deleteTask, patchTask } from '@/task/api/funcs'
 import { Task } from '../../api/entity'
 import EditTaskModal from './EditTaskModal'
-import useEditTask from '@/task/hook/useEditTask'
-import { patchTask } from '@/task/api/funcs'
-import { useMutation } from 'react-query'
 
 const MenuLabel = {
   date: '목표일 설정',
@@ -33,7 +35,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, refetch, foldMode }) => {
     date: false,
     time: false,
   })
-
+  const [, setSnackbar] = useRecoilState(snackbarState)
   const hasSubTask = useMemo(() => !!task.sub_tasks?.length, [task])
   const { isOpen, open, close, mode, submitCreateTask, submitUpdateTask } = useEditTask({
     refetch,
@@ -44,6 +46,23 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, refetch, foldMode }) => {
       refetch()
     },
   })
+  const { mutate: removeTask } = useMutation(deleteTask, {
+    onSuccess: () => {
+      setSnackbar({
+        type: 'success',
+        message: '성공적으로 삭제되었습니다.',
+      })
+      refetch()
+    },
+  })
+
+  const onClickRemoveTask = () => {
+    setAnchorEl(null)
+
+    if (window.confirm('해당 태스크를 삭제하시겠습니까?')) {
+      removeTask({ id: task.id })
+    }
+  }
 
   const onClickCheckbox = useCallback(
     ({
@@ -176,13 +195,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, refetch, foldMode }) => {
                   수정
                 </MenuItem>
 
-                <MenuItem
-                  className="!text-red-600"
-                  onClick={() => {
-                    // TODO: delete task api
-                    setAnchorEl(null)
-                  }}
-                >
+                <MenuItem className="!text-red-600" onClick={onClickRemoveTask}>
                   삭제
                 </MenuItem>
               </Menu>
