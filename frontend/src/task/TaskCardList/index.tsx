@@ -2,11 +2,9 @@ import React, { useState } from 'react'
 import { IconButton, Typography } from '@mui/material'
 import { LibraryAdd as LibraryAddIcon } from '@mui/icons-material'
 
-import { Drawer } from '@/global/ui'
-
 import { useTaskCards } from '../api/hook'
 import TaskCircle from './TaskCircle'
-import TaskList from './TaskList'
+import TaskListDrawer from './TaskListDrawer'
 import EditTaskCardModal from './EditTaskCardModal'
 import useEditTaskCard from '../hook/useEditTaskCard'
 
@@ -58,9 +56,11 @@ const TaskCardList: React.FC = () => {
         </ul>
 
         {selectedTaskCardId && taskCards?.find((card) => card.id === selectedTaskCardId) && (
-          <Drawer isOpen={!!selectedTaskCardId} close={() => setSelectedTaskCardId(null)}>
-            <TaskList taskCard={taskCards!.find((card) => card.id === selectedTaskCardId)!} />
-          </Drawer>
+          <TaskListDrawer
+            isOpen={!!selectedTaskCardId}
+            close={() => setSelectedTaskCardId(null)}
+            taskCard={taskCards!.find((card) => card.id === selectedTaskCardId)!}
+          />
         )}
 
         {isOpenEditTaskCardModal && (

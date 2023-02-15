@@ -52,6 +52,15 @@ export const patchTaskCard = async ({
   }
 }
 
+export const deleteTaskCard = async ({ id }: { id: number }) => {
+  try {
+    const response = await API.delete<{ task_card: TaskCard }>(`/task-card/${id}`)
+    return response?.data
+  } catch (err) {
+    throw err
+  }
+}
+
 export const patchTask = async ({
   id,
   body,
