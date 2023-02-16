@@ -5,14 +5,16 @@ import { useRecoilState } from 'recoil'
 import { snackbarState } from '@/global/atom'
 import { patchTask, postTask } from '@/task/api/funcs'
 import { Task } from '@/task/api/entity'
+import { useTaskCards } from '../api/hook'
 
 const useEditTask = ({
-  refetch,
+  refetch: refetchTasks,
   task_card_id,
 }: { refetch: () => void } & Pick<Task, 'task_card_id'>) => {
   const [isOpenEditTaskModal, setIsOpenEditTaskModal] = useState<boolean>(false)
   const [mode, setMode] = useState<'create' | 'update' | null>(null)
   const [, setSnackbar] = useRecoilState(snackbarState)
+  const { refetch: refetchTaskCards } = useTaskCards()
 
   const open = (mode: 'create' | 'update') => {
     setMode(mode)
@@ -28,8 +30,8 @@ const useEditTask = ({
         type: 'success',
         message: '태스크가 추가되었습니다.',
       })
-
-      refetch()
+      refetchTaskCards()
+      refetchTasks()
       close()
     },
   })
@@ -41,7 +43,8 @@ const useEditTask = ({
         message: '태스크가 수정되었습니다.',
       })
 
-      refetch()
+      refetchTaskCards()
+      refetchTasks()
       close()
     },
   })

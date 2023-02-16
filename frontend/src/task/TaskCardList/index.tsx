@@ -47,7 +47,10 @@ const TaskCardList: React.FC = () => {
                       {taskCard.completed_task_count} / {taskCard.total_task_count}
                     </span>
 
-                    <TaskCircle completed={3} total={taskCard.total_task_count} />
+                    <TaskCircle
+                      completed={taskCard.completed_task_count}
+                      total={taskCard.total_task_count}
+                    />
                   </React.Fragment>
                 ) : null}
               </div>
