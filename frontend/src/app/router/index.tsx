@@ -1,18 +1,29 @@
 import React from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
 
-import Login from '@/auth/Login'
-import Signup from '@/auth/Signup'
 import RouteOption from './RouteOption'
-import ArticleEditor from '@/article/ArticleEditor'
-import ArticleList from '@/article/ArticleList'
-import ArticleDetail from '@/article/ArticleDetail'
+
+import { Login, Signup } from '@/auth'
+import { ArticleDetail, ArticleEditor, ArticleList } from '@/article'
+import { TaskCardKanban, TaskCardList } from '@/task'
 
 const PageRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/">
+          <Route
+            path="auth"
+            element={
+              <RouteOption withoutLayout isAuthenticated={false}>
+                <Outlet />
+              </RouteOption>
+            }
+          >
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
+          </Route>
+
           <Route
             index
             element={
@@ -22,50 +33,29 @@ const PageRouter = () => {
             }
           />
 
-          <Route path="auth">
-            <Route
-              path="login"
-              element={
-                <RouteOption withoutLayout isAuthenticated={false}>
-                  <Login />
-                </RouteOption>
-              }
-            />
-            <Route
-              path="signup"
-              element={
-                <RouteOption withoutLayout isAuthenticated={false}>
-                  <Signup />
-                </RouteOption>
-              }
-            />
+          <Route
+            path="article"
+            element={
+              <RouteOption isAuthenticated>
+                <Outlet />
+              </RouteOption>
+            }
+          >
+            <Route index element={<ArticleList />} />
+            <Route path="write" element={<ArticleEditor />} />
+            <Route path=":id" element={<ArticleDetail />} />
           </Route>
 
-          <Route path="article">
-            <Route
-              index
-              element={
-                <RouteOption isAuthenticated>
-                  <ArticleList />
-                </RouteOption>
-              }
-            />
-            <Route
-              path="write"
-              element={
-                <RouteOption isAuthenticated>
-                  <ArticleEditor />
-                </RouteOption>
-              }
-            />
-            <Route
-              path=":id"
-              element={
-                <RouteOption isAuthenticated>
-                  <ArticleDetail />
-                </RouteOption>
-              }
-            />
+          <Route
+            path="task"
+            element={
+              <RouteOption isAuthenticated>
+                <Outlet />
+              </RouteOption>
+            }
+          >
+            <Route path="list" element={<TaskCardList />} />
+            <Route path="kanban" element={<TaskCardKanban />} />
           </Route>
         </Route>
 
@@ -74,5 +64,4 @@ const PageRouter = () => {
     </BrowserRouter>
   )
 }
-
 export default PageRouter

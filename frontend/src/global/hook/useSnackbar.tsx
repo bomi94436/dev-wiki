@@ -5,6 +5,16 @@ import { useRecoilState } from 'recoil'
 import { snackbarState } from '../atom'
 import { Portal } from '@/global/ui'
 
+/**
+ * @example
+ * const [, setSnackbar] = useRecoilState(snackbarState)
+ *
+ * setSnackbar({
+ *  type: 'success',
+ *  message: '성공적으로 삭제되었습니다.',
+ * })
+ *
+ */
 const useSnackbar = () => {
   const [snackbar, setSnackbar] = useRecoilState(snackbarState)
 
@@ -28,7 +38,7 @@ const useSnackbar = () => {
         >
           <Alert
             onClose={() => setSnackbar({ type: null, message: null })}
-            severity={snackbar.type}
+            severity={snackbar.type!}
           >
             {snackbar.message}
           </Alert>

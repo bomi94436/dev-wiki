@@ -50,14 +50,14 @@ const Signup = () => {
       onError: (error) => {
         const err = error as AxiosError
 
-        if (err.response.status === 409) {
+        if (err.response?.status === 409) {
           setSnackbar({
             message: '이미 존재하는 사용자입니다.',
             type: 'error',
           })
         }
 
-        if (err.response.status === 422) {
+        if (err.response?.status === 422) {
           // validate error
           setSnackbar({
             message: '정확한 정보를 입력하세요.',

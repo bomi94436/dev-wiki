@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
-import { useUserInfo } from '../../global/hook'
+import { useUserInfo } from '../../global/api/hook'
 
 interface AuthenticatedRouteProps {
   children: JSX.Element

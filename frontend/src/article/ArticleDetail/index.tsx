@@ -1,22 +1,23 @@
 import React from 'react'
-import { Divider, IconButton, Typography } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useMutation, useQuery } from 'react-query'
-import { deleteArticle, getArticle } from '@/global/api/funcs'
+import { useMutation } from 'react-query'
+import { useRecoilState } from 'recoil'
+import { Divider, IconButton, Typography } from '@mui/material'
 import MDEditor from '@uiw/react-md-editor'
 import {
   DriveFileRenameOutline as DriveFileRenameOutlineIcon,
   DeleteOutline as DeleteOutlineIcon,
 } from '@mui/icons-material'
+
 import { snackbarState } from '@/global/atom'
-import { useRecoilState } from 'recoil'
+import { deleteArticle } from '../api/funcs'
+import { useArticle } from '../api/hook'
 
 const ArticleDetail: React.FC = () => {
   const navigate = useNavigate()
   const { id: articleId } = useParams()
-  const { data: article } = useQuery(['article', articleId], () => getArticle(Number(articleId)), {
-    enabled: !!articleId,
-  })
+  const { article } = useArticle({ id: Number(articleId) })
+
   const [, setSnackbar] = useRecoilState(snackbarState)
   const { mutate: removeArticle } = useMutation(deleteArticle, {
     onSuccess: () => {
@@ -45,18 +46,12 @@ const ArticleDetail: React.FC = () => {
               <IconButton
                 className="!ml-auto"
                 aria-label="delete"
-                size="large"
                 onClick={() => navigate(`/article/write?id=${articleId}`)}
               >
                 <DriveFileRenameOutlineIcon color="primary" fontSize="inherit" />
               </IconButton>
 
-              <IconButton
-                className="!ml-1"
-                aria-label="delete"
-                size="large"
-                onClick={onClickRemoveArticle}
-              >
+              <IconButton className="!ml-1" aria-label="delete" onClick={onClickRemoveArticle}>
                 <DeleteOutlineIcon color="primary" fontSize="inherit" />
               </IconButton>
             </div>

@@ -1,9 +1,3 @@
-export interface User {
-  id: string
-  nickname: string
-  email: string
-}
-
 export interface Article {
   id: number
   title: string

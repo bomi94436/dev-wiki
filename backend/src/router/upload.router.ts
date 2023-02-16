@@ -49,7 +49,7 @@ uploadRouter.post('/', checkIsLoggedInUser, upload.single('image'), (req, res, n
       },
     })
   } else {
-    res.status(400).json({
+    res.status(500).json({
       message: 'fail upload file',
     })
   }

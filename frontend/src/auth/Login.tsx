@@ -5,7 +5,7 @@ import { AxiosError } from 'axios'
 import { Button, Link, Typography } from '@mui/material'
 
 import { Input, PasswordInput } from '@/global/ui'
-import { useUserInfo } from '@/global/hook'
+import { useUserInfo } from '@/global/api/hook'
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {

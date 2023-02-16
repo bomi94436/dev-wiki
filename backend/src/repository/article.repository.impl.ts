@@ -40,7 +40,6 @@ class ArticleRepositoryImpl implements ArticleRepository {
 
   public async deleteOne(articleId: number) {
     await this.repository.delete(articleId)
-    return
   }
 }
 

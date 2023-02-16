@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
-import API from '../api'
-import { User } from '../entity'
+import API from '.'
+import { User } from './entity'
 
 export const useUserInfo = () => {
   const {

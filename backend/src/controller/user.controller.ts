@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express'
+import { RequestHandler } from 'express'
 import UserRepositoryImpl from 'repository/user.repository.impl'
 import UserService from 'services/user.service'
 
@@ -10,7 +10,7 @@ class UserController {
     this.userService = new UserService({ userRepository })
   }
 
-  public async me(req: Request, res: Response, next: NextFunction) {
+  public me: RequestHandler = async (req, res, next) => {
     if (req.session.userid) {
       const user = await this.userService.findme({
         id: req.session.userid,

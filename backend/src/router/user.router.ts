@@ -6,10 +6,6 @@ import { asyncMiddleware } from 'global/utils'
 const userRouter = express.Router()
 const userController = new UserController()
 
-userRouter.get(
-  '/me',
-  checkIsLoggedInUser,
-  asyncMiddleware((req, res, next) => userController.me(req, res, next))
-)
+userRouter.get('/me', checkIsLoggedInUser, asyncMiddleware(userController.me))
 
 export default userRouter

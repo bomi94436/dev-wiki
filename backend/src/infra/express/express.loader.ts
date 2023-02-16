@@ -6,10 +6,18 @@ import cors, { CorsOptions } from 'cors'
 import path from 'path'
 
 import { SESSION_KEY, STATIC_UPLOAD_FOLDER_PATH } from 'global/constant'
+import { getRelativePathOfProjectRootPath } from 'global/utils'
 import { redisClient } from 'infra/redis/usecase'
 import config from 'config'
-import { articleRouter, authRouter, rootRouter, uploadRouter, userRouter } from 'router'
-import { getRelativePathOfProjectRootPath } from 'global/utils'
+import {
+  articleRouter,
+  authRouter,
+  rootRouter,
+  taskCardRouter,
+  taskRouter,
+  uploadRouter,
+  userRouter,
+} from 'router'
 
 const RedisStore = connectRedis(session)
 
@@ -57,11 +65,35 @@ const expressLoader = async ({ app }: { app: express.Express }) => {
     })
   )
 
+  /**
+   * query string type parsing
+   */
+  app.use((req, res, next) => {
+    if (Object.keys(req.query).length) {
+      req.query = Object.entries(req.query).reduce(
+        (acc, [key, value]) => ({
+          ...acc,
+          [key]:
+            value === 'true' || value === 'false'
+              ? JSON.parse(value)
+              : !isNaN(Number(value))
+              ? Number(value)
+              : value,
+        }),
+        {}
+      )
+    }
+
+    next()
+  })
+
   app.use('/', rootRouter)
   app.use('/auth', authRouter)
   app.use('/users', userRouter)
   app.use('/article', articleRouter)
   app.use('/upload', uploadRouter)
+  app.use('/task-card', taskCardRouter)
+  app.use('/task', taskRouter)
 }
 
 export default expressLoader

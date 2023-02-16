@@ -1,8 +1,9 @@
-import { RequestHandler, Request, Response, NextFunction } from 'express'
+import { RequestHandler } from 'express'
 import path from 'path'
 
 export const asyncMiddleware =
-  (fn: RequestHandler) => (req: Request, res: Response, next: NextFunction) => {
+  (fn: RequestHandler): RequestHandler =>
+  (req, res, next) => {
     Promise.resolve(fn(req, res, next)).catch(next)
   }
 
@@ -20,3 +21,12 @@ export const getProjectRootPath = (dirname: string) => dirname.slice(0, dirname.
 
 export const getRelativePathOfProjectRootPath = (dirname: string) =>
   path.relative(dirname, getProjectRootPath(dirname))
+
+export const reduceObject = (obj: { [key: string]: any }) =>
+  Object.keys(obj).reduce((acc, curr) => {
+    if (obj[curr] !== undefined) {
+      return { ...acc, [curr]: obj[curr] }
+    } else {
+      return { ...acc }
+    }
+  }, {})
