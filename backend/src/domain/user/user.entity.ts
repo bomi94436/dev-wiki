@@ -2,6 +2,24 @@ import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } fro
 import UuidService from '../uuidService'
 import { Password } from './password'
 
+/**
+ * @swagger
+ *  components:
+ *  schemas:
+ *    User:
+ *      type: object
+ *      properties:
+ *        id:
+ *          type: string
+ *          format: uuid
+ *          example: f1b00933-e51d-4f7f-bdf1-03016f3dd96b
+ *        email:
+ *          type: string
+ *          example: bomi@naver.com
+ *        nickname:
+ *          type: string
+ *          example: bomi
+ */
 @Entity({ database: 'dev_wiki_db', name: 'user' })
 export class User {
   @PrimaryColumn(
@@ -12,21 +30,13 @@ export class User {
   )
   id: string
 
-  @Column({
-    length: 50,
-    unique: true,
-  })
+  @Column({ length: 50, unique: true })
   email: string
 
-  @Column(() => Password, {
-    prefix: false,
-  })
+  @Column(() => Password, { prefix: false })
   password: Password
 
-  @Column({
-    length: 20,
-    unique: true,
-  })
+  @Column({ length: 20, unique: true })
   nickname: string
 
   @Column({

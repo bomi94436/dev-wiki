@@ -2,7 +2,7 @@ import express from 'express'
 import swaggerJSDoc from 'swagger-jsdoc'
 import { serve, setup } from 'swagger-ui-express'
 
-const options = {
+const options: swaggerJSDoc.Options = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
@@ -11,7 +11,7 @@ const options = {
       description: 'product API with express',
     },
   },
-  apis: ['src/**/*.ts'],
+  apis: ['src/**/*.entity.ts'],
 }
 
 const swaggerLoader = ({ app }: { app: express.Express }) => {
