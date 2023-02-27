@@ -11,7 +11,7 @@ const options: swaggerJSDoc.Options = {
       description: 'product API with express',
     },
   },
-  apis: ['src/**/*.entity.ts'],
+  apis: ['src/**/*.entity.ts', 'src/**/*.loader.ts'],
 }
 
 const swaggerLoader = ({ app }: { app: express.Express }) => {

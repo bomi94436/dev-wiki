@@ -87,6 +87,24 @@ const expressLoader = async ({ app }: { app: express.Express }) => {
     next()
   })
 
+  /**
+   * @swagger
+   * tags:
+   *  - name: auth
+   *    description: 사용자 인증
+   *  - name: user
+   *    description: 사용자
+   *  - name: article
+   *    description: 아티클
+   *  - name: upload
+   *    description: 파일 업로드
+   *  - name: task-card
+   *    description: 태스크 카드
+   *  - name: task
+   *    description: 태스크
+   * components:
+   *  schemas:
+   */
   app.use('/', rootRouter)
   app.use('/auth', authRouter)
   app.use('/users', userRouter)
