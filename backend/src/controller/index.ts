@@ -1,3 +1,6 @@
 export { default as rootController } from './root.controller'
 export { default as AuthController } from './auth.controller'
 export { default as UserController } from './user.controller'
+export { default as ArticleController } from './article.controller'
+export { default as TaskController } from './task.controller'
+export { default as TaskCardController } from './taskCard.controller'
