@@ -5,6 +5,7 @@ import TaskCardRepositoryImpl from 'repository/taskCard.repository.impl'
 import TaskService from 'services/task.service'
 import { Task } from 'domain/taskCard/task.entity'
 import { ItemResponse, ItemsResponse } from './types'
+import { CreateTaskDTO, UpdateTaskDTO } from 'types/task.dto'
 
 interface TaskReqParams {
   taskId?: number
@@ -19,7 +20,11 @@ class TaskController {
     this.taskService = new TaskService(taskRepository, taskCardRepository)
   }
 
-  public createTask: RequestHandler<{}, ItemResponse<Task>> = async (req, res, next) => {
+  public createTask: RequestHandler<{}, ItemResponse<Task>, CreateTaskDTO> = async (
+    req,
+    res,
+    next
+  ) => {
     const task = await this.taskService.createTask(req.body)
 
     if (task) {
@@ -50,7 +55,11 @@ class TaskController {
     }
   }
 
-  public updateTask: RequestHandler<TaskReqParams, ItemResponse<Task>> = async (req, res, next) => {
+  public updateTask: RequestHandler<TaskReqParams, ItemResponse<Task>, UpdateTaskDTO> = async (
+    req,
+    res,
+    next
+  ) => {
     const taskId = Number(req.params.taskId)
     const task = await this.taskService.updateTask(taskId, req.body)
 

@@ -15,20 +15,20 @@ class ArticleService {
     content,
     thumbnail,
     short_description,
-    writerId,
+    writer_id,
   }: {
     title: string
     thumbnail?: string
     short_description?: string
     content: string
-    writerId: string
+    writer_id: string
   }) {
     const article = new Article({
       title,
       content,
       thumbnail,
       short_description,
-      writer_id: writerId,
+      writer_id,
     })
 
     return await this.articleRepository.create(article)
