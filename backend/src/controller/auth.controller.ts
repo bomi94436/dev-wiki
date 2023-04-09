@@ -3,6 +3,8 @@ import { RequestHandler } from 'express'
 import { SESSION_KEY } from 'global/constant'
 import UserRepositoryImpl from 'repository/user.repository.impl'
 import AuthService from 'services/auth.service'
+import { ItemResponse } from './types'
+import { User } from 'domain/user/user.entity'
 
 class AuthController {
   private authService: AuthService
@@ -13,13 +15,20 @@ class AuthController {
     this.authService = new AuthService({ userRepository, uuidService })
   }
 
-  public signup: RequestHandler = async (req, res, next) => {
+  public signup: RequestHandler<{}, ItemResponse<User>> = async (req, res, next) => {
     const user = await this.authService.signup(req.body)
 
     res.status(201).json(user)
   }
 
-  public login: RequestHandler = async (req, res, next) => {
+  public login: RequestHandler<
+    {},
+    ItemResponse<{
+      id: string
+      email: string
+      nickname: string
+    }>
+  > = async (req, res, next) => {
     const user = await this.authService.login(req.body)
 
     req.session.userid = user.id
