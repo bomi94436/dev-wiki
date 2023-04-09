@@ -4,7 +4,7 @@ import { Article } from 'domain/article/article.entity'
 import ArticleRepositoryImpl from 'repository/article.repository.impl'
 import ArticleHistoryRepositoryImpl from 'repository/articleHistory.repository.impl'
 import ArticleService from 'services/article.service'
-import { ItemsResponse, Response } from './types'
+import { ItemsResponse, ItemResponse } from './types'
 
 interface ArticleReqParams {
   articleId?: number
@@ -18,7 +18,7 @@ class ArticleController {
     this.articleService = new ArticleService(articleRepository, articleHistoryRepository)
   }
 
-  public createArticle: RequestHandler<{}, Response<Article>> = async (req, res) => {
+  public createArticle: RequestHandler<{}, ItemResponse<Article>> = async (req, res) => {
     const article = await this.articleService.createArticle({
       ...req.body,
       writerId: req.session.userid,
@@ -38,7 +38,7 @@ class ArticleController {
     })
   }
 
-  public getArticle: RequestHandler<ArticleReqParams, Response<Article>> = async (req, res) => {
+  public getArticle: RequestHandler<ArticleReqParams, ItemResponse<Article>> = async (req, res) => {
     const articleId = Number(req.params.articleId)
     const article = await this.articleService.getArticle(articleId)
 
@@ -51,7 +51,10 @@ class ArticleController {
     }
   }
 
-  public updateArticle: RequestHandler<ArticleReqParams, Response<Article>> = async (req, res) => {
+  public updateArticle: RequestHandler<ArticleReqParams, ItemResponse<Article>> = async (
+    req,
+    res
+  ) => {
     const articleId = Number(req.params.articleId)
 
     const article = await this.articleService.updateArticle(articleId, req.body)
@@ -65,17 +68,12 @@ class ArticleController {
     }
   }
 
-  public deleteArticle: RequestHandler<ArticleReqParams, Response<{ id: number }>> = async (
-    req,
-    res
-  ) => {
+  public deleteArticle: RequestHandler<ArticleReqParams> = async (req, res) => {
     const articleId = Number(req.params.articleId)
 
     await this.articleService.deleteArticle(articleId)
 
-    res.status(200).json({
-      id: articleId,
-    })
+    res.status(204)
   }
 }
 

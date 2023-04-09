@@ -16,10 +16,7 @@ class AuthController {
   public signup: RequestHandler = async (req, res, next) => {
     const user = await this.authService.signup(req.body)
 
-    res.status(200).json({
-      message: 'success create user',
-      user,
-    })
+    res.status(201).json(user)
   }
 
   public login: RequestHandler = async (req, res, next) => {
@@ -27,10 +24,7 @@ class AuthController {
 
     req.session.userid = user.id
 
-    res.status(200).json({
-      message: 'success login',
-      user,
-    })
+    res.status(200).json(user)
   }
 
   public logout: RequestHandler = async (req, res, next) => {
@@ -38,9 +32,7 @@ class AuthController {
       req.session.destroy(console.error)
 
       res.clearCookie(SESSION_KEY)
-      res.status(200).json({
-        message: 'success logout',
-      })
+      res.status(204)
     } else {
       res.status(404).json({
         message: 'not exist session',

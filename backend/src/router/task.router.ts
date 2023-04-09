@@ -1,5 +1,5 @@
 import express from 'express'
-import TaskController from 'controller/task.controller'
+import { TaskController } from 'controller'
 import { checkIsLoggedInUser } from '../middleware/checkAuthentification'
 import { asyncMiddleware } from 'global/utils'
 import taskValidator from 'middleware/vaildator/task.validator'
