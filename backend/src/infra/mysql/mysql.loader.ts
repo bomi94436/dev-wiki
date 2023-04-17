@@ -12,31 +12,29 @@ const pool = mysql.createPool({
 })
 
 const getConnectionPool = async (callback: (conn: mysql.PoolConnection) => any) => {
-  const connection = await pool.getConnection()
-
   try {
+    const connection = await pool.getConnection()
     callback(connection)
+
+    connection.release()
   } catch (err) {
     console.error(err)
+    throw err
   }
-
-  connection.release()
 }
 
 const mysqlLoader = async () => {
-  // TODO: migration 코드 작성 ?
-  await getConnectionPool(async (conn) => {
-    await conn.query('CREATE DATABASE IF NOT EXISTS dev_wiki_db default CHARACTER SET UTF8')
-    await conn.query('USE dev_wiki_db')
-  })
-
-  await dataSource
-    .initialize()
-    .then(async () => {})
-    .then(() => {
-      console.log('typeorm app data source is ready')
+  try {
+    // TODO: migration 코드 작성 ?
+    await getConnectionPool(async (conn) => {
+      await conn.query('CREATE DATABASE IF NOT EXISTS dev_wiki_db default CHARACTER SET UTF8')
+      await conn.query('USE dev_wiki_db')
     })
-    .catch((error) => console.error(error))
+
+    await dataSource.initialize()
+  } catch (err) {
+    setTimeout(mysqlLoader, 2000)
+  }
 }
 
 export default mysqlLoader
