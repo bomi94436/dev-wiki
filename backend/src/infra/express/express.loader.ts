@@ -21,7 +21,7 @@ import {
 
 const RedisStore = connectRedis(session)
 
-const whitelist = ['http://localhost:3000']
+const whitelist = ['http://localhost:3000', 'http://localhost:5001']
 const corsOptions: CorsOptions = {
   origin: function (origin, callback) {
     if (origin && whitelist.indexOf(origin) !== -1) {

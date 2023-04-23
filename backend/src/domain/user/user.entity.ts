@@ -15,10 +15,8 @@ import { Password } from './password'
  *          example: f1b00933-e51d-4f7f-bdf1-03016f3dd96b
  *        email:
  *          type: string
- *          example: bomi@naver.com
  *        nickname:
  *          type: string
- *          example: bomi
  */
 @Entity({ database: 'dev_wiki_db', name: 'user' })
 export class User {

@@ -27,7 +27,8 @@ class AuthController {
       id: string
       email: string
       nickname: string
-    }>
+    }>,
+    { email: string; password: string }
   > = async (req, res, next) => {
     const user = await this.authService.login(req.body)
 
