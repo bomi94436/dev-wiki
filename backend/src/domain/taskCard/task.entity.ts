@@ -11,49 +11,6 @@ import {
 import { DateString, TimeString } from 'global/type'
 import { TaskCard } from 'domain/taskCard/taskCard.entity'
 
-/**
- * @swagger
- *  components:
- *  schemas:
- *    Task:
- *      type: object
- *      properties:
- *        id:
- *          type: integer
- *          example: 10
- *        content:
- *          type: string
- *          example: 태스크 내용
- *        date:
- *          type: string
- *          nullable: true
- *        time:
- *          type: string
- *          nullable: true
- *        completed_at:
- *          type: string
- *          format: date-time
- *          nullable: true
- *          example: 2023-02-21T07:54:39.312Z
- *        created_at:
- *          type: string
- *          format: date-time
- *          example: 2023-02-21T07:54:39.312Z
- *        task_card_id:
- *          type: integer
- *          example: 10
- *        parent_task_id:
- *          type: integer
- *          example: 10
- *          nullable: true
- *        sub_tasks:
- *          type: array
- *          xml:
- *            name: sub tasks
- *            wrapped: true
- *          items:
- *            $ref: '#/components/schemas/Task'
- */
 @Entity({ database: 'dev_wiki_db', name: 'task' })
 export class Task {
   @PrimaryGeneratedColumn({ name: 'task_id' })

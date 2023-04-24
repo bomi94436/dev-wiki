@@ -2,22 +2,6 @@ import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } fro
 import UuidService from '../uuidService'
 import { Password } from './password'
 
-/**
- * @swagger
- *  components:
- *  schemas:
- *    User:
- *      type: object
- *      properties:
- *        id:
- *          type: string
- *          format: uuid
- *          example: f1b00933-e51d-4f7f-bdf1-03016f3dd96b
- *        email:
- *          type: string
- *        nickname:
- *          type: string
- */
 @Entity({ database: 'dev_wiki_db', name: 'user' })
 export class User {
   @PrimaryColumn(

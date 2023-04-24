@@ -1,0 +1,41 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Dev Wiki
+  description: product API with express
+  license:
+    name: bomi
+servers:
+  - url: http://localhost:5001/
+securityDefinitions:
+  cookieAuth:
+    type: apiKey
+    in: cookie
+    name: connect.sid
+
+tags:
+  - name: auth
+    description: 사용자 인증
+  - name: user
+    description: 사용자
+  - name: article
+    description: 아티클
+  - name: upload
+    description: 파일 업로드
+  - name: task-card
+    description: 태스크 카드
+  - name: task
+    description: 태스크
+
+components:
+  schemas:
+    User:
+      $ref: './schemas/user.schema.yaml'
+    Task:
+      $ref: './schemas/task.schema.yaml'
+    Article:
+      $ref: './schemas/article.schema.yaml'
+
+paths:
+  /auth/login:
+    $ref: './paths/auth.path.yaml#/~1auth~1login'

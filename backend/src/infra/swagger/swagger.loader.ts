@@ -1,22 +1,16 @@
 import express from 'express'
-import swaggerJSDoc from 'swagger-jsdoc'
+import path from 'path'
 import { serve, setup } from 'swagger-ui-express'
+import YAML from 'yamljs'
 
-const options: swaggerJSDoc.Options = {
-  swaggerDefinition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Dev Wiki',
-      version: '1.0.0',
-      description: 'product API with express',
-    },
-  },
-  apis: ['src/**/*.entity.ts', 'src/**/*.loader.ts', 'src/**/*.router.ts'],
-}
+import { getRelativePathOfProjectRootPath } from 'global/utils'
+
+const swaggerSpec = YAML.load(
+  path.join(__dirname, getRelativePathOfProjectRootPath(__dirname), 'build/swagger.yaml')
+)
 
 const swaggerLoader = ({ app }: { app: express.Express }) => {
-  const specs = swaggerJSDoc(options)
-  app.use('/api-docs', serve, setup(specs))
+  app.use('/api-docs', serve, setup(swaggerSpec))
 }
 
 export default swaggerLoader
