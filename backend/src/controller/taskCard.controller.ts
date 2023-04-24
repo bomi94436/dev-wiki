@@ -76,7 +76,7 @@ class TaskCardController {
     const taskCardId = Number(req.params.taskCardId)
     await this.taskCardService.deleteTaskCard({ id: taskCardId })
 
-    res.status(204)
+    res.status(204).send()
   }
 }
 

@@ -73,7 +73,7 @@ class ArticleController {
 
     await this.articleService.deleteArticle(articleId)
 
-    res.status(204)
+    res.status(204).send()
   }
 }
 

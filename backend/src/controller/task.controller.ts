@@ -77,7 +77,7 @@ class TaskController {
 
     await this.taskService.deleteTask({ id: taskId })
 
-    res.status(204)
+    res.status(204).send()
   }
 }
 
