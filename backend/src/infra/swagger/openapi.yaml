@@ -64,3 +64,7 @@ paths:
     $ref: './paths/taskCard.path.yaml#/~1task-card~1{taskCardId}'
   /task-card/{taskCardId}/task:
     $ref: './paths/taskCard.path.yaml#/~1task-card~1{taskCardId}~1task'
+  /task:
+    $ref: './paths/task.path.yaml#/~1task'
+  /task/{taskId}:
+    $ref: './paths/task.path.yaml#/~1task~1{taskId}'
