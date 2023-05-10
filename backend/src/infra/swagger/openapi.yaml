@@ -40,6 +40,8 @@ components:
   schemas:
     User:
       $ref: './schemas/user.schema.yaml'
+    TaskCard:
+      $ref: './schemas/taskCard.schema.yaml'
     Task:
       $ref: './schemas/task.schema.yaml'
     Article:

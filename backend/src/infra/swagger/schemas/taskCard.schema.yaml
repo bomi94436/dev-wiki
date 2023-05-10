@@ -1,0 +1,26 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 10
+  name:
+    type: string
+    example: 태스크 카드 이름
+  description:
+    type: string
+    nullable: true
+    example: 태스크 카드 설명
+  is_closed:
+    type: boolean
+  tasks:
+    type: array
+    nullable: true
+    xml:
+      name: 하위 tasks
+      wrapped: true
+    items:
+      $ref: '../openapi.yaml#/components/schemas/Task'
+  total_task_count:
+    type: number
+  completed_task_count:
+    type: number
