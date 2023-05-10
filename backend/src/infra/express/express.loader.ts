@@ -79,7 +79,7 @@ const expressLoader = async ({ app }: { app: express.Express }) => {
 
   app.use('/', rootRouter)
   app.use('/auth', authRouter)
-  app.use('/users', userRouter)
+  app.use('/user', userRouter)
   app.use('/article', articleRouter)
   app.use('/upload', uploadRouter)
   app.use('/task-card', taskCardRouter)

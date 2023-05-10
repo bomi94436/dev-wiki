@@ -70,3 +70,5 @@ paths:
     $ref: './paths/task.path.yaml#/~1task~1{taskId}'
   /upload:
     $ref: './paths/upload.path.yaml#/~1upload'
+  /user/me:
+    $ref: './paths/user.path.yaml#/~1user~1me'

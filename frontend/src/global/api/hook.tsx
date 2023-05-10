@@ -8,7 +8,7 @@ export const useUserInfo = () => {
     refetch,
     remove,
     isFetching,
-  } = useQuery(['me'], () => API.get<{ user?: User }>('/users/me'), {
+  } = useQuery(['me'], () => API.get<{ user?: User }>('/user/me'), {
     staleTime: 1000 * 60,
     retry: 0,
   })
