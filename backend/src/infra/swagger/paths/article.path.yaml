@@ -1,0 +1,116 @@
+/article:
+  get:
+    tags:
+      - article
+    summary: 내 아티클 리스트 조회
+    responses:
+      200:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    $ref: '../openapi.yaml#/components/schemas/Article'
+
+  post:
+    tags:
+      - article
+    summary: 아티클 생성
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              content:
+                type: string
+              thumbnail:
+                type: string
+                nullable: true
+              short_description:
+                type: string
+                nullable: true
+    responses:
+      201:
+        description: 아티클 생성 성공
+        content:
+          application/json:
+            schema:
+              $ref: '../openapi.yaml#/components/schemas/Article'
+
+/article/{articleId}:
+  get:
+    tags:
+      - article
+    summary: 아티클 단일 조회
+    parameters:
+      - name: articleId
+        in: path
+        description: 조회할 아티클 id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      200:
+        description: 아티클 조회 성공
+        content:
+          application/json:
+            schema:
+              $ref: '../openapi.yaml#/components/schemas/Article'
+
+  patch:
+    tags:
+      - article
+    summary: 아티클 수정
+    parameters:
+      - name: articleId
+        in: path
+        description: 수정할 아티클 id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              thumbnail:
+                type: string
+              short_description:
+                type: string
+              content:
+                type: string
+    responses:
+      200:
+        description: 아티클 수정 성공
+        content:
+          application/json:
+            schema:
+              $ref: '../openapi.yaml#/components/schemas/Article'
+
+  delete:
+    tags:
+      - article
+    summary: 아티클 삭제
+    parameters:
+      - name: articleId
+        in: path
+        description: 삭제할 아티클 id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      204:
+        description: 아티클 삭제 성공

@@ -51,7 +51,7 @@
           Set-Cookie:
             schema:
               type: string
-              example: connect.sid=abcde12345;
+              example: connect.sid=abcde12345; Path=/; Expires=Mon, 24 Apr 2023 18:07:51 GMT
 
 /auth/logout:
   post:

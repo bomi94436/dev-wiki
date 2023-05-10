@@ -7,11 +7,10 @@ info:
     name: bomi
 servers:
   - url: http://localhost:5001/
-securityDefinitions:
-  cookieAuth:
-    type: apiKey
-    in: cookie
-    name: connect.sid
+host: 'localhost:5001'
+schemes:
+  - http
+basePath: /
 
 tags:
   - name: auth
@@ -28,6 +27,16 @@ tags:
     description: 태스크
 
 components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  # securitySchemes:
+  #   OAuth2:
+  #     type: oauth2
+  #     flows:
+  #       authorizationCode:
+  #         authorizationUrl: http://localhost:5001/auth/login
   schemas:
     User:
       $ref: './schemas/user.schema.yaml'
@@ -43,3 +52,7 @@ paths:
     $ref: './paths/auth.path.yaml#/~1auth~1login'
   /auth/logout:
     $ref: './paths/auth.path.yaml#/~1auth~1logout'
+  /article:
+    $ref: './paths/article.path.yaml#/~1article'
+  /article/{articleId}:
+    $ref: './paths/article.path.yaml#/~1article~1{articleId}'
