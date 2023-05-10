@@ -5,6 +5,7 @@
     summary: 내 아티클 리스트 조회
     responses:
       200:
+        description: 아티클 리스트 조회 성공
         content:
           application/json:
             schema:

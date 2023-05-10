@@ -58,3 +58,9 @@ paths:
     $ref: './paths/article.path.yaml#/~1article'
   /article/{articleId}:
     $ref: './paths/article.path.yaml#/~1article~1{articleId}'
+  /task-card:
+    $ref: './paths/taskCard.path.yaml#/~1task-card'
+  /task-card/{taskCardId}:
+    $ref: './paths/taskCard.path.yaml#/~1task-card~1{taskCardId}'
+  /task-card/{taskCardId}/task:
+    $ref: './paths/taskCard.path.yaml#/~1task-card~1{taskCardId}~1task'
