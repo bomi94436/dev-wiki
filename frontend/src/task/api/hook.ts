@@ -5,7 +5,7 @@ export const useTaskCards = () => {
   const { data, isLoading, refetch } = useQuery(['task-cards'], getTaskCards)
 
   return {
-    taskCards: data?.task_cards,
+    taskCards: data?.items,
     isLoading,
     refetch,
   }
@@ -21,7 +21,7 @@ export const useTasks = ({ taskCardId }: { taskCardId?: number }) => {
   )
 
   return {
-    tasks: data?.tasks,
+    tasks: data?.items,
     isLoading,
     refetch,
   }

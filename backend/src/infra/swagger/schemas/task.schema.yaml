@@ -1,0 +1,38 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 10
+  content:
+    type: string
+    example: 태스크 내용
+  date:
+    type: string
+    nullable: true
+  time:
+    type: string
+    nullable: true
+  completed_at:
+    type: string
+    format: date-time
+    nullable: true
+    example: 2023-02-21T07:54:39.312Z
+  created_at:
+    type: string
+    format: date-time
+    example: 2023-02-21T07:54:39.312Z
+  task_card_id:
+    type: integer
+    example: 10
+  parent_task_id:
+    type: integer
+    example: 10
+    nullable: true
+  sub_tasks:
+    type: array
+    xml:
+      name: sub tasks
+      wrapped: true
+    items:
+      # FIXME: swagger로 표현안됨
+      $ref: '../openapi.yaml#/components/schemas/Task'

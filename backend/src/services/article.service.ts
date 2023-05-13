@@ -15,20 +15,20 @@ class ArticleService {
     content,
     thumbnail,
     short_description,
-    writerId,
+    writer_id,
   }: {
     title: string
     thumbnail?: string
     short_description?: string
     content: string
-    writerId: string
+    writer_id: string
   }) {
     const article = new Article({
       title,
       content,
       thumbnail,
       short_description,
-      writer_id: writerId,
+      writer_id,
     })
 
     return await this.articleRepository.create(article)
@@ -55,7 +55,7 @@ class ArticleService {
 
   public async updateArticle(
     articleId: number,
-    data: Pick<Article, 'title' | 'thumbnail' | 'short_description' | 'content'>
+    data: Partial<Pick<Article, 'title' | 'thumbnail' | 'short_description' | 'content'>>
   ) {
     const article = await this.articleRepository.getOne({ id: articleId })
 
@@ -69,7 +69,7 @@ class ArticleService {
     })
     await this.articleHistoryRepository.create(articleHistory)
 
-    const updateArticle = new Article(data)
+    const updateArticle = new Article({ ...article, ...data })
     return await this.articleRepository.updateOne(articleId, updateArticle)
   }
 

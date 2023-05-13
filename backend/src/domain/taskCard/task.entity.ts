@@ -19,6 +19,7 @@ export class Task {
   @Column({ length: 200, comment: 'task 내용' })
   content: string
 
+  // FIXME: 타임존 정보 주입가능 여부
   @Column({ type: 'date', nullable: true, comment: 'task 완료 목표 날짜' })
   date?: DateString
 

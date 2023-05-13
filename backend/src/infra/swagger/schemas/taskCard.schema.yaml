@@ -1,0 +1,18 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 10
+  name:
+    type: string
+    example: 태스크 카드 이름
+  description:
+    type: string
+    nullable: true
+    example: 태스크 카드 설명
+  is_closed:
+    type: boolean
+  total_task_count:
+    type: number
+  completed_task_count:
+    type: number

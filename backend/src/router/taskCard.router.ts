@@ -1,9 +1,7 @@
 import express from 'express'
 import { checkIsLoggedInUser } from 'middleware/checkAuthentification'
 import { asyncMiddleware } from 'global/utils'
-
-import TaskController from 'controller/task.controller'
-import TaskCardController from 'controller/taskCard.controller'
+import { TaskCardController, TaskController } from 'controller'
 import taskCardValidator from 'middleware/vaildator/taskCard.validator'
 
 const taskCardRouter = express.Router()

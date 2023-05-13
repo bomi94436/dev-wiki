@@ -2,7 +2,7 @@ import express from 'express'
 import session from 'express-session'
 import connectRedis from 'connect-redis'
 import { v4 as uuidv4 } from 'uuid'
-import cors, { CorsOptions } from 'cors'
+import cors from 'cors'
 import path from 'path'
 
 import { SESSION_KEY, STATIC_UPLOAD_FOLDER_PATH } from 'global/constant'
@@ -21,17 +21,7 @@ import {
 
 const RedisStore = connectRedis(session)
 
-const whitelist = ['http://localhost:3000']
-const corsOptions: CorsOptions = {
-  origin: function (origin, callback) {
-    if (origin && whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
-  credentials: true,
-}
+const whitelist = ['http://localhost:3000', 'http://localhost:5001']
 
 const expressLoader = async ({ app }: { app: express.Express }) => {
   app.use(express.json())
@@ -44,7 +34,7 @@ const expressLoader = async ({ app }: { app: express.Express }) => {
     STATIC_UPLOAD_FOLDER_PATH,
     express.static(path.join(__dirname, getRelativePathOfProjectRootPath(__dirname), 'uploads'))
   )
-  app.use(cors(corsOptions))
+  app.use(cors({ origin: whitelist, credentials: true }))
 
   /**
    * redis를 store로 한 session 설정
@@ -89,7 +79,7 @@ const expressLoader = async ({ app }: { app: express.Express }) => {
 
   app.use('/', rootRouter)
   app.use('/auth', authRouter)
-  app.use('/users', userRouter)
+  app.use('/user', userRouter)
   app.use('/article', articleRouter)
   app.use('/upload', uploadRouter)
   app.use('/task-card', taskCardRouter)

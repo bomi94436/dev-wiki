@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Dev Wiki
+  description: product API with express
+  license:
+    name: bomi
+servers:
+  - url: http://localhost:5001/
+host: 'localhost:5001'
+schemes:
+  - http
+basePath: /
+
+tags:
+  - name: auth
+    description: 사용자 인증
+  - name: user
+    description: 사용자
+  - name: article
+    description: 아티클
+  - name: upload
+    description: 파일 업로드
+  - name: task-card
+    description: 태스크 카드
+  - name: task
+    description: 태스크
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  # securitySchemes:
+  #   OAuth2:
+  #     type: oauth2
+  #     flows:
+  #       authorizationCode:
+  #         authorizationUrl: http://localhost:5001/auth/login
+  schemas:
+    User:
+      $ref: './schemas/user.schema.yaml'
+    TaskCard:
+      $ref: './schemas/taskCard.schema.yaml'
+    Task:
+      $ref: './schemas/task.schema.yaml'
+    Article:
+      $ref: './schemas/article.schema.yaml'
+
+paths:
+  /auth/signup:
+    $ref: './paths/auth.path.yaml#/~1auth~1signup'
+  /auth/login:
+    $ref: './paths/auth.path.yaml#/~1auth~1login'
+  /auth/logout:
+    $ref: './paths/auth.path.yaml#/~1auth~1logout'
+  /article:
+    $ref: './paths/article.path.yaml#/~1article'
+  /article/{articleId}:
+    $ref: './paths/article.path.yaml#/~1article~1{articleId}'
+  /task-card:
+    $ref: './paths/taskCard.path.yaml#/~1task-card'
+  /task-card/{taskCardId}:
+    $ref: './paths/taskCard.path.yaml#/~1task-card~1{taskCardId}'
+  /task-card/{taskCardId}/task:
+    $ref: './paths/taskCard.path.yaml#/~1task-card~1{taskCardId}~1task'
+  /task:
+    $ref: './paths/task.path.yaml#/~1task'
+  /task/{taskId}:
+    $ref: './paths/task.path.yaml#/~1task~1{taskId}'
+  /upload:
+    $ref: './paths/upload.path.yaml#/~1upload'
+  /user/me:
+    $ref: './paths/user.path.yaml#/~1user~1me'

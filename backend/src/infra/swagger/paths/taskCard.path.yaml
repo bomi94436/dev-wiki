@@ -1,0 +1,148 @@
+/task-card:
+  get:
+    tags:
+      - task-card
+    summary: 태스크 카드 리스트 조회
+    parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+      - name: description
+        in: query
+        schema:
+          type: string
+      - name: is_closed
+        in: query
+        schema:
+          type: boolean
+    responses:
+      200:
+        description: 태스크 카드 리스트 조회 성공
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    $ref: '../openapi.yaml#/components/schemas/TaskCard'
+
+  post:
+    tags:
+      - task-card
+    summary: 태스크 카드 생성
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+    responses:
+      201:
+        description: 태스크 카드 생성 성공
+        content:
+          application/json:
+            schema:
+              $ref: '../openapi.yaml#/components/schemas/TaskCard'
+
+/task-card/{taskCardId}:
+  get:
+    tags:
+      - task-card
+    summary: 태스크 카드 단일 조회
+    parameters:
+      - name: taskCardId
+        in: path
+        description: 조회할 태스크 카드 id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      200:
+        description: 태스크 카드 조회 성공
+        content:
+          application/json:
+            schema:
+              $ref: '../openapi.yaml#/components/schemas/TaskCard'
+
+  patch:
+    tags:
+      - task-card
+    summary: 태스크 카드 수정
+    parameters:
+      - name: taskCardId
+        in: path
+        description: 수정할 태스크 카드 id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              is_closed:
+                type: boolean
+    responses:
+      200:
+        description: 태스크 카드 수정 성공
+        content:
+          application/json:
+            schema:
+              $ref: '../openapi.yaml#/components/schemas/TaskCard'
+
+  delete:
+    tags:
+      - task-card
+    summary: 태스크 카드 삭제
+    parameters:
+      - name: taskCardId
+        in: path
+        description: 삭제할 태스크 카드 id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      204:
+        description: 태스크 카드 삭제 성공
+
+/task-card/{taskCardId}/task:
+  get:
+    tags:
+      - task-card
+    summary: 태스크 카드 하위의 태스크 리스트 조회
+    parameters:
+      - name: taskCardId
+        in: path
+        description: 태스크 리스트를 조회할 태스크 카드 id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      200:
+        description: 태스크 리스트 조회 성공
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    $ref: '../openapi.yaml#/components/schemas/Task'

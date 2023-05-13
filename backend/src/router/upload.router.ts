@@ -40,13 +40,10 @@ const uploadRouter = express.Router()
 uploadRouter.post('/', checkIsLoggedInUser, upload.single('image'), (req, res, next) => {
   if (req.file) {
     res.status(201).json({
-      message: 'success upload file',
-      file: {
-        filename: req.file.filename,
-        mimetype: req.file.mimetype,
-        size: req.file.size,
-        path: `${req.protocol}://${req.headers.host}${STATIC_UPLOAD_FOLDER_PATH}/${req.file.filename}`,
-      },
+      filename: req.file.filename,
+      mimetype: req.file.mimetype,
+      size: req.file.size,
+      path: `${req.protocol}://${req.headers.host}${STATIC_UPLOAD_FOLDER_PATH}/${req.file.filename}`,
     })
   } else {
     res.status(500).json({

@@ -1,5 +1,5 @@
 import express from 'express'
-import ArticleController from 'controller/article.controller'
+import { ArticleController } from 'controller'
 import { checkIsLoggedInUser } from 'middleware/checkAuthentification'
 import { asyncMiddleware } from 'global/utils'
 import articleValidator from 'middleware/vaildator/article.validator'

@@ -6,44 +6,28 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 
 @Entity({ database: 'dev_wiki_db', name: 'article' })
 export class Article {
-  @PrimaryGeneratedColumn({
-    name: 'article_id',
-  })
+  @PrimaryGeneratedColumn({ name: 'article_id' })
   id: number
 
-  @Column({
-    length: 100,
-  })
+  @Column({ length: 100 })
   title: string
 
-  @Column({
-    length: 2000,
-    nullable: true,
-  })
+  @Column({ length: 2000, nullable: true })
   thumbnail?: string
 
-  @Column({
-    length: 150,
-    nullable: true,
-  })
+  @Column({ length: 150, nullable: true })
   short_description?: string
 
-  @Column({
-    type: 'text',
-  })
+  @Column({ type: 'text' })
   content: string
 
-  @Column({
-    type: 'int',
-    default: 0,
-  })
+  @Column({ type: 'int', default: 0 })
   my_views: number
 
   @CreateDateColumn()

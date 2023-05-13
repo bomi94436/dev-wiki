@@ -1,0 +1,31 @@
+/upload:
+  post:
+    tags:
+      - upload
+    summary: 이미지 업로드
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              image:
+                type: string
+                format: binary
+    responses:
+      201:
+        description: 이미지 업로드 성공
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filename:
+                  type: string
+                mimetype:
+                  type: string
+                size:
+                  type: integer
+                path:
+                  type: string

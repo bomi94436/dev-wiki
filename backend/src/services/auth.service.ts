@@ -45,7 +45,13 @@ class AuthService {
     const userId = this.uuidService.generateUuid()
     const user = new User({ id: userId, email, password, nickname })
 
-    return await this.userRepository.create(user)
+    const newUser = await this.userRepository.create(user)
+
+    return {
+      id: newUser.id,
+      email: newUser.email,
+      nickname: newUser.nickname,
+    }
   }
 
   public async login({ email, password }: { email: string; password: string }) {

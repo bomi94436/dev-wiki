@@ -12,21 +12,13 @@ export class User {
   )
   id: string
 
-  @Column({
-    length: 50,
-    unique: true,
-  })
+  @Column({ length: 50, unique: true })
   email: string
 
-  @Column(() => Password, {
-    prefix: false,
-  })
+  @Column(() => Password, { prefix: false })
   password: Password
 
-  @Column({
-    length: 20,
-    unique: true,
-  })
+  @Column({ length: 20, unique: true })
   nickname: string
 
   @Column({
