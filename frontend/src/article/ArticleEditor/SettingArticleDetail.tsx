@@ -31,16 +31,14 @@ const SettingArticleDetail: React.FC<SettingArticleDetailProps> = ({
   const { mutate: uploadThumbnail } = useMutation(
     (formdata: FormData) =>
       API.post<{
-        file: {
-          filename: string
-          mimetype: string
-          size: number
-          path: string
-        }
+        filename: string
+        mimetype: string
+        size: number
+        path: string
       }>('/upload', formdata),
     {
       onSuccess: (res) => {
-        setThumbnail(res.data.file.path)
+        setThumbnail(res.data.path)
       },
       onError: (err) => {
         const error = err as AxiosError

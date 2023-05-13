@@ -3,7 +3,7 @@ import { Task, TaskCard } from './entity'
 
 export const getTaskCards = async () => {
   try {
-    const response = await API.get<{ task_cards: TaskCard[] }>('/task-card')
+    const response = await API.get<{ items: TaskCard[] }>('/task-card')
     return response?.data
   } catch (err) {
     throw err
@@ -12,16 +12,18 @@ export const getTaskCards = async () => {
 
 export const getTasks = async ({ taskCardId }: { taskCardId: number }) => {
   try {
-    const response = await API.get<{ tasks: Task[] }>(`/task-card/${taskCardId}/task`)
+    const response = await API.get<{ items: Task[] }>(`/task-card/${taskCardId}/task`)
     return response?.data
   } catch (err) {
     throw err
   }
 }
 
-export const postTask = async (data: Pick<Task, 'content' | 'task_card_id' | 'parent_task_id'>) => {
+export const postTask = async (
+  data: Pick<Task, 'content' | 'date' | 'time' | 'task_card_id' | 'parent_task_id'>
+) => {
   try {
-    const response = await API.post<{ task: Task }>(`/task`, data)
+    const response = await API.post<Task>(`/task`, data)
     return response?.data
   } catch (err) {
     throw err
@@ -30,7 +32,7 @@ export const postTask = async (data: Pick<Task, 'content' | 'task_card_id' | 'pa
 
 export const postTaskCard = async (data: Pick<TaskCard, 'name' | 'description'>) => {
   try {
-    const response = await API.post<{ taskCard: TaskCard }>('/task-card', data)
+    const response = await API.post<TaskCard>('/task-card', data)
     return response?.data
   } catch (err) {
     throw err
@@ -45,7 +47,7 @@ export const patchTaskCard = async ({
   body: Partial<Pick<TaskCard, 'name' | 'description' | 'is_closed'>>
 }) => {
   try {
-    const response = await API.patch<{ task_card: TaskCard }>(`/task-card/${id}`, body)
+    const response = await API.patch<TaskCard>(`/task-card/${id}`, body)
     return response?.data
   } catch (err) {
     throw err
@@ -70,7 +72,7 @@ export const patchTask = async ({
   >
 }) => {
   try {
-    const response = await API.patch<{ task: Task }>(`/task/${id}`, body)
+    const response = await API.patch<Task>(`/task/${id}`, body)
     return response?.data
   } catch (err) {
     throw err

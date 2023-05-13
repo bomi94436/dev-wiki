@@ -67,15 +67,13 @@ const Editor: React.FC<EditorProps> = ({
 
         try {
           const response = await API.post<{
-            file: {
-              filename: string
-              mimetype: string
-              size: number
-              path: string
-            }
+            filename: string
+            mimetype: string
+            size: number
+            path: string
           }>('/upload', formdata)
 
-          const insertedMarkdown = insertToTextArea(`![](${response.data.file.path})`)
+          const insertedMarkdown = insertToTextArea(`![](${response.data.path})`)
           if (!insertedMarkdown) {
             return
           }

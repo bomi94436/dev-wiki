@@ -8,14 +8,9 @@ export const postArticle = async ({
   content,
   thumbnail,
   short_description,
-}: {
-  title: string
-  content: string
-  thumbnail?: string
-  short_description?: string
-}) => {
+}: Pick<Article, 'title' | 'content' | 'thumbnail' | 'short_description'>) => {
   try {
-    const response = await API.post<{ article: Article }>('/article', {
+    const response = await API.post<Article>('/article', {
       title,
       content,
       thumbnail,
@@ -27,10 +22,10 @@ export const postArticle = async ({
   }
 }
 
-export const getArticles = async (): Promise<Article[]> => {
+export const getArticles = async () => {
   try {
-    const response = await API.get<{ articles: Article[] }>('/article')
-    return response?.data.articles
+    const response = await API.get<{ items: Article[] }>('/article')
+    return response?.data
   } catch (err) {
     throw err as AxiosError
   }
@@ -38,8 +33,8 @@ export const getArticles = async (): Promise<Article[]> => {
 
 export const getArticle = async (id: number): Promise<Article> => {
   try {
-    const response = await API.get<{ article: Article }>(`/article/${id}`)
-    return response?.data.article
+    const response = await API.get<Article>(`/article/${id}`)
+    return response?.data
   } catch (err) {
     throw err as AxiosError
   }
@@ -52,8 +47,8 @@ export interface PatchArticleParams {
 
 export const patchArticle = async ({ id, body }: PatchArticleParams) => {
   try {
-    const response = await API.patch<{ article: Article }>(`/article/${id}`, body)
-    return response?.data.article
+    const response = await API.patch<Article>(`/article/${id}`, body)
+    return response?.data
   } catch (err) {
     throw err as AxiosError
   }
