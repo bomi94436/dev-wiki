@@ -1,4 +1,4 @@
-import { Task } from 'domain/taskCard/task.entity'
+import { Task } from 'domain/task/task.entity'
 
 export type CreateTaskDTO = Pick<
   Task,

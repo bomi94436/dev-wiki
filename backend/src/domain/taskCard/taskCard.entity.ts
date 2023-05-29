@@ -1,5 +1,5 @@
 import { AfterLoad, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
-import { Task } from './task.entity'
+import { Task } from '../task/task.entity'
 
 @Entity({ database: 'dev_wiki_db', name: 'task_card' })
 export class TaskCard {

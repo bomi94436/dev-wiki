@@ -1,5 +1,5 @@
-import { Task } from 'domain/taskCard/task.entity'
-import { TaskRepository } from 'domain/taskCard/task.repository'
+import { Task } from 'domain/task/task.entity'
+import { TaskRepository } from 'domain/task/task.repository'
 import { TaskCardRepository } from 'domain/taskCard/taskCard.repository'
 import { CustomError } from 'global/utils'
 import { CreateTaskDTO, UpdateTaskDTO } from 'types/task.dto'

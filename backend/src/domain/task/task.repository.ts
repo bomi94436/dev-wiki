@@ -1,4 +1,4 @@
-import { Task } from 'domain/taskCard/task.entity'
+import { Task } from 'domain/task/task.entity'
 import { CreateTaskDTO, UpdateTaskDTO } from 'types/task.dto'
 
 export interface TaskRepository {

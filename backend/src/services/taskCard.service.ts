@@ -1,5 +1,6 @@
 import { TaskCard } from 'domain/taskCard/taskCard.entity'
 import { TaskCardRepository } from 'domain/taskCard/taskCard.repository'
+import { PageParam } from 'global/type'
 import { CustomError } from 'global/utils'
 
 class TaskCardService {
@@ -9,13 +10,19 @@ class TaskCardService {
     return await this.taskCardRepository.create(taskCard)
   }
 
-  public async getTaskCards(
-    findOption?: Partial<Pick<TaskCard, 'name' | 'description' | 'is_closed'>>
-  ) {
+  public async getTaskCards({
+    name,
+    description,
+    is_closed,
+    page,
+    page_size,
+  }: Partial<Pick<TaskCard, 'name' | 'description' | 'is_closed'>> & PageParam) {
     return await this.taskCardRepository.getList({
-      name: findOption?.name,
-      description: findOption?.description,
-      is_closed: findOption?.is_closed,
+      name,
+      description,
+      is_closed,
+      page,
+      page_size,
     })
   }
 

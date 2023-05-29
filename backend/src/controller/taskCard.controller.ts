@@ -32,11 +32,9 @@ class TaskCardController {
 
   public getTaskCards: RequestHandler<{}, ItemsResponse<TaskCard>, {}, GetTaskCardsReqQuery> =
     async (req, res, next) => {
-      const taskCards = await this.taskCardService.getTaskCards(req.query)
+      const result = await this.taskCardService.getTaskCards(req.query)
 
-      res.status(200).json({
-        items: taskCards,
-      })
+      res.status(200).json(result)
     }
 
   public getTaskCard: RequestHandler<TaskCardReqParams, ItemResponse<TaskCard>> = async (

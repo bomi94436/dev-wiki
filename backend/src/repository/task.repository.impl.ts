@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm'
 import dataSource from 'infra/mysql/dataSource'
-import { TaskRepository } from 'domain/taskCard/task.repository'
-import { Task } from 'domain/taskCard/task.entity'
+import { TaskRepository } from 'domain/task/task.repository'
+import { Task } from 'domain/task/task.entity'
 import { CreateTaskDTO, UpdateTaskDTO } from 'types/task.dto'
 
 class TaskRepositoryImpl implements TaskRepository {

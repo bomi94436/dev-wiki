@@ -3,7 +3,7 @@ import { RequestHandler } from 'express'
 import TaskRepositoryImpl from 'repository/task.repository.impl'
 import TaskCardRepositoryImpl from 'repository/taskCard.repository.impl'
 import TaskService from 'services/task.service'
-import { Task } from 'domain/taskCard/task.entity'
+import { Task } from 'domain/task/task.entity'
 import { ItemResponse, ItemsResponse } from './types'
 import { CreateTaskDTO, UpdateTaskDTO } from 'types/task.dto'
 

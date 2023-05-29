@@ -2,7 +2,8 @@ import { Like, Repository } from 'typeorm'
 import { TaskCard } from 'domain/taskCard/taskCard.entity'
 import { TaskCardRepository } from 'domain/taskCard/taskCard.repository'
 import dataSource from 'infra/mysql/dataSource'
-import { reduceObject } from 'global/utils'
+import { paginate } from 'global/utils'
+import { PaginationResult, Result } from 'global/type'
 
 class TaskCardRepositoryImpl implements TaskCardRepository {
   private repository: Repository<TaskCard>
@@ -16,27 +17,31 @@ class TaskCardRepositoryImpl implements TaskCardRepository {
   }
 
   public async getList(
-    findOption?: Partial<Pick<TaskCard, 'name' | 'description' | 'is_closed'>>
-  ): Promise<TaskCard[]> {
-    const taskCardQuery = this.repository
+    option?: Parameters<TaskCardRepository['getList']>[0]
+  ): Promise<Result<TaskCard> | PaginationResult<TaskCard>> {
+    const query = this.repository
       .createQueryBuilder('task_card')
-      .select()
       .leftJoinAndSelect('task_card.tasks', 'Task')
-      .where(
-        reduceObject({
-          ...findOption,
-          name: findOption?.name ? Like(`%${findOption.name}%`) : undefined,
-          description: findOption?.description ? Like(`%${findOption.description}%`) : undefined,
-        })
-      )
 
-    return taskCardQuery.getMany()
+    if (option?.name) {
+      query.where({ name: Like(`%${option.name}%`) })
+    }
+    if (option?.description) {
+      query.where({ description: Like(`%${option.description}%`) })
+    }
+
+    if (option?.page) {
+      return await paginate<TaskCard>({ query, page: option.page, page_size: option.page_size })
+    }
+
+    return {
+      items: await query.getMany(),
+    }
   }
 
   public async getOne({ id }: Pick<TaskCard, 'id'>): Promise<TaskCard | null> {
     return await this.repository
       .createQueryBuilder('task_card')
-      .select()
       .leftJoinAndSelect('task_card.tasks', 'Task')
       .where({ id })
       .getOne()
