@@ -4,10 +4,12 @@ export type DateString = `${number}${number}${number}${number}-${number | ''}${n
 
 export type TimeString = `${number | ''}${number}:${number | ''}${number}:${number | ''}${number}`
 
-export type PageParam = {
-  page?: number
-  page_size?: number
-}
+export type PageParam =
+  | {
+      page?: number
+      page_size?: number
+    }
+  | undefined
 
 export type Result<T> = {
   items: T[]

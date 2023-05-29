@@ -24,15 +24,6 @@ export const getProjectRootPath = (dirname: string) => dirname.slice(0, dirname.
 export const getRelativePathOfProjectRootPath = (dirname: string) =>
   path.relative(dirname, getProjectRootPath(dirname))
 
-export const reduceObject = (obj: { [key: string]: any }) =>
-  Object.keys(obj).reduce((acc, curr) => {
-    if (obj[curr] !== undefined) {
-      return { ...acc, [curr]: obj[curr] }
-    } else {
-      return { ...acc }
-    }
-  }, {})
-
 /**
  * typeorm SelectQueryBuilder를 이용해 리스트 데이터를 페이징하는 함수
  */

@@ -2,6 +2,7 @@ import { Article } from 'domain/article/article.entity'
 import { ArticleRepository } from 'domain/article/article.repository'
 import { ArticleHistory } from 'domain/article/articleHistory.entity'
 import { ArticleHistoryRepository } from 'domain/article/articleHistory.repository'
+import { PageParam } from 'global/type'
 import { CustomError } from 'global/utils'
 
 class ArticleService {
@@ -34,12 +35,25 @@ class ArticleService {
     return await this.articleRepository.create(article)
   }
 
-  public async getArticles(
-    option?: Partial<
-      Pick<Article, 'title' | 'content' | 'thumbnail' | 'short_description' | 'writer_id' | 'id'>
-    >
-  ) {
-    return await this.articleRepository.getList(option)
+  public async getArticles({
+    title,
+    content,
+    thumbnail,
+    short_description,
+    writer_id,
+    page,
+    page_size,
+  }: Partial<Pick<Article, 'title' | 'content' | 'thumbnail' | 'short_description' | 'writer_id'>> &
+    PageParam) {
+    return await this.articleRepository.getList({
+      title,
+      content,
+      thumbnail,
+      short_description,
+      writer_id,
+      page,
+      page_size,
+    })
   }
 
   public async getArticle(id: number) {
