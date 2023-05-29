@@ -5,10 +5,16 @@ import ArticleRepositoryImpl from 'repository/article.repository.impl'
 import ArticleHistoryRepositoryImpl from 'repository/articleHistory.repository.impl'
 import ArticleService from 'services/article.service'
 import { ItemsResponse, ItemResponse } from './types'
+import { PageParam } from 'global/type'
 
 interface ArticleReqParams {
   articleId?: number
 }
+
+type GetMyArticlesReqParams = Partial<
+  Pick<Article, 'title' | 'content' | 'thumbnail' | 'short_description' | 'id'>
+> &
+  PageParam
 
 class ArticleController {
   private articleService: ArticleService
@@ -27,15 +33,16 @@ class ArticleController {
     res.status(201).json(article)
   }
 
-  public getMyArticles: RequestHandler<{}, ItemsResponse<Article>> = async (req, res) => {
-    // TODO: pagination
-    const articles = await this.articleService.getArticles({
+  public getMyArticles: RequestHandler<GetMyArticlesReqParams, ItemsResponse<Article>> = async (
+    req,
+    res
+  ) => {
+    const result = await this.articleService.getArticles({
+      ...req.query,
       writer_id: req.session.userid,
     })
 
-    res.status(200).json({
-      items: articles,
-    })
+    res.status(200).json(result)
   }
 
   public getArticle: RequestHandler<ArticleReqParams, ItemResponse<Article>> = async (req, res) => {
