@@ -2,7 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  ul,
+  ol {
+    list-style: revert;
+  }
+}
+
 * {
   box-sizing: border-box;
-  letter-spacing: -0.015em !important;
+  /* letter-spacing: -0.015em !important; */
 }

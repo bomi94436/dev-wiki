@@ -4,7 +4,7 @@ export interface Article {
   content: string
   thumbnail?: string
   short_description?: string
-  writer_id: string
+  created_by_id: string
   created_at: string // timestamp
   updated_at: string // timestamp
 }

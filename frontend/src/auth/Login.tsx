@@ -52,7 +52,7 @@ const Login = () => {
   )
 
   return (
-    <div className="w-full h-full flex justify-center items-center">
+    <div className="w-full h-screen flex justify-center items-center">
       <div className="w-[350px] h-[50vh] flex flex-col justify-center">
         <div className="flex items-center justify-between">
           <Typography variant="h5" gutterBottom className="!font-semibold">

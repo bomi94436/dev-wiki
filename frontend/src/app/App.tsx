@@ -7,7 +7,7 @@ const App = () => {
   const { CustomSnackbar } = useSnackbar()
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen min-h-screen">
       <CustomSnackbar />
 
       <PageRouter />
