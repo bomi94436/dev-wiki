@@ -27,7 +27,7 @@ class ArticleController {
   public createArticle: RequestHandler<{}, ItemResponse<Article>> = async (req, res) => {
     const article = await this.articleService.createArticle({
       ...req.body,
-      writer_id: req.session.userid,
+      created_by_id: req.session.userid,
     })
 
     res.status(201).json(article)
@@ -39,7 +39,7 @@ class ArticleController {
   ) => {
     const result = await this.articleService.getArticles({
       ...req.query,
-      writer_id: req.session.userid,
+      created_by_id: req.session.userid,
     })
 
     res.status(200).json(result)

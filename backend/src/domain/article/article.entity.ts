@@ -38,16 +38,16 @@ export class Article {
 
   @Column(
     new UuidService().uuidColumnOptions({
-      name: 'writer_id',
+      name: 'created_by_id',
     })
   )
-  writer_id: string
+  created_by_id: string
 
   @ManyToOne(() => User)
   @JoinColumn({
-    name: 'writer_id',
+    name: 'created_by_id',
   })
-  writer: User
+  created_by: User
 
   constructor(
     {
@@ -56,14 +56,14 @@ export class Article {
       thumbnail,
       short_description,
       content,
-      writer_id,
+      created_by_id,
     }: {
       title: string
       content: string
       id?: number
       thumbnail?: string
       short_description?: string
-      writer_id?: string
+      created_by_id?: string
     } = {
       title: '',
       content: '',
@@ -76,7 +76,7 @@ export class Article {
     this.short_description = short_description
 
     if (id) this.id = id
-    if (writer_id) this.writer_id = writer_id
+    if (created_by_id) this.created_by_id = created_by_id
   }
 
   public increaseMyViews(): void {
