@@ -27,6 +27,7 @@ services:
     volumes:
       - ./backend/src:/usr/src/app/src
       - ./backend/uploads:/usr/src/app/uploads
+      - ./backend/package.json:/usr/src/app/package.json
       - /usr/src/app/node_modules
     depends_on:
       - mysql
