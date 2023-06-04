@@ -29,6 +29,9 @@ class TaskCardRepositoryImpl implements TaskCardRepository {
     if (option?.description) {
       query.where({ description: Like(`%${option.description}%`) })
     }
+    if (option?.created_by_id) {
+      query.where({ created_by_id: option.created_by_id })
+    }
 
     if (option?.page) {
       return await paginate<TaskCard>({ query, page: option.page, page_size: option.page_size })
