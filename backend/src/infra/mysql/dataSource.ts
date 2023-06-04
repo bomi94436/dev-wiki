@@ -1,11 +1,5 @@
 import { DataSource } from 'typeorm'
-import config from '../../config'
-
-import { Article } from 'domain/article/article.entity'
-import { ArticleHistory } from 'domain/article/articleHistory.entity'
-import { User } from 'domain/user/user.entity'
-import { TaskCard } from 'domain/taskCard/taskCard.entity'
-import { Task } from 'domain/task/task.entity'
+import config from 'config'
 
 const dataSource = new DataSource({
   type: 'mysql',
@@ -17,9 +11,9 @@ const dataSource = new DataSource({
   timezone: '+09:00',
   synchronize: true,
   logging: true,
-  entities: [User, Article, ArticleHistory, TaskCard, Task],
-  subscribers: [],
-  migrations: [],
+  entities: ['../**/*.entity.ts'],
+  migrationsTableName: 'migrations',
+  migrations: ['../**/migrations/*.ts'],
 })
 
 export default dataSource
