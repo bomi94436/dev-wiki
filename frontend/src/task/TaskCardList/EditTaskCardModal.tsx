@@ -26,10 +26,10 @@ const EditTaskCardModal: React.FC<EditTaskCardModalProps> = ({
   const [input, setInput] = useState<typeof taskCard>(taskCard)
 
   return (
-    <Dialog open={isOpen} onClose={close}>
+    <Dialog open={isOpen} onClose={close} maxWidth="xl">
       <DialogTitle>{taskCard ? '태스크 카드 수정' : '태스크 카드 추가'}</DialogTitle>
 
-      <DialogContent>
+      <DialogContent className="w-[50vw]">
         <TextField
           autoFocus
           margin="dense"
