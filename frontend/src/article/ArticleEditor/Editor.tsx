@@ -111,7 +111,7 @@ const Editor: React.FC<EditorProps> = ({
       <MDEditor
         value={content}
         onChange={(value) => setContent(value || '')}
-        height={400}
+        height="65vh"
         onPaste={async (event) => {
           if (event.clipboardData.files.length) {
             event.preventDefault()
