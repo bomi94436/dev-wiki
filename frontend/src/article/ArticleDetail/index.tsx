@@ -58,13 +58,14 @@ const ArticleDetail: React.FC = () => {
 
             <Divider className="!my-4" />
 
-            <MDEditor.Markdown
-              source={article.content}
-              style={{
-                whiteSpace: 'pre-wrap',
-                padding: '1rem',
-              }}
-            />
+            <div className="p-6 bg-white rounded-lg">
+              <MDEditor.Markdown
+                source={article.content}
+                style={{
+                  padding: '8',
+                }}
+              />
+            </div>
           </>
         )}
       </div>

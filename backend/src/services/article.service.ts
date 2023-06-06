@@ -16,20 +16,20 @@ class ArticleService {
     content,
     thumbnail,
     short_description,
-    writer_id,
+    created_by_id,
   }: {
     title: string
     thumbnail?: string
     short_description?: string
     content: string
-    writer_id: string
+    created_by_id: string
   }) {
     const article = new Article({
       title,
       content,
       thumbnail,
       short_description,
-      writer_id,
+      created_by_id,
     })
 
     return await this.articleRepository.create(article)
@@ -40,17 +40,19 @@ class ArticleService {
     content,
     thumbnail,
     short_description,
-    writer_id,
+    created_by_id,
     page,
     page_size,
-  }: Partial<Pick<Article, 'title' | 'content' | 'thumbnail' | 'short_description' | 'writer_id'>> &
+  }: Partial<
+    Pick<Article, 'title' | 'content' | 'thumbnail' | 'short_description' | 'created_by_id'>
+  > &
     PageParam) {
     return await this.articleRepository.getList({
       title,
       content,
       thumbnail,
       short_description,
-      writer_id,
+      created_by_id,
       page,
       page_size,
     })

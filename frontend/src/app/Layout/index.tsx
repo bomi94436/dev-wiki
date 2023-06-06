@@ -174,7 +174,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
         </List>
       </Drawer>
 
-      <Box component="main" className="!p-0 bg-background" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" className="!p-0 bg-background min-h-screen" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
         {children}
       </Box>

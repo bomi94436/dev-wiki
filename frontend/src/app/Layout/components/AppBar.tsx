@@ -1,6 +1,6 @@
 import { styled } from '@mui/material'
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
-import { drawerWidth } from '../contant'
+import { DRAWER_WIDTH } from '../contant'
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean
@@ -19,8 +19,8 @@ const AppBar = styled(MuiAppBar, {
   backdropFilter: 'blur(7px)',
   backgroundColor: 'rgba(255, 255, 255, 0.7)',
   ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: DRAWER_WIDTH,
+    width: `calc(100% - ${DRAWER_WIDTH}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,

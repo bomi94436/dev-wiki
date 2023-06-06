@@ -18,8 +18,10 @@ class TaskCardController {
   }
 
   public createTaskCard: RequestHandler<{}, ItemResponse<TaskCard>> = async (req, res, next) => {
-    const { name, description } = req.body
-    const taskCard = await this.taskCardService.createTaskCard({ name, description })
+    const taskCard = await this.taskCardService.createTaskCard({
+      ...req.body,
+      created_by_id: req.session.userid,
+    })
 
     if (taskCard) {
       res.status(201).json(taskCard)
@@ -32,7 +34,10 @@ class TaskCardController {
 
   public getTaskCards: RequestHandler<{}, ItemsResponse<TaskCard>, {}, GetTaskCardsReqQuery> =
     async (req, res, next) => {
-      const result = await this.taskCardService.getTaskCards(req.query)
+      const result = await this.taskCardService.getTaskCards({
+        ...req.query,
+        created_by_id: req.session.userid,
+      })
 
       res.status(200).json(result)
     }

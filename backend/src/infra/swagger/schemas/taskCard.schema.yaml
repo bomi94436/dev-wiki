@@ -16,3 +16,7 @@ properties:
     type: number
   completed_task_count:
     type: number
+  created_by_id:
+    type: string
+    format: uuid
+    example: f1b00933-e51d-4f7f-bdf1-03016f3dd96b

@@ -13,10 +13,10 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({ isOpen, close, submit, ta
   const [input, setInput] = useState<Pick<Task, 'content'> | undefined>(task)
 
   return (
-    <Dialog open={isOpen} onClose={close}>
+    <Dialog open={isOpen} onClose={close} maxWidth="xl">
       <DialogTitle>{task ? '태스크 수정' : '태스크 추가'}</DialogTitle>
 
-      <DialogContent>
+      <DialogContent className="w-[50vw]">
         <TextField
           autoFocus
           margin="dense"

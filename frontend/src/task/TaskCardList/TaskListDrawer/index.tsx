@@ -122,7 +122,10 @@ const TaskListDrawer: React.FC<TaskListDrawerProps> = ({ isOpen, close, taskCard
             <TaskItem
               key={`task-item-${task.id}`}
               task={task}
-              refetch={refetchTasks}
+              refetch={() => {
+                refetchTaskCards()
+                refetchTasks()
+              }}
               foldMode={foldMode}
             />
           ))}

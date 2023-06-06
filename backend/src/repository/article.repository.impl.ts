@@ -33,8 +33,8 @@ class ArticleRepositoryImpl implements ArticleRepository {
     if (option?.short_description) {
       query.where({ short_description: Like(`%${option.short_description}%`) })
     }
-    if (option?.writer_id) {
-      query.where({ writer_id: option.writer_id })
+    if (option?.created_by_id) {
+      query.where({ created_by_id: option.created_by_id })
     }
 
     if (option?.page) {

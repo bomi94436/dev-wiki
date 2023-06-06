@@ -6,21 +6,27 @@ import { CustomError } from 'global/utils'
 class TaskCardService {
   constructor(private taskCardRepository: TaskCardRepository) {}
 
-  public async createTaskCard(taskCard: Pick<TaskCard, 'name' | 'description'>) {
-    return await this.taskCardRepository.create(taskCard)
+  public async createTaskCard({
+    name,
+    description,
+    created_by_id,
+  }: Parameters<TaskCardRepository['create']>[0]) {
+    return await this.taskCardRepository.create({ name, description, created_by_id })
   }
 
   public async getTaskCards({
     name,
     description,
     is_closed,
+    created_by_id,
     page,
     page_size,
-  }: Partial<Pick<TaskCard, 'name' | 'description' | 'is_closed'>> & PageParam) {
+  }: Partial<Pick<TaskCard, 'name' | 'description' | 'is_closed' | 'created_by_id'>> & PageParam) {
     return await this.taskCardRepository.getList({
       name,
       description,
       is_closed,
+      created_by_id,
       page,
       page_size,
     })

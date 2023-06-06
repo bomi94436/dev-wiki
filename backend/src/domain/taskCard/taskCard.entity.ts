@@ -1,5 +1,15 @@
-import { AfterLoad, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  AfterLoad,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 import { Task } from '../task/task.entity'
+import UuidService from 'domain/uuidService'
+import { User } from 'domain/user/user.entity'
 
 @Entity({ database: 'dev_wiki_db', name: 'task_card' })
 export class TaskCard {
@@ -17,6 +27,19 @@ export class TaskCard {
 
   @OneToMany(() => Task, (task) => task.task_card)
   tasks?: Task[]
+
+  @Column(
+    new UuidService().uuidColumnOptions({
+      name: 'created_by_id',
+    })
+  )
+  created_by_id: string
+
+  @ManyToOne(() => User)
+  @JoinColumn({
+    name: 'created_by_id',
+  })
+  created_by: User
 
   total_task_count: number = 0
   completed_task_count: number = 0
