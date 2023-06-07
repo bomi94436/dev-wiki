@@ -9,7 +9,7 @@ const dataSource = new DataSource({
   password: config.mysql.password,
   database: 'dev_wiki_db',
   timezone: '+09:00',
-  synchronize: true,
+  synchronize: false,
   logging: true,
   entities: ['../**/*.entity.ts'],
   migrationsTableName: 'migrations',

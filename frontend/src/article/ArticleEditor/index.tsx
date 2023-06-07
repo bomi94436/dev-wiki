@@ -11,6 +11,7 @@ import { parseImageMarkdown } from '../usecase'
 import { useArticle } from '../api/hook'
 import { patchArticle, PatchArticleParams, postArticle } from '../api/funcs'
 import { parseStringToInt } from '@/global/util/funcs'
+import { Article } from '../api/entity'
 
 const ArticleEditor: React.FC = () => {
   const navigate = useNavigate()
@@ -18,16 +19,19 @@ const ArticleEditor: React.FC = () => {
 
   const [query] = useSearchParams()
   const articleId = parseStringToInt(query.get('id'))
-  const { article } = useArticle({ id: articleId })
+  const [article, setArticle] = useState<Article | null>(null)
+  const [title, setTitle] = useState<string>('')
+  const [content, setContent] = useState<string>('')
+  const [thumbnail, setThumbnail] = useState<string | undefined>(undefined)
+  const [shortDescription, setShortDescription] = useState<string | undefined>(undefined)
 
-  const [title, setTitle] = useState<string>(article ? article.title : '')
-  const [content, setContent] = useState<string>(article ? article.content : '')
-  const [thumbnail, setThumbnail] = useState<string | undefined>(
-    article ? article.thumbnail : undefined
-  )
-  const [shortDescription, setShortDescription] = useState<string | undefined>(
-    article ? article.short_description : undefined
-  )
+  const {} = useArticle({
+    id: articleId,
+    onSuccess: (data) => {
+      if (!!article) return
+      setArticle(data)
+    },
+  })
 
   const [, setSnackbar] = useRecoilState(snackbarState)
 
