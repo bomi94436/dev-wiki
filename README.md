@@ -15,8 +15,18 @@
 - `Medis`: redis GUI
 - `MySQLWorkbench`: mysql GUI
 
-### 서버 실행
+### 서비스 실행
 
 ```
 docker-compose up --build
+```
+
+### backend 테스트 실행
+
+```sh
+npm i -g mocha
+
+cd backend
+
+npm test
 ```
