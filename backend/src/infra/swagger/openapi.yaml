@@ -17,6 +17,8 @@ tags:
     description: 사용자 인증
   - name: user
     description: 사용자
+  - name: series
+    description: 시리즈
   - name: article
     description: 아티클
   - name: upload
@@ -46,6 +48,8 @@ components:
       $ref: './schemas/task.schema.yaml'
     Article:
       $ref: './schemas/article.schema.yaml'
+    Series:
+      $ref: './schemas/series.schema.yaml'
 
 paths:
   /auth/signup:
@@ -54,6 +58,8 @@ paths:
     $ref: './paths/auth.path.yaml#/~1auth~1login'
   /auth/logout:
     $ref: './paths/auth.path.yaml#/~1auth~1logout'
+  /series:
+    $ref: './paths/series.path.yaml#/~1series'
   /article:
     $ref: './paths/article.path.yaml#/~1article'
   /article/{articleId}:

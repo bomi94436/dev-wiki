@@ -1,5 +1,5 @@
-import dataSource from '../infra/mysql/dataSource'
 import { Like, Repository } from 'typeorm'
+import dataSource from 'infra/mysql/dataSource'
 import { ArticleRepository } from 'domain/article/article.repository'
 import { Article } from 'domain/article/article.entity'
 import { PaginationResult, Result } from 'global/type'

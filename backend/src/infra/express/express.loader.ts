@@ -13,6 +13,7 @@ import {
   articleRouter,
   authRouter,
   rootRouter,
+  seriesRouter,
   taskCardRouter,
   taskRouter,
   uploadRouter,
@@ -84,6 +85,7 @@ const expressLoader = async ({ app }: { app: express.Express }) => {
   app.use('/upload', uploadRouter)
   app.use('/task-card', taskCardRouter)
   app.use('/task', taskRouter)
+  app.use('/series', seriesRouter)
 }
 
 export default expressLoader
