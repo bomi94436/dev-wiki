@@ -22,19 +22,19 @@ class ArticleRepositoryImpl implements ArticleRepository {
     const query = this.repository.createQueryBuilder('article')
 
     if (option?.title) {
-      query.where({ title: Like(`%${option.title}%`) })
+      query.andWhere({ title: Like(`%${option.title}%`) })
     }
     if (option?.content) {
-      query.where({ content: Like(`%${option.content}%`) })
+      query.andWhere({ content: Like(`%${option.content}%`) })
     }
     if (option?.thumbnail) {
-      query.where({ thumbnail: option.thumbnail })
+      query.andWhere({ thumbnail: option.thumbnail })
     }
     if (option?.short_description) {
-      query.where({ short_description: Like(`%${option.short_description}%`) })
+      query.andWhere({ short_description: Like(`%${option.short_description}%`) })
     }
     if (option?.created_by_id) {
-      query.where({ created_by_id: option.created_by_id })
+      query.andWhere({ created_by_id: option.created_by_id })
     }
 
     if (option?.page) {

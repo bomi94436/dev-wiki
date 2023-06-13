@@ -24,13 +24,13 @@ class TaskCardRepositoryImpl implements TaskCardRepository {
       .leftJoinAndSelect('task_card.tasks', 'Task')
 
     if (option?.name) {
-      query.where({ name: Like(`%${option.name}%`) })
+      query.andWhere({ name: Like(`%${option.name}%`) })
     }
     if (option?.description) {
-      query.where({ description: Like(`%${option.description}%`) })
+      query.andWhere({ description: Like(`%${option.description}%`) })
     }
     if (option?.created_by_id) {
-      query.where({ created_by_id: option.created_by_id })
+      query.andWhere({ created_by_id: option.created_by_id })
     }
 
     if (option?.page) {
