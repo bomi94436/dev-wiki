@@ -7,6 +7,8 @@ import seriesValidator from 'middleware/vaildator/series.validator'
 const seriesRouter = express.Router()
 const seriesController = new SeriesController()
 
+seriesRouter.get('/', checkIsLoggedInUser, asyncMiddleware(seriesController.getSeriesList))
+
 seriesRouter.post(
   '/',
   checkIsLoggedInUser,

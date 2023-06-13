@@ -1,8 +1,9 @@
 import { RequestHandler } from 'express'
-import { ItemResponse } from './types'
+import { ItemResponse, ItemsResponse } from './types'
 import SeriesRepositoryImpl from 'repository/series.repository.impl'
 import SeriesService from 'services/series.service'
 import { Series } from 'domain/series/series.entity'
+import { PageParam } from 'global/type'
 
 class SeriesController {
   private seriesService: SeriesService
@@ -18,6 +19,18 @@ class SeriesController {
     })
 
     res.status(201).json(series)
+  }
+
+  public getSeriesList: RequestHandler<
+    Partial<Pick<Series, 'name'>> & PageParam,
+    ItemsResponse<Series>
+  > = async (req, res) => {
+    const result = await this.seriesService.getSeriesList({
+      ...req.query,
+      created_by_id: req.session.userid,
+    })
+
+    res.status(200).json(result)
   }
 }
 
