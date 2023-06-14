@@ -60,6 +60,8 @@ paths:
     $ref: './paths/auth.path.yaml#/~1auth~1logout'
   /series:
     $ref: './paths/series.path.yaml#/~1series'
+  /series/{seriesId}:
+    $ref: './paths/series.path.yaml#/~1series~1{seriesId}'
   /article:
     $ref: './paths/article.path.yaml#/~1article'
   /article/{articleId}:

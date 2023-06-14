@@ -11,6 +11,15 @@ const seriesValidator = {
       },
     },
   }),
+  update: validator('body', {
+    name: {
+      type: DataType.string,
+      length: {
+        min: 1,
+        max: 100,
+      },
+    },
+  }),
 }
 
 export default seriesValidator

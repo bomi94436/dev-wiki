@@ -6,4 +6,6 @@ export interface SeriesRepository {
   getList(
     option?: Partial<Pick<Series, 'name' | 'created_by_id'>> & PageParam
   ): Promise<Result<Series> | PaginationResult<Series>>
+  getOne(series: Pick<Series, 'id'>): Promise<Series | null>
+  updateOne(seriesId: number, data: Partial<Pick<Series, 'name'>>): Promise<Series | null>
 }

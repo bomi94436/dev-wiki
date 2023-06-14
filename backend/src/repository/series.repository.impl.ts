@@ -34,6 +34,27 @@ class SeriesRepositoryImpl implements SeriesRepository {
       items: await query.getMany(),
     }
   }
+
+  public async getOne({ id }: Parameters<SeriesRepository['getOne']>[0]): Promise<Series | null> {
+    return await this.repository.findOneBy({
+      id,
+    })
+  }
+
+  public async updateOne(
+    seriesId: number,
+    data: Parameters<SeriesRepository['updateOne']>[1]
+  ): Promise<Series | null> {
+    const result = await this.repository.update(seriesId, data)
+
+    if (result) {
+      return await this.repository.findOneBy({
+        id: seriesId,
+      })
+    } else {
+      return null
+    }
+  }
 }
 
 export default SeriesRepositoryImpl

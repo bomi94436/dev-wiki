@@ -16,4 +16,11 @@ seriesRouter.post(
   asyncMiddleware(seriesController.createSeries)
 )
 
+seriesRouter.patch(
+  '/:seriesId',
+  checkIsLoggedInUser,
+  seriesValidator.update,
+  asyncMiddleware(seriesController.updateSeries)
+)
+
 export default seriesRouter
