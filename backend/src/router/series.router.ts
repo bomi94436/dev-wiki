@@ -23,4 +23,10 @@ seriesRouter.patch(
   asyncMiddleware(seriesController.updateSeries)
 )
 
+seriesRouter.delete(
+  '/:seriesId',
+  checkIsLoggedInUser,
+  asyncMiddleware(seriesController.deleteSeries)
+)
+
 export default seriesRouter

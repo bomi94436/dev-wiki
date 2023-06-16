@@ -55,6 +55,10 @@ class SeriesRepositoryImpl implements SeriesRepository {
       return null
     }
   }
+
+  public async deleteOne(seriesId: number) {
+    await this.repository.delete(seriesId)
+  }
 }
 
 export default SeriesRepositoryImpl

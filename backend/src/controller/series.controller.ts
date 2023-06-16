@@ -50,6 +50,14 @@ class SeriesController {
       })
     }
   }
+
+  public deleteSeries: RequestHandler<SeriesReqParams> = async (req, res) => {
+    const seriesId = Number(req.params.seriesId)
+
+    await this.seriesService.deleteSeries(seriesId)
+
+    res.status(204).send()
+  }
 }
 
 export default SeriesController

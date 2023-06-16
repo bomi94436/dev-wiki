@@ -8,4 +8,5 @@ export interface SeriesRepository {
   ): Promise<Result<Series> | PaginationResult<Series>>
   getOne(series: Pick<Series, 'id'>): Promise<Series | null>
   updateOne(seriesId: number, data: Partial<Pick<Series, 'name'>>): Promise<Series | null>
+  deleteOne(seriesId: number): Promise<void>
 }

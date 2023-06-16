@@ -27,6 +27,16 @@ class SeriesService {
 
     return await this.seriesRepository.updateOne(seriesId, data)
   }
+
+  public async deleteSeries(seriesId: number) {
+    const series = await this.seriesRepository.getOne({ id: seriesId })
+
+    if (!series) {
+      throw new CustomError(404, 'Not found series')
+    }
+
+    return await this.seriesRepository.deleteOne(seriesId)
+  }
 }
 
 export default SeriesService
