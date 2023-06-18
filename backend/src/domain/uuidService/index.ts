@@ -1,4 +1,4 @@
-import { ColumnOptions, PrimaryColumnOptions } from 'typeorm'
+import { PrimaryColumnOptions } from 'typeorm'
 import { parse as uuidParse, stringify as uuidStringify, v4 as uuidv4 } from 'uuid'
 
 class UuidService {
@@ -9,6 +9,7 @@ class UuidService {
   }
 
   public parseBufferToString(uuid: Buffer | string): string {
+    if (!uuid) return uuid
     if (typeof uuid === 'string') return uuid
     else return uuidStringify(uuid)
   }
