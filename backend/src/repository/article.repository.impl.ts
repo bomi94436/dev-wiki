@@ -19,7 +19,9 @@ class ArticleRepositoryImpl implements ArticleRepository {
   public async getList(
     option?: Parameters<ArticleRepository['getList']>[0]
   ): Promise<Result<Article> | PaginationResult<Article>> {
-    const query = this.repository.createQueryBuilder('article')
+    const query = this.repository
+      .createQueryBuilder('article')
+      .leftJoinAndSelect('article.series', 'series')
 
     if (option?.title) {
       query.andWhere({ title: Like(`%${option.title}%`) })
