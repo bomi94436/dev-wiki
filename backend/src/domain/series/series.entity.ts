@@ -1,3 +1,4 @@
+import { Article } from 'domain/article/article.entity'
 import { User } from 'domain/user/user.entity'
 import UuidService from 'domain/uuidService'
 import {
@@ -6,6 +7,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
@@ -15,14 +17,14 @@ export class Series {
   @PrimaryGeneratedColumn({ name: 'series_id' })
   id: number
 
-  @Column({ length: 100 })
+  @Column({ length: 100, comment: '이름' })
   name: string
 
-  @CreateDateColumn()
+  @CreateDateColumn({ comment: '생성일자' })
   created_at: Date
 
-  @UpdateDateColumn()
-  updated_at: Date
+  @UpdateDateColumn({ comment: '수정일자' })
+  updated_at?: Date
 
   @Column(
     new UuidService().uuidColumnOptions({
@@ -36,4 +38,7 @@ export class Series {
     name: 'created_by_id',
   })
   created_by: User
+
+  @OneToMany(() => Article, (article) => article.series)
+  articles?: Article[]
 }
