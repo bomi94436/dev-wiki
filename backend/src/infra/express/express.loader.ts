@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { ErrorRequestHandler } from 'express'
 import session from 'express-session'
 import connectRedis from 'connect-redis'
 import { v4 as uuidv4 } from 'uuid'
@@ -6,7 +6,7 @@ import cors from 'cors'
 import path from 'path'
 
 import { SESSION_KEY, STATIC_UPLOAD_FOLDER_PATH } from 'global/constant'
-import { getRelativePathOfProjectRootPath } from 'global/utils'
+import { CustomError, getRelativePathOfProjectRootPath } from 'global/utils'
 import { redisClient } from 'infra/redis/usecase'
 import config from 'config'
 import {
@@ -86,6 +86,10 @@ const expressLoader = async ({ app }: { app: express.Express }) => {
   app.use('/task-card', taskCardRouter)
   app.use('/task', taskRouter)
   app.use('/series', seriesRouter)
+
+  app.use(<ErrorRequestHandler>((error: CustomError, req, res, next) => {
+    res.status(error.status || 500).json({ message: error.message, stack: error.stack })
+  }))
 }
 
 export default expressLoader
