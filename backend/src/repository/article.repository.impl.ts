@@ -49,9 +49,11 @@ class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   public async getOne({ id }: Article): Promise<Article | null> {
-    return await this.repository.findOneBy({
-      id,
-    })
+    const query = this.repository
+      .createQueryBuilder('article')
+      .leftJoinAndSelect('article.series', 'series')
+
+    return await query.where({ id }).getOne()
   }
 
   public async updateOne(articleId: number, article: Article) {

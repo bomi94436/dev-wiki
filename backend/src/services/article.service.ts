@@ -63,7 +63,8 @@ class ArticleService {
 
     if (article) {
       article.increaseMyViews()
-      return this.articleRepository.updateOne(id, article)
+      await this.articleRepository.updateOne(id, article)
+      return article
     } else {
       return null
     }
