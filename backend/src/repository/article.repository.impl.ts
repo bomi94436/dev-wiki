@@ -29,11 +29,11 @@ class ArticleRepositoryImpl implements ArticleRepository {
     if (option?.content) {
       query.andWhere({ content: Like(`%${option.content}%`) })
     }
-    if (option?.thumbnail) {
-      query.andWhere({ thumbnail: option.thumbnail })
-    }
     if (option?.short_description) {
       query.andWhere({ short_description: Like(`%${option.short_description}%`) })
+    }
+    if (option?.series_id) {
+      query.andWhere({ series_id: option.series_id })
     }
     if (option?.created_by_id) {
       query.andWhere({ created_by_id: option.created_by_id })
