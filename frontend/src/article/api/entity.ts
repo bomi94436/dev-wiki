@@ -1,10 +1,4 @@
-export interface Series {
-  id: number
-  name: string
-  created_by_id: string
-  created_at: string // timestamp
-  updated_at?: string // timestamp
-}
+import { Series } from '@/global/api/entity'
 
 export interface Article {
   id: number
