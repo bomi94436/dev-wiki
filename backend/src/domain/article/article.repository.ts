@@ -10,7 +10,7 @@ export interface ArticleRepository {
   ): Promise<Article>
   getList(
     option?: Partial<
-      Pick<Article, 'title' | 'content' | 'thumbnail' | 'short_description' | 'created_by_id'>
+      Pick<Article, 'title' | 'content' | 'short_description' | 'series_id' | 'created_by_id'>
     > &
       PageParam
   ): Promise<Result<Article> | PaginationResult<Article>>

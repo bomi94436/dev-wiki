@@ -2,8 +2,10 @@ import { useQuery } from 'react-query'
 import { getArticle, getArticles } from './funcs'
 import { Article } from './entity'
 
-export const useArticles = () => {
-  const { data, isLoading, refetch } = useQuery(['articles'], getArticles)
+export const useArticles = (param: Parameters<typeof getArticles>[0] = {}) => {
+  const { data, isLoading, refetch } = useQuery(['articles', { ...param }], () =>
+    getArticles(param)
+  )
 
   return { articles: data?.items, isLoading, refetch }
 }

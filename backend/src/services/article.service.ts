@@ -38,20 +38,20 @@ class ArticleService {
   public async getArticles({
     title,
     content,
-    thumbnail,
     short_description,
+    series_id,
     created_by_id,
     page,
     page_size,
   }: Partial<
-    Pick<Article, 'title' | 'content' | 'thumbnail' | 'short_description' | 'created_by_id'>
+    Pick<Article, 'title' | 'content' | 'short_description' | 'series_id' | 'created_by_id'>
   > &
     PageParam) {
     return await this.articleRepository.getList({
       title,
       content,
-      thumbnail,
       short_description,
+      series_id,
       created_by_id,
       page,
       page_size,
@@ -63,7 +63,8 @@ class ArticleService {
 
     if (article) {
       article.increaseMyViews()
-      return this.articleRepository.updateOne(id, article)
+      await this.articleRepository.updateOne(id, article)
+      return article
     } else {
       return null
     }

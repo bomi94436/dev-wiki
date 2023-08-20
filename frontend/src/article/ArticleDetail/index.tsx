@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useMutation } from 'react-query'
 import { useRecoilState } from 'recoil'
-import { Divider, IconButton, Typography } from '@mui/material'
+import { Chip, Divider, IconButton, Typography } from '@mui/material'
 import MDEditor from '@uiw/react-md-editor'
 import {
   DriveFileRenameOutline as DriveFileRenameOutlineIcon,
@@ -54,6 +54,12 @@ const ArticleDetail: React.FC = () => {
               <IconButton className="!ml-1" aria-label="delete" onClick={onClickRemoveArticle}>
                 <DeleteOutlineIcon color="primary" fontSize="inherit" />
               </IconButton>
+            </div>
+
+            <div>
+              {article.series?.name && (
+                <Chip label={`시리즈: ${article.series.name}`} size="small" />
+              )}
             </div>
 
             <Divider className="!my-4" />

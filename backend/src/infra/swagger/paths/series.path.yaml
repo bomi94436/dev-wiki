@@ -1,0 +1,99 @@
+/series:
+  get:
+    tags:
+      - series
+    summary: 시리즈 리스트 조회
+    parameters:
+      - name: name
+        in: query
+        description: 시리즈 이름
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: 페이지 번호
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        description: 페이지 크기
+        schema:
+          type: integer
+    responses:
+      200:
+        description: 시리즈 리스트 조회 성공
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    $ref: '../openapi.yaml#/components/schemas/Series'
+
+  post:
+    tags:
+      - series
+    summary: 시리즈 생성
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+    responses:
+      201:
+        description: 시리즈 생성 성공
+        content:
+          application/json:
+            schema:
+              $ref: '../openapi.yaml#/components/schemas/Series'
+
+/series/{seriesId}:
+  patch:
+    tags:
+      - series
+    summary: 시리즈 수정
+    parameters:
+      - name: seriesId
+        in: path
+        description: 수정할 시리즈 id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+    responses:
+      200:
+        description: 시리즈 수정 성공
+        content:
+          application/json:
+            schema:
+              $ref: '../openapi.yaml#/components/schemas/Series'
+
+  delete:
+    tags:
+      - series
+    summary: 시리즈 삭제
+    parameters:
+      - name: seriesId
+        in: path
+        description: 삭제할 시리즈 id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      204:
+        description: 시리즈 삭제 성공

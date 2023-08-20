@@ -22,6 +22,7 @@ import {
   ViewList as ViewListIcon,
   Style as StyleIcon,
   ViewKanban as ViewKanbanIcon,
+  CollectionsBookmark as CollectionsBookmarkIcon,
 } from '@mui/icons-material'
 
 import AppBar from './components/AppBar'
@@ -158,6 +159,10 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
 
           <DrawerItem text="아티클 리스트" link="/article" open={open}>
             <StyleIcon color="primary" />
+          </DrawerItem>
+
+          <DrawerItem text="시리즈 관리" link="/article/series" open={open}>
+            <CollectionsBookmarkIcon color="primary" />
           </DrawerItem>
         </List>
 

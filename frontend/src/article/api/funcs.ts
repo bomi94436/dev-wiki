@@ -22,9 +22,16 @@ export const postArticle = async ({
   }
 }
 
-export const getArticles = async () => {
+export const getArticles = async (params: {
+  title?: string
+  content?: string
+  short_description?: string
+  series_id?: number
+  page?: number
+  page_size?: number
+}) => {
   try {
-    const response = await API.get<{ items: Article[] }>('/article')
+    const response = await API.get<{ items: Article[] }>('/article', { params })
     return response?.data
   } catch (err) {
     throw err as AxiosError

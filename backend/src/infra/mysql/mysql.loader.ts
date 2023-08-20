@@ -7,7 +7,7 @@ const pool = mysql.createPool({
   port: config.mysql.port,
   user: config.mysql.user,
   password: config.mysql.password,
-  timezone: '+09:00',
+  timezone: '+00:00',
   connectionLimit: 10,
 })
 

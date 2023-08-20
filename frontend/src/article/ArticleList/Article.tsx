@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material'
+import { Card, CardActionArea, CardContent, CardMedia, Chip, Typography } from '@mui/material'
 import { Article } from '@/article/api/entity'
 import { useNavigate } from 'react-router-dom'
 
@@ -30,6 +30,9 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                 <Typography variant="body2" color="text.secondary">
                   {article.short_description}
                 </Typography>
+                {article.series?.name && (
+                  <Chip label={`시리즈: ${article.series.name}`} size="small" />
+                )}
               </CardContent>
             </>
           ) : (

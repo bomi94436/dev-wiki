@@ -1,3 +1,4 @@
+import { Series } from 'domain/series/series.entity'
 import { User } from 'domain/user/user.entity'
 import UuidService from 'domain/uuidService'
 import {
@@ -34,7 +35,14 @@ export class Article {
   created_at: Date
 
   @UpdateDateColumn()
-  updated_at: Date
+  updated_at?: Date
+
+  @Column({ nullable: true })
+  series_id?: string
+
+  @ManyToOne(() => Series, (series) => series.articles)
+  @JoinColumn({ name: 'series_id' })
+  series?: Series
 
   @Column(
     new UuidService().uuidColumnOptions({

@@ -8,7 +8,7 @@ const dataSource = new DataSource({
   username: config.mysql.user,
   password: config.mysql.password,
   database: 'dev_wiki_db',
-  timezone: '+09:00',
+  timezone: '+00:00',
   synchronize: false,
   logging: true,
   entities: ['../**/*.entity.ts'],

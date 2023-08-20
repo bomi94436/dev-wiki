@@ -1,0 +1,20 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 10
+  name:
+    type: string
+    example: 시리즈 이름
+  created_at:
+    type: string
+    format: date-time
+    example: 2023-02-21T07:54:39.312Z
+  updated_at:
+    type: string
+    format: date-time
+    example: 2023-02-21T07:54:39.312Z
+  created_by_id:
+    type: string
+    format: uuid
+    example: f1b00933-e51d-4f7f-bdf1-03016f3dd96b

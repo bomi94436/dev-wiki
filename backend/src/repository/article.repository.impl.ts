@@ -1,5 +1,5 @@
-import dataSource from '../infra/mysql/dataSource'
 import { Like, Repository } from 'typeorm'
+import dataSource from 'infra/mysql/dataSource'
 import { ArticleRepository } from 'domain/article/article.repository'
 import { Article } from 'domain/article/article.entity'
 import { PaginationResult, Result } from 'global/type'
@@ -19,22 +19,24 @@ class ArticleRepositoryImpl implements ArticleRepository {
   public async getList(
     option?: Parameters<ArticleRepository['getList']>[0]
   ): Promise<Result<Article> | PaginationResult<Article>> {
-    const query = this.repository.createQueryBuilder('article')
+    const query = this.repository
+      .createQueryBuilder('article')
+      .leftJoinAndSelect('article.series', 'series')
 
     if (option?.title) {
-      query.where({ title: Like(`%${option.title}%`) })
+      query.andWhere({ title: Like(`%${option.title}%`) })
     }
     if (option?.content) {
-      query.where({ content: Like(`%${option.content}%`) })
-    }
-    if (option?.thumbnail) {
-      query.where({ thumbnail: option.thumbnail })
+      query.andWhere({ content: Like(`%${option.content}%`) })
     }
     if (option?.short_description) {
-      query.where({ short_description: Like(`%${option.short_description}%`) })
+      query.andWhere({ short_description: Like(`%${option.short_description}%`) })
+    }
+    if (option?.series_id) {
+      query.andWhere({ series_id: option.series_id })
     }
     if (option?.created_by_id) {
-      query.where({ created_by_id: option.created_by_id })
+      query.andWhere({ created_by_id: option.created_by_id })
     }
 
     if (option?.page) {
@@ -47,9 +49,11 @@ class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   public async getOne({ id }: Article): Promise<Article | null> {
-    return await this.repository.findOneBy({
-      id,
-    })
+    const query = this.repository
+      .createQueryBuilder('article')
+      .leftJoinAndSelect('article.series', 'series')
+
+    return await query.where({ id }).getOne()
   }
 
   public async updateOne(articleId: number, article: Article) {
